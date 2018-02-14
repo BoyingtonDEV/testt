@@ -217,11 +217,11 @@ BOOL CAtumDBManager::Connect2DBServer(SQLHENV *i_phenv, SQLHDBC    *i_phdbc, SQL
             , g_pGlobal->GetDBServerIP(), g_pGlobal->GetDBServerPort(), g_pGlobal->GetDBServerDatabaseName(), (CHAR*)g_pGlobal->GetODBCUID(), (CHAR*)g_pGlobal->GetODBCPASSWORD());
 
 
-        if(SQL_NULL_HDBC != *i_phdbc){        SQLDisconnect(*i_phdbc);}
+        if (SQL_NULL_HDBC != *i_phdbc) {SQLDisconnect(*i_phdbc);}
     #ifndef _DEBUG
-        if(SQL_NULL_HDBC != *i_phdbc){        SQLFreeHandle(SQL_HANDLE_DBC, *i_phdbc);}
+        if (SQL_NULL_HDBC != *i_phdbc) {SQLFreeHandle(SQL_HANDLE_DBC, *i_phdbc);}
     #endif
-        if(SQL_NULL_HENV != *i_phenv){        SQLFreeHandle(SQL_HANDLE_ENV, *i_phenv);}
+        if (SQL_NULL_HENV != *i_phenv) {SQLFreeHandle(SQL_HANDLE_ENV, *i_phenv);}
 
         *i_phdbc        = SQL_NULL_HDBC;
         *i_phenv        = SQL_NULL_HENV;

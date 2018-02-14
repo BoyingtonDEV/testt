@@ -228,7 +228,7 @@ BOOL CAtumDBManager::Connect2DBServer(SQLHENV *i_phenv, SQLHDBC    *i_phdbc, SQL
         return FALSE;
     }
 
-    if(EN_DBCONN_MANUAL_COMMIT == i_connTy)
+    if (EN_DBCONN_MANUAL_COMMIT == i_connTy)
     {
         SQLSetConnectAttr(*i_phdbc, SQL_ATTR_AUTOCOMMIT, (SQLPOINTER)SQL_AUTOCOMMIT_OFF, SQL_NTS);    // set mannualcommit
     }
@@ -256,7 +256,7 @@ BOOL CAtumDBManager::Connect2DBServer(SQLHENV *i_phenv, SQLHDBC    *i_phdbc, SQL
 ///////////////////////////////////////////////////////////////////////////////
 BOOL CAtumDBManager::Connect2DBServer(DBWorkerData *io_pDBTlsData, EN_DBCONN_TYPE i_dbConnTy)
 {
-    switch(i_dbConnTy)
+    switch (i_dbConnTy)
     {
     case EN_DBCONN_AUTO_COMMIT:
         return Connect2DBServer(&io_pDBTlsData->henv, &io_pDBTlsData->hdbc, &io_pDBTlsData->hstmt, i_dbConnTy);
@@ -282,12 +282,12 @@ BOOL CAtumDBManager::Connect2DBServer(DBWorkerData *io_pDBTlsData, EN_DBCONN_TYP
 void CAtumDBManager::DisconnectDBServer(SQLHENV *i_phenv, SQLHDBC    *i_phdbc, SQLHSTMT *i_phstmt)
 {
     // cleanup odbc resources
-    if(SQL_NULL_HSTMT != *i_phstmt){    SQLFreeHandle(SQL_HANDLE_STMT, *i_phstmt);}
-    if(SQL_NULL_HDBC != *i_phdbc){        SQLDisconnect(*i_phdbc);}
+    if (SQL_NULL_HSTMT != *i_phstmt){    SQLFreeHandle(SQL_HANDLE_STMT, *i_phstmt);}
+    if (SQL_NULL_HDBC != *i_phdbc){        SQLDisconnect (*i_phdbc);}
 #ifndef _DEBUG
-    if(SQL_NULL_HDBC != *i_phdbc){        SQLFreeHandle(SQL_HANDLE_DBC, *i_phdbc);}
+    if (SQL_NULL_HDBC != *i_phdbc){        SQLFreeHandle (SQL_HANDLE_DBC, *i_phdbc);}
 #endif
-    if(SQL_NULL_HENV != *i_phenv){        SQLFreeHandle(SQL_HANDLE_ENV, *i_phenv);}
+    if (SQL_NULL_HENV != *i_phenv){        SQLFreeHandle (SQL_HANDLE_ENV, *i_phenv);}
 
     *i_phstmt        = SQL_NULL_HSTMT;
     *i_phdbc        = SQL_NULL_HDBC;
@@ -307,7 +307,7 @@ void CAtumDBManager::DisconnectDBServer(SQLHENV *i_phenv, SQLHDBC    *i_phdbc, S
 ///////////////////////////////////////////////////////////////////////////////
 void CAtumDBManager::DisconnectDBServer(DBWorkerData *io_pDBTlsData, EN_DBCONN_TYPE i_dbConnTy)
 {
-    switch(i_dbConnTy)
+    switch (i_dbConnTy)
     {
     case EN_DBCONN_AUTO_COMMIT:
         DisconnectDBServer(&io_pDBTlsData->henv, &io_pDBTlsData->hdbc, &io_pDBTlsData->hstmt);
@@ -552,7 +552,7 @@ BOOL CAtumDBManager::InsertDBQueryToDynamicQueryList(DB_QUERY *i_pDBQuery)
 BOOL CAtumDBManager::GetDBQueryFromDynamicQueryList(DB_QUERY *o_pDBQuery)
 {
     mt_auto_lock mtA(&m_mtvectInputQueryWithNewThread);
-    if(m_mtvectInputQueryWithNewThread.empty())
+    if (m_mtvectInputQueryWithNewThread.empty())
     {
         return FALSE;
     }
@@ -623,14 +623,14 @@ DWORD CAtumDBManager::AtumDBDynamicWorker()
 {
 
     DB_QUERY dbQuery;
-    if(FALSE == this->GetDBQueryFromDynamicQueryList(&dbQuery))
+    if (FALSE == this->GetDBQueryFromDynamicQueryList(&dbQuery))
     {
         return 60;
     }
 
     CODBCStatement odbcStmt;
     BOOL bRet = odbcStmt.Init(g_pGlobal->GetDBServerIP(), g_pGlobal->GetDBServerPort(), g_pGlobal->GetDBServerDatabaseName(), (LPCSTR)g_pGlobal->GetODBCUID(), (LPCSTR)g_pGlobal->GetODBCPASSWORD(), g_pGlobal->GetMainWndHandle());
-    if(FALSE == bRet)
+    if (FALSE == bRet)
     {
         g_pGlobal->WriteSystemLogEX(TRUE, "[ERROR] CAtumDBManager::AtumDBDynamicWorker# connect db fail !! GetLastError(%d)\r\n", GetLastError());
         SetLastError(0);
@@ -640,10 +640,10 @@ DWORD CAtumDBManager::AtumDBDynamicWorker()
         return 61;
     }
 
-    while(TRUE)
+    while (TRUE)
     {
         bRet = this->ProcessDynamicServerQuery(&dbQuery, &odbcStmt);
-        if(FALSE == bRet)
+        if (FALSE == bRet)
         {// 2008-12-01 by cmkwon, 쿼리처리 실패함, 해당 쿼리를 벡터에 다시 추가한다.
 
             g_pGlobal->WriteSystemLogEX(TRUE, "[ERROR] CAtumDBManager::AtumDBDynamicWorker# call ProcessDynamicServerQuery() error !!, CurThreadID(%d) %d(%s)\r\n"
@@ -653,7 +653,7 @@ DWORD CAtumDBManager::AtumDBDynamicWorker()
             break;
         }
 
-        if(FALSE == this->GetDBQueryFromDynamicQueryList(&dbQuery))
+        if (FALSE == this->GetDBQueryFromDynamicQueryList(&dbQuery))
         {
             break;
         }
@@ -668,11 +668,11 @@ void CAtumDBManager::ProcessLogMessages(SQLSMALLINT plm_handle_type,
 {
     g_pGlobal->WriteSystemLogEX(TRUE, "[DB Error] DBWorkerThreadID(%5d) hstmt(0x%X): %s\r\n", GetCurrentThreadId(), plm_handle, (char*)logstring);
 
-    if(plm_handle == SQL_NULL_HSTMT)
+    if (plm_handle == SQL_NULL_HSTMT)
     {
         auto pTlsData = GetDBWorkerTLSDATA();
         BOOL bRet = Connect2DBServer(pTlsData, EN_DBCONN_AUTO_COMMIT);
-        if(bRet)
+        if (bRet)
         {
             g_pGlobal->WriteSystemLogEX(TRUE, "[DB Notify] ThreadID(%5d) Connect2DBServer_3 success !!, hstmt(0x%X) dbConnType(%d)\r\n", GetCurrentThreadId(), pTlsData->hstmt, EN_DBCONN_AUTO_COMMIT);
         }
@@ -681,7 +681,7 @@ void CAtumDBManager::ProcessLogMessages(SQLSMALLINT plm_handle_type,
             g_pGlobal->WriteSystemLogEX(TRUE, "[DB Error] ThreadID(%5d) Connect2DBServer_3 error !!, dbConnType(%d)\r\n", GetCurrentThreadId(), EN_DBCONN_AUTO_COMMIT);
         }
         bRet = Connect2DBServer(pTlsData, EN_DBCONN_MANUAL_COMMIT);
-        if(bRet)
+        if (bRet)
         {
             g_pGlobal->WriteSystemLogEX(TRUE, "[DB Notify] ThreadID(%5d) Connect2DBServer_3 success !!, hstmt(0x%X) dbConnType(%d)\r\n", GetCurrentThreadId(), pTlsData->hstmt_mc, EN_DBCONN_MANUAL_COMMIT);
         }
@@ -714,7 +714,7 @@ void CAtumDBManager::ProcessLogMessages(SQLSMALLINT plm_handle_type,
         // information has not yet been cached by ODBC
         // Driver Manager and these calls to SQLGetDiagField
         // will fail.
-        if(SQL_INVALID_HANDLE == plm_retcode)
+        if (SQL_INVALID_HANDLE == plm_retcode)
         {// 2006-05-18 by cmkwon
             break;
         }
@@ -754,7 +754,7 @@ void CAtumDBManager::ProcessLogMessages(SQLSMALLINT plm_handle_type,
                 auto pTlsData = GetDBWorkerTLSDATA();
 
                 // start 2011-07-15 by hskim, 인증 서버 구현 (DB 서버 다운시 죽는 문제 처리)
-                if( NULL == pTlsData )
+                if ( NULL == pTlsData )
                 {
                     g_pGlobal->WriteSystemLogEX(TRUE, "[DB Error] ThreadID(%5d) DBWorker TLSData is NULL!!\r\n", GetCurrentThreadId());
                     
@@ -771,7 +771,7 @@ void CAtumDBManager::ProcessLogMessages(SQLSMALLINT plm_handle_type,
                 DisconnectDBServer(pTlsData, EN_DBCONN_GLOG_COMMIT);    // 2013-06-20 by jhseol,bckim GLog 보완
 
                 BOOL bRet = Connect2DBServer(pTlsData, EN_DBCONN_AUTO_COMMIT);
-                if(bRet)
+                if (bRet)
                 {
                     g_pGlobal->WriteSystemLogEX(TRUE, "[DB Notify] ThreadID(%5d) Connect2DBServer_4 success !!, hstmt(0x%X) dbConnType(%d)\r\n", GetCurrentThreadId(), pTlsData->hstmt, EN_DBCONN_AUTO_COMMIT);
                 }
@@ -780,7 +780,7 @@ void CAtumDBManager::ProcessLogMessages(SQLSMALLINT plm_handle_type,
                     g_pGlobal->WriteSystemLogEX(TRUE, "[DB Error] ThreadID(%5d) Connect2DBServer_4 error !!, dbConnType(%d)\r\n", GetCurrentThreadId(), EN_DBCONN_AUTO_COMMIT);
                 }
                 bRet = Connect2DBServer(pTlsData, EN_DBCONN_MANUAL_COMMIT);
-                if(bRet)
+                if (bRet)
                 {
                     g_pGlobal->WriteSystemLogEX(TRUE, "[DB Notify] ThreadID(%5d) Connect2DBServer_4 success !!, hstmt(0x%X) dbConnType(%d)\r\n", GetCurrentThreadId(), pTlsData->hstmt_mc, EN_DBCONN_MANUAL_COMMIT);
                 }
@@ -827,7 +827,7 @@ char* CAtumDBManager::GetSqlPattern(const char* str, char* buf)
     int        nOffset        = 0;
     int        nLen        = strlen(str);
     char *    pCurStr        = (char*)(str);
-    while(pCurStr && pCurStr < str + nLen)
+    while (pCurStr && pCurStr < str + nLen)
     {
         switch (*pCurStr)
         {
@@ -849,7 +849,7 @@ char* CAtumDBManager::GetSqlPattern(const char* str, char* buf)
             {
                 BOOL bIsDBSLeadByte = IsDBCSLeadByte(*pCurStr);
 
-                if(FALSE == bIsDBSLeadByte)
+                if (FALSE == bIsDBSLeadByte)
                 {
                     if (nOffset+1 >= SIZE_MAX_SQL_PATTERN_BUFFER)
                     {

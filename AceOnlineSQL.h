@@ -1,4 +1,4 @@
-#if !defined(_ACEONLINE_SQL_H_)
+﻿#if !defined(_ACEONLINE_SQL_H_)
 #define _ACEONLINE_SQL_H_
 
 

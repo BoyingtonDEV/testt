@@ -1,4 +1,5 @@
 ﻿//Copyright [2002] MasangSoft
+#ifndef ACEONLINESQL_H_
 #if !defined(_ACEONLINE_SQL_H_)
 #define _ACEONLINE_SQL_H_
 

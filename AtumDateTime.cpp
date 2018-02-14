@@ -1,10 +1,10 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "AtumDateTime.h"
 #include "AtumParam.h"
 //Copyright [2002] MasangSoft
-// 2008-04-02 by cmkwon, ½æ¸ÓÅ¸ÀÓ °ü·Ã ¹ö±× ¼öÁ¤ - 
-bool ATUM_DATE_TIME::ms_bSettm_isdst = false;    // ÃÊ±âÈ­
-int ATUM_DATE_TIME::ms_tm_isdst = 0;        // ÃÊ±âÈ­
+// 2008-04-02 by cmkwon, ì¸ë¨¸íƒ€ìž„ ê´€ë ¨ ë²„ê·¸ ìˆ˜ì • - 
+bool ATUM_DATE_TIME::ms_bSettm_isdst = false;    // ì´ˆê¸°í™”
+int ATUM_DATE_TIME::ms_tm_isdst = 0;        // ì´ˆê¸°í™”
 
 
 ATUM_DATE_TIME ATUM_DATE_TIME::GetCurrentDateTime()
@@ -84,7 +84,7 @@ const char* ATUM_DATE_TIME::GetLocalString_MMDD(int i_Month, int i_Day, string &
     atCur.Month = i_Month;
     atCur.Day = i_Day;
     auto tmTM = tm(atCur);
-    strftime(buf, 512, "%B-%d", &tmTM);        // 2008-03-27 by cmkwon, ³¯Â¥ Çü½Ä ¼öÁ¤(ex> March-01-2008 20:00:00) - March-10
+    strftime(buf, 512, "%B-%d", &tmTM);        // 2008-03-27 by cmkwon, ë‚ ì§œ í˜•ì‹ ìˆ˜ì •(ex> March-01-2008 20:00:00) - March-10
 
     io_szStrBuf = buf;
     return io_szStrBuf.c_str();
@@ -243,14 +243,14 @@ const char* ATUM_DATE_TIME::GetSQLDateTimeString(STRNBUF& i_strnbuf) const
     return i_strnbuf.GetBuffer();
 }
 
-// 2013-05-28 by hskim, ¹Ì´Ï ´ýÇÁ ÆÄÀÏ ÀÌ¸§¿¡ ½Ã°£ Ãß°¡
+// 2013-05-28 by hskim, ë¯¸ë‹ˆ ë¤í”„ íŒŒì¼ ì´ë¦„ì— ì‹œê°„ ì¶”ê°€
 const char* ATUM_DATE_TIME::GetFileDateTimeString(STRNBUF& i_strnbuf) const
 {
     sprintf(i_strnbuf.GetBuffer(), FILE_DATETIME_STRING_FORMAT, Year, Month, Day, Hour, Minute, Second);
 
     return i_strnbuf.GetBuffer();
 }
-// end 2013-05-28 by hskim, ¹Ì´Ï ´ýÇÁ ÆÄÀÏ ÀÌ¸§¿¡ ½Ã°£ Ãß°¡
+// end 2013-05-28 by hskim, ë¯¸ë‹ˆ ë¤í”„ íŒŒì¼ ì´ë¦„ì— ì‹œê°„ ì¶”ê°€
 
 int ATUM_DATE_TIME::GetTimeInSeconds() const
 {
@@ -294,7 +294,7 @@ int ATUM_DATE_TIME::GetTimeDiffTimeInSeconds(int i_atOP2) const
 ///////////////////////////////////////////////////////////////////////////////
 int ATUM_DATE_TIME::GetTimeDiffTimeInMinutes(ATUM_DATE_TIME i_atOP2) const
 {
-    return this->GetTimeDiffTimeInSeconds(i_atOP2) / 60;    // 2007-02-07 by cmkwon, ÃÊ¸¦ ºÐ´ÜÀ§·Î º¯°æ
+    return this->GetTimeDiffTimeInSeconds(i_atOP2) / 60;    // 2007-02-07 by cmkwon, ì´ˆë¥¼ ë¶„ë‹¨ìœ„ë¡œ ë³€ê²½
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -309,7 +309,7 @@ int ATUM_DATE_TIME::GetTimeDiffTimeInMinutes(ATUM_DATE_TIME i_atOP2) const
 ///////////////////////////////////////////////////////////////////////////////
 int ATUM_DATE_TIME::GetTimeDiffTimeInHours(ATUM_DATE_TIME i_atOP2) const
 {
-    return this->GetTimeDiffTimeInMinutes(i_atOP2) / 60;    // 2007-02-07 by cmkwon, ºÐ´ÜÀ§¸¦ ½Ã°£´ÜÀ§·Î º¯°æ
+    return this->GetTimeDiffTimeInMinutes(i_atOP2) / 60;    // 2007-02-07 by cmkwon, ë¶„ë‹¨ìœ„ë¥¼ ì‹œê°„ë‹¨ìœ„ë¡œ ë³€ê²½
 }
 
 //ATUM_DATE_TIME& ATUM_DATE_TIME::operator=(const tm& rhs)

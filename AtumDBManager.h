@@ -1,4 +1,4 @@
-//Copyright [2002] MasangSoft
+ï»¿//Copyright [2002] MasangSoft
 #ifndef __ATUM_DB_MANAGER_H__
 #define __ATUM_DB_MANAGER_H__
 
@@ -26,7 +26,7 @@ using namespace std;
 #define COUNT_FIELD_SERVER_DBWORKER            25        // 2006-05-21 by cmkwon
 
 DWORD WINAPI DBWorkerThread(LPVOID lpParam);
-DWORD WINAPI DBDynamicWorkerThread(LPVOID lpParam);        // 2008-12-01 by cmkwon, Äõ¸®º°·Î ½º·¹µå¸¦ ¸¸µé¾î Ã³¸®ÇÏ´Â ½Ã½ºÅÛ ±¸Ãà - 
+DWORD WINAPI DBDynamicWorkerThread(LPVOID lpParam);        // 2008-12-01 by cmkwon, ì¿¼ë¦¬ë³„ë¡œ ìŠ¤ë ˆë“œë¥¼ ë§Œë“¤ì–´ ì²˜ë¦¬í•˜ëŠ” ì‹œìŠ¤í…œ êµ¬ì¶• - 
 
 class CAtumDBManager;
 class CIOCPSocket;
@@ -42,7 +42,7 @@ struct DB_QUERY
     void            *pGeneralParam;        // General-Purpose void* Parameter
     INT64            nGeneralParam1;        // General-Purpose INT   Parameter
     INT64            nGeneralParam2;        // General-Purpose INT   Parameter
-    DWORD            dwProcessedTick;    // Äõ¸®°¡ Ã³¸®µÇ´Â ½Ã°£
+    DWORD            dwProcessedTick;    // ì¿¼ë¦¬ê°€ ì²˜ë¦¬ë˜ëŠ” ì‹œê°„
 
     DB_QUERY()
     {
@@ -51,14 +51,14 @@ struct DB_QUERY
 };
 
 typedef mt_vector<DB_QUERY>                mtvectorDB_QUERY;
-typedef mt_vector<HANDLE>                mtvectHANDLE;        // 2008-12-01 by cmkwon, Äõ¸®º°·Î ½º·¹µå¸¦ ¸¸µé¾î Ã³¸®ÇÏ´Â ½Ã½ºÅÛ ±¸Ãà - 
+typedef mt_vector<HANDLE>                mtvectHANDLE;        // 2008-12-01 by cmkwon, ì¿¼ë¦¬ë³„ë¡œ ìŠ¤ë ˆë“œë¥¼ ë§Œë“¤ì–´ ì²˜ë¦¬í•˜ëŠ” ì‹œìŠ¤í…œ êµ¬ì¶• - 
 
 const char* GetDBQueryTypeString(EnumQueryType qType);
 
 enum EN_DBCONN_TYPE
 {    EN_DBCONN_AUTO_COMMIT        = 0,    // 2006-05-17 by cmkwon
     EN_DBCONN_MANUAL_COMMIT        = 1,    // 2006-05-17 by cmkwon
-    EN_DBCONN_GLOG_COMMIT                // 2013-06-20 by jhseol,bckim GLog º¸¿Ï
+    EN_DBCONN_GLOG_COMMIT                // 2013-06-20 by jhseol,bckim GLog ë³´ì™„
 };                                
 
 struct DBWorkerData
@@ -77,9 +77,9 @@ struct DBWorkerData
         hdbc_mc            = SQL_NULL_HDBC;
         hstmt_mc        = SQL_NULL_HSTMT;
 
-        henv_GLog        = SQL_NULL_HENV;        // 2013-06-20 by jhseol,bckim GLog º¸¿Ï
-        hdbc_GLog        = SQL_NULL_HDBC;        // 2013-06-20 by jhseol,bckim GLog º¸¿Ï
-        hstmt_GLog        = SQL_NULL_HSTMT;        // 2013-06-20 by jhseol,bckim GLog º¸¿Ï
+        henv_GLog        = SQL_NULL_HENV;        // 2013-06-20 by jhseol,bckim GLog ë³´ì™„
+        hdbc_GLog        = SQL_NULL_HDBC;        // 2013-06-20 by jhseol,bckim GLog ë³´ì™„
+        hstmt_GLog        = SQL_NULL_HSTMT;        // 2013-06-20 by jhseol,bckim GLog ë³´ì™„
     }
 
     SQLHSTMT GetSQLHSTMT(EN_DBCONN_TYPE i_dbConnTy) const
@@ -111,9 +111,9 @@ struct DBWorkerData
     SQLHDBC            hdbc_mc;        // for manual commit
     SQLHSTMT        hstmt_mc;        // for manual commit
 
-    SQLHENV            henv_GLog;        // 2013-06-20 by jhseol,bckim GLog º¸¿Ï
-    SQLHDBC            hdbc_GLog;        // 2013-06-20 by jhseol,bckim GLog º¸¿Ï
-    SQLHSTMT        hstmt_GLog;        // 2013-06-20 by jhseol,bckim GLog º¸¿Ï
+    SQLHENV            henv_GLog;        // 2013-06-20 by jhseol,bckim GLog ë³´ì™„
+    SQLHDBC            hdbc_GLog;        // 2013-06-20 by jhseol,bckim GLog ë³´ì™„
+    SQLHSTMT        hstmt_GLog;        // 2013-06-20 by jhseol,bckim GLog ë³´ì™„
 };
 
 class CODBCStatement;
@@ -159,7 +159,7 @@ public:
     
     BOOL ExecuteQuery(EnumQueryType type, CIOCPSocket* pIOCPSocket, void *pMsg, void* i_pGeneralParam = NULL, INT64 i_nGeneralParam1 = 0, INT64 i_nGeneralParam2 = 0);        // Synchronous Excution
 
-    // 2008-12-01 by cmkwon, Äõ¸®º°·Î ½º·¹µå¸¦ ¸¸µé¾î Ã³¸®ÇÏ´Â ½Ã½ºÅÛ ±¸Ãà - 
+    // 2008-12-01 by cmkwon, ì¿¼ë¦¬ë³„ë¡œ ìŠ¤ë ˆë“œë¥¼ ë§Œë“¤ì–´ ì²˜ë¦¬í•˜ëŠ” ì‹œìŠ¤í…œ êµ¬ì¶• - 
     mtvectorDB_QUERY    m_mtvectInputQueryWithNewThread;
     mt_vector<future<DWORD>> m_mtvectQueryFutureList;
     BOOL CheckAndCloseHandleDynamicDBThread();
@@ -186,12 +186,12 @@ private:
 // private member functions
 ///////////////////////////////////////////////////////////////////////////////
 private:
-    virtual BOOL ProcessServerQuery(DB_QUERY q, SQLHSTMT &hstmt, SQLHSTMT &hstmt_mc, SQLHSTMT &hstmt_extAuth, SQLHSTMT &hstmt_GLog) = 0;        // 2013-06-20 by jhseol,bckim GLog º¸¿Ï
+    virtual BOOL ProcessServerQuery(DB_QUERY q, SQLHSTMT &hstmt, SQLHSTMT &hstmt_mc, SQLHSTMT &hstmt_extAuth, SQLHSTMT &hstmt_GLog) = 0;        // 2013-06-20 by jhseol,bckim GLog ë³´ì™„
 
 public:
-    char* GetSqlPattern(const char* str, char* buf);    // whereÀÇ string ºñ±³ ¹®¿¡¼­ %, [, ], _¸¦ Á¦°ÅÇÏ±â À§ÇØ
-                                                        // °Ë»ö¿¡¼­¸¸ »ç¿ëÇÏ¸é µÊ
-                                                        // buffer size´Â max 64ÀÓ!
+    char* GetSqlPattern(const char* str, char* buf);    // whereì˜ string ë¹„êµ ë¬¸ì—ì„œ %, [, ], _ë¥¼ ì œê±°í•˜ê¸° ìœ„í•´
+                                                        // ê²€ìƒ‰ì—ì„œë§Œ ì‚¬ìš©í•˜ë©´ ë¨
+                                                        // buffer sizeëŠ” max 64ì„!
 
     RETCODE GetDBError(SQLHSTMT hstmt, UCHAR *sqlState);
 
@@ -217,7 +217,7 @@ protected:
     mtvectorDB_QUERY    m_arrmtvectorInputDBQuery[COUNT_MAX_DBWORKER_THREADS];
     mtvectorDB_QUERY    m_arrmtvectorProcessDBQuery[COUNT_MAX_DBWORKER_THREADS];
 
-    CODBCStatement        *m_ArrOdbcStmt;        // Synchronous Execution¿ë
+    CODBCStatement        *m_ArrOdbcStmt;        // Synchronous Executionìš©
 };
 
 #endif

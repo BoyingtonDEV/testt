@@ -1,4 +1,5 @@
-ï»¿#include "stdafx.h"
+//Copyright [2002] MasangSoft
+#include "stdafx.h"
 #include "AtumDBManager.h"
 #include "IOCP.h"
 #include "odbcstatement.h"
@@ -6,7 +7,7 @@
 #include "odbcss.h"
 #undef UNICODE
 #include <timeapi.h>
-#define    NUM_OF_SYNC_ODBC_STATEMENT 10    // Sync Exec.ìš© statement ê°œìˆ˜
+#define    NUM_OF_SYNC_ODBC_STATEMENT 10    // Sync Exec.¿ë statement °³¼ö
 
 
 thread_local DBWorkerData CAtumDBManager::workerdata { };
@@ -34,7 +35,7 @@ DWORD WINAPI DBWorkerThread(LPVOID lpParam)
 
 ///////////////////////////////////////////////////////////////////////////////
 /// \fn            DWORD WINAPI DBDynamicWorkerThread(LPVOID lpParam)
-/// \brief        // 2008-12-01 by cmkwon, ì¿¼ë¦¬ë³„ë¡œ ìŠ¤ë ˆë“œë¥¼ ë§Œë“¤ì–´ ì²˜ë¦¬í•˜ëŠ” ì‹œìŠ¤í…œ êµ¬ì¶• - 
+/// \brief        // 2008-12-01 by cmkwon, Äõ¸®º°·Î ½º·¹µå¸¦ ¸¸µé¾î Ã³¸®ÇÏ´Â ½Ã½ºÅÛ ±¸Ãà - 
 /// \author        cmkwon
 /// \date        2008-12-01 ~ 2008-12-01
 ///////////////////////////////////////////////////////////////////////////////
@@ -86,7 +87,7 @@ void CAtumDBManager::Clean()
             
             m_ArrOdbcStmt[i].Clean();
 
-    // 2008-12-01 by cmkwon, ì¿¼ë¦¬ë³„ë¡œ ìŠ¤ë ˆë“œë¥¼ ë§Œë“¤ì–´ ì²˜ë¦¬í•˜ëŠ” ì‹œìŠ¤í…œ êµ¬ì¶• - CAtumDBManager::Clean# ì—ì„œ ì¢…ë£Œ ì²´í¬
+    // 2008-12-01 by cmkwon, Äõ¸®º°·Î ½º·¹µå¸¦ ¸¸µé¾î Ã³¸®ÇÏ´Â ½Ã½ºÅÛ ±¸Ãà - CAtumDBManager::Clean# ¿¡¼­ Á¾·á Ã¼Å©
     while (true)
     {
         if (CheckAndCloseHandleDynamicDBThread()) break;
@@ -198,7 +199,7 @@ BOOL CAtumDBManager::Connect2DBServer(SQLHENV *i_phenv, SQLHDBC    *i_phdbc, SQL
         sprintf(szConnectionString, "DRIVER={SQL Server};SERVER=%s;ADDRESS=%s,%d;NETWORK=DBMSSOCN;UID=%s;PWD=%s;DATABASE=GLog"
             , g_pGlobal->GetDBServerIP(), g_pGlobal->GetDBServerIP(), g_pGlobal->GetDBServerPort(), (char*)g_pGlobal->GetODBCUID(), (char*)g_pGlobal->GetODBCPASSWORD());
     }
-    // end 2013-06-20 by jhseol,bckim GLog ë³´ì™„
+    // end 2013-06-20 by jhseol,bckim GLog º¸¿Ï
     else
     {
         sprintf(szConnectionString, "DRIVER={SQL Server};SERVER=%s;ADDRESS=%s,%d;NETWORK=DBMSSOCN;UID=%s;PWD=%s;DATABASE=%s"
@@ -211,7 +212,7 @@ BOOL CAtumDBManager::Connect2DBServer(SQLHENV *i_phenv, SQLHDBC    *i_phdbc, SQL
     if (ret != SQL_SUCCESS && ret != SQL_SUCCESS_WITH_INFO)
     {
 
-        // 2008-09-05 by cmkwon, DBServer ì—°ê²° ì‹¤íŒ¨ ì‹œìŠ¤í…œ ë¡œê·¸ ë‚¨ê¸°ê¸° - 
+        // 2008-09-05 by cmkwon, DBServer ¿¬°á ½ÇÆĞ ½Ã½ºÅÛ ·Î±× ³²±â±â - 
         g_pGlobal->WriteSystemLogEX(TRUE, "[DB Error] fail to connect DBServer(CAtumDBManager::Connect2DBServer_) !! %s,%d %s %s %s\r\n"
             , g_pGlobal->GetDBServerIP(), g_pGlobal->GetDBServerPort(), g_pGlobal->GetDBServerDatabaseName(), (CHAR*)g_pGlobal->GetODBCUID(), (CHAR*)g_pGlobal->GetODBCPASSWORD());
 
@@ -261,7 +262,7 @@ BOOL CAtumDBManager::Connect2DBServer(DBWorkerData *io_pDBTlsData, EN_DBCONN_TYP
         return Connect2DBServer(&io_pDBTlsData->henv, &io_pDBTlsData->hdbc, &io_pDBTlsData->hstmt, i_dbConnTy);
     case EN_DBCONN_MANUAL_COMMIT:
         return Connect2DBServer(&io_pDBTlsData->henv_mc, &io_pDBTlsData->hdbc_mc, &io_pDBTlsData->hstmt_mc, i_dbConnTy);
-    case EN_DBCONN_GLOG_COMMIT:        // 2013-06-20 by jhseol,bckim GLog ë³´ì™„
+    case EN_DBCONN_GLOG_COMMIT:        // 2013-06-20 by jhseol,bckim GLog º¸¿Ï
         return Connect2DBServer(&io_pDBTlsData->henv_GLog, &io_pDBTlsData->hdbc_GLog, &io_pDBTlsData->hstmt_GLog, i_dbConnTy);
     }
 
@@ -314,7 +315,7 @@ void CAtumDBManager::DisconnectDBServer(DBWorkerData *io_pDBTlsData, EN_DBCONN_T
     case EN_DBCONN_MANUAL_COMMIT:
         DisconnectDBServer(&io_pDBTlsData->henv_mc, &io_pDBTlsData->hdbc_mc, &io_pDBTlsData->hstmt_mc);
         break;
-    case EN_DBCONN_GLOG_COMMIT:            // 2013-06-20 by jhseol,bckim GLog ë³´ì™„
+    case EN_DBCONN_GLOG_COMMIT:            // 2013-06-20 by jhseol,bckim GLog º¸¿Ï
         DisconnectDBServer(&io_pDBTlsData->henv_GLog, &io_pDBTlsData->hdbc_GLog, &io_pDBTlsData->hstmt_GLog);
         break;
     }
@@ -400,7 +401,7 @@ DWORD CAtumDBManager::AtumDBWorker(int i_nAtumDBThreadIndex)
             pstInfo->dwSocketIndex    = i_nAtumDBThreadIndex;
             pstInfo->dwMessageType    = dbquery.enumQueryType;
             pstInfo->dwCharacterUID    = dbquery.nCharacterUID;            
-            auto bRet = ProcessServerQuery(dbquery, tlsData->hstmt, tlsData->hstmt_mc, tlsData->hstmt_ExtAuth, tlsData->hstmt_GLog);    // 2013-06-20 by jhseol,bckim GLog ë³´ì™„    // Process each query
+            auto bRet = ProcessServerQuery(dbquery, tlsData->hstmt, tlsData->hstmt_mc, tlsData->hstmt_ExtAuth, tlsData->hstmt_GLog);    // 2013-06-20 by jhseol,bckim GLog º¸¿Ï    // Process each query
             dbquery.dwProcessedTick = timeGetTime() - dwCurTick;
         }
         auto dwEndTick = timeGetTime();
@@ -433,7 +434,7 @@ DWORD CAtumDBManager::AtumDBWorker(int i_nAtumDBThreadIndex)
         pstInfo->bThreadUseFlag = false;
     } // end while
 
-// 2006-05-17 by cmkwon, ì•„ë˜ í•¨ìˆ˜ë¡œ ì²˜ë¦¬
+// 2006-05-17 by cmkwon, ¾Æ·¡ ÇÔ¼ö·Î Ã³¸®
 //     // cleanup odbc resources
 //     SQLFreeHandle(SQL_HANDLE_STMT, hstmt);
 //     SQLDisconnect(hdbc);
@@ -452,7 +453,7 @@ DWORD CAtumDBManager::AtumDBWorker(int i_nAtumDBThreadIndex)
 
     DisconnectDBServer(tlsData, EN_DBCONN_AUTO_COMMIT);
     DisconnectDBServer(tlsData, EN_DBCONN_MANUAL_COMMIT);
-    DisconnectDBServer(tlsData, EN_DBCONN_GLOG_COMMIT);    // 2013-06-20 by jhseol,bckim GLog ë³´ì™„
+    DisconnectDBServer(tlsData, EN_DBCONN_GLOG_COMMIT);    // 2013-06-20 by jhseol,bckim GLog º¸¿Ï
     //if (!TLSDataClean(lpvData))
     //{
     //    // init error
@@ -481,15 +482,15 @@ BOOL CAtumDBManager::ExecuteQuery(EnumQueryType type, CIOCPSocket* pIOCPSocket, 
     pOdbcStmt->Lock();
     SQLHSTMT    hstmt_ms = SQL_NULL_HSTMT;
     SQLHSTMT    hstmt_extAuth = SQL_NULL_HSTMT;
-    SQLHSTMT    hstmt_GLog = SQL_NULL_HSTMT;        // 2013-06-20 by jhseol,bckim GLog ë³´ì™„
-    bRet = ProcessServerQuery(dbquery, pOdbcStmt->m_hstmt, hstmt_ms, hstmt_extAuth, hstmt_GLog);    // 2013-06-20 by jhseol,bckim GLog ë³´ì™„
+    SQLHSTMT    hstmt_GLog = SQL_NULL_HSTMT;        // 2013-06-20 by jhseol,bckim GLog º¸¿Ï
+    bRet = ProcessServerQuery(dbquery, pOdbcStmt->m_hstmt, hstmt_ms, hstmt_extAuth, hstmt_GLog);    // 2013-06-20 by jhseol,bckim GLog º¸¿Ï
     pOdbcStmt->Unlock();
     return bRet;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 /// \fn            BOOL CAtumDBManager::CheckAndCloseHandleDynamicDBThread(void)
-/// \brief        // 2008-12-01 by cmkwon, ì¿¼ë¦¬ë³„ë¡œ ìŠ¤ë ˆë“œë¥¼ ë§Œë“¤ì–´ ì²˜ë¦¬í•˜ëŠ” ì‹œìŠ¤í…œ êµ¬ì¶• - 
+/// \brief        // 2008-12-01 by cmkwon, Äõ¸®º°·Î ½º·¹µå¸¦ ¸¸µé¾î Ã³¸®ÇÏ´Â ½Ã½ºÅÛ ±¸Ãà - 
 /// \author        cmkwon
 /// \date        2008-12-01 ~ 2008-12-01
 /// \warning    
@@ -523,7 +524,7 @@ BOOL CAtumDBManager::CheckAndCloseHandleDynamicDBThread()
 
 ///////////////////////////////////////////////////////////////////////////////
 /// \fn            BOOL CAtumDBManager::InsertDBQueryToDynamicQueryList(DB_QUERY *i_pDBQuery)
-/// \brief        // 2008-12-01 by cmkwon, ì¿¼ë¦¬ë³„ë¡œ ìŠ¤ë ˆë“œë¥¼ ë§Œë“¤ì–´ ì²˜ë¦¬í•˜ëŠ” ì‹œìŠ¤í…œ êµ¬ì¶• - 
+/// \brief        // 2008-12-01 by cmkwon, Äõ¸®º°·Î ½º·¹µå¸¦ ¸¸µé¾î Ã³¸®ÇÏ´Â ½Ã½ºÅÛ ±¸Ãà - 
 /// \author        cmkwon
 /// \date        2008-12-01 ~ 2008-12-01
 /// \warning    
@@ -540,7 +541,7 @@ BOOL CAtumDBManager::InsertDBQueryToDynamicQueryList(DB_QUERY *i_pDBQuery)
 
 ///////////////////////////////////////////////////////////////////////////////
 /// \fn            BOOL CAtumDBManager::GetDBQueryFromDynamicQueryList(DB_QUERY *o_pDBQuery)
-/// \brief        // 2008-12-01 by cmkwon, ì¿¼ë¦¬ë³„ë¡œ ìŠ¤ë ˆë“œë¥¼ ë§Œë“¤ì–´ ì²˜ë¦¬í•˜ëŠ” ì‹œìŠ¤í…œ êµ¬ì¶• - 
+/// \brief        // 2008-12-01 by cmkwon, Äõ¸®º°·Î ½º·¹µå¸¦ ¸¸µé¾î Ã³¸®ÇÏ´Â ½Ã½ºÅÛ ±¸Ãà - 
 /// \author        cmkwon
 /// \date        2008-12-01 ~ 2008-12-01
 /// \warning    
@@ -565,7 +566,7 @@ BOOL CAtumDBManager::GetDBQueryFromDynamicQueryList(DB_QUERY *o_pDBQuery)
 
 ///////////////////////////////////////////////////////////////////////////////
 /// \fn            BOOL CAtumDBManager::MakeQueryWithNewThread(EnumQueryType type, CIOCPSocket* pIOCPSocket, void *pMsg, void* i_pGeneralParam/*=NULL*/, INT64 i_nGeneralParam1/*=0*/, INT64 i_nGeneralParam2/*=0*/)
-/// \brief        // 2008-12-01 by cmkwon, ì¿¼ë¦¬ë³„ë¡œ ìŠ¤ë ˆë“œë¥¼ ë§Œë“¤ì–´ ì²˜ë¦¬í•˜ëŠ” ì‹œìŠ¤í…œ êµ¬ì¶• - 
+/// \brief        // 2008-12-01 by cmkwon, Äõ¸®º°·Î ½º·¹µå¸¦ ¸¸µé¾î Ã³¸®ÇÏ´Â ½Ã½ºÅÛ ±¸Ãà - 
 /// \author        cmkwon
 /// \date        2008-12-01 ~ 2008-12-01
 /// \warning    
@@ -610,7 +611,7 @@ BOOL CAtumDBManager::MakeQueryWithNewThread(EnumQueryType type, CIOCPSocket* pIO
 
 ///////////////////////////////////////////////////////////////////////////////
 /// \fn            DWORD CAtumDBManager::AtumDBDynamicWorker(void)
-/// \brief        // 2008-12-01 by cmkwon, ì¿¼ë¦¬ë³„ë¡œ ìŠ¤ë ˆë“œë¥¼ ë§Œë“¤ì–´ ì²˜ë¦¬í•˜ëŠ” ì‹œìŠ¤í…œ êµ¬ì¶• - 
+/// \brief        // 2008-12-01 by cmkwon, Äõ¸®º°·Î ½º·¹µå¸¦ ¸¸µé¾î Ã³¸®ÇÏ´Â ½Ã½ºÅÛ ±¸Ãà - 
 /// \author        cmkwon
 /// \date        2008-12-01 ~ 2008-12-01
 /// \warning    
@@ -634,7 +635,7 @@ DWORD CAtumDBManager::AtumDBDynamicWorker()
         g_pGlobal->WriteSystemLogEX(TRUE, "[ERROR] CAtumDBManager::AtumDBDynamicWorker# connect db fail !! GetLastError(%d)\r\n", GetLastError());
         SetLastError(0);
 
-        // 2008-12-19 by cmkwon, ì—°ê²°ì‹œ ì—ëŸ¬ê°€ ë°œìƒí•œ ê²½ìš°ëŠ” ì¿¼ë¦¬ë¥¼ ë²¡í„°ì— ë‹¤ì‹œ ì¶”ê°€í•œë‹¤.
+        // 2008-12-19 by cmkwon, ¿¬°á½Ã ¿¡·¯°¡ ¹ß»ıÇÑ °æ¿ì´Â Äõ¸®¸¦ º¤ÅÍ¿¡ ´Ù½Ã Ãß°¡ÇÑ´Ù.
         this->InsertDBQueryToDynamicQueryList(&dbQuery);
         return 61;
     }
@@ -643,11 +644,11 @@ DWORD CAtumDBManager::AtumDBDynamicWorker()
     {
         bRet = this->ProcessDynamicServerQuery(&dbQuery, &odbcStmt);
         if(FALSE == bRet)
-        {// 2008-12-01 by cmkwon, ì¿¼ë¦¬ì²˜ë¦¬ ì‹¤íŒ¨í•¨, í•´ë‹¹ ì¿¼ë¦¬ë¥¼ ë²¡í„°ì— ë‹¤ì‹œ ì¶”ê°€í•œë‹¤.
+        {// 2008-12-01 by cmkwon, Äõ¸®Ã³¸® ½ÇÆĞÇÔ, ÇØ´ç Äõ¸®¸¦ º¤ÅÍ¿¡ ´Ù½Ã Ãß°¡ÇÑ´Ù.
 
             g_pGlobal->WriteSystemLogEX(TRUE, "[ERROR] CAtumDBManager::AtumDBDynamicWorker# call ProcessDynamicServerQuery() error !!, CurThreadID(%d) %d(%s)\r\n"
                 , ::GetCurrentThreadId(), dbQuery.enumQueryType, GetDBQueryTypeString(dbQuery.enumQueryType));
-            // 2008-12-19 by cmkwon, ì—ëŸ¬ê°€ ë°œìƒí•˜ë©´ ì¿¼ë¦¬ë¥¼ ë‹¤ì‹œ ì¶”ê°€ í•  í•„ìš”ëŠ” ì—†ë‹¤.
+            // 2008-12-19 by cmkwon, ¿¡·¯°¡ ¹ß»ıÇÏ¸é Äõ¸®¸¦ ´Ù½Ã Ãß°¡ ÇÒ ÇÊ¿ä´Â ¾ø´Ù.
             //this->InsertDBQueryToDynamicQueryList(&dbQuery);
             break;
         }
@@ -734,7 +735,7 @@ void CAtumDBManager::ProcessLogMessages(SQLSMALLINT plm_handle_type,
             g_pGlobal->WriteSystemLogEX(TRUE, "    szErrorMsg    = %s\r\n",plm_szErrorMsg);
             g_pGlobal->WriteSystemLogEX(TRUE, "    pcbErrorMsg   = %d\r\n\r\n",plm_pcbErrorMsg);
 
-            if ( strcmp((char*)plm_szSqlState, "2400") == 0    )    // ì˜ëª»ëœ ì»¤ì„œ ìƒíƒœ ì˜¤ë¥˜
+            if ( strcmp((char*)plm_szSqlState, "2400") == 0    )    // Àß¸øµÈ Ä¿¼­ »óÅÂ ¿À·ù
             {
                 auto pTlsData = GetDBWorkerTLSDATA();
                 
@@ -747,27 +748,27 @@ void CAtumDBManager::ProcessLogMessages(SQLSMALLINT plm_handle_type,
                 SQLAllocHandle(SQL_HANDLE_STMT, pTlsData->hdbc_mc, &pTlsData->hstmt_mc);
             }
             else if ( strcmp((char*)plm_szSqlState, "08S01") == 0    // Communication link failure
-                || strcmp((char*)plm_szSqlState, "01000") == 0    // ì¼ë°˜ ë„¤íŠ¸ÂŸp ì˜¤ë¥˜
+                || strcmp((char*)plm_szSqlState, "01000") == 0    // ÀÏ¹İ ³×Æ®Ÿp ¿À·ù
             )
             {
                 auto pTlsData = GetDBWorkerTLSDATA();
 
-                // start 2011-07-15 by hskim, ì¸ì¦ ì„œë²„ êµ¬í˜„ (DB ì„œë²„ ë‹¤ìš´ì‹œ ì£½ëŠ” ë¬¸ì œ ì²˜ë¦¬)
+                // start 2011-07-15 by hskim, ÀÎÁõ ¼­¹ö ±¸Çö (DB ¼­¹ö ´Ù¿î½Ã Á×´Â ¹®Á¦ Ã³¸®)
                 if( NULL == pTlsData )
                 {
                     g_pGlobal->WriteSystemLogEX(TRUE, "[DB Error] ThreadID(%5d) DBWorker TLSData is NULL!!\r\n", GetCurrentThreadId());
                     
                     // 2011-07-15 by hskim
-                    // DB ì—°ê²° ê´€ë ¨ë˜ì–´ ë¬¸ì œê°€ ë°œí–‰í–ˆë‹¤ë©´ ë‹¤ì‹œ ì—°ê²°(ë³µêµ¬)í•˜ëŠ”ê²ƒë³´ë‹¤ ë¹ ë¥¸ ìš´ì˜íŒ€ì˜ í™•ì¸ê³¼ í›„ì† ì¡°ì¹˜ í›„ ì¬ì‹œì‘ì´ í•„ìš”í•˜ë‹¤ê³  íŒë‹¨í•©ë‹ˆë‹¤.
-                    // ì œê°€ ë‹´ë‹¹í•˜ëŠ” ì´ìƒ ì´ëŸ° ì •ì±…ìœ¼ë¡œ ì²˜ë¦¬í•  ì˜ˆì •ì…ë‹ˆë‹¤.
+                    // DB ¿¬°á °ü·ÃµÇ¾î ¹®Á¦°¡ ¹ßÇàÇß´Ù¸é ´Ù½Ã ¿¬°á(º¹±¸)ÇÏ´Â°Íº¸´Ù ºü¸¥ ¿î¿µÆÀÀÇ È®ÀÎ°ú ÈÄ¼Ó Á¶Ä¡ ÈÄ Àç½ÃÀÛÀÌ ÇÊ¿äÇÏ´Ù°í ÆÇ´ÜÇÕ´Ï´Ù.
+                    // Á¦°¡ ´ã´çÇÏ´Â ÀÌ»ó ÀÌ·± Á¤Ã¥À¸·Î Ã³¸®ÇÒ ¿¹Á¤ÀÔ´Ï´Ù.
                     continue;
                     //exit(1);
                 }
-                // end 2011-07-15 by hskim, ì¸ì¦ ì„œë²„ êµ¬í˜„ (DB ì„œë²„ ë‹¤ìš´ì‹œ ì£½ëŠ” ë¬¸ì œ ì²˜ë¦¬)                
+                // end 2011-07-15 by hskim, ÀÎÁõ ¼­¹ö ±¸Çö (DB ¼­¹ö ´Ù¿î½Ã Á×´Â ¹®Á¦ Ã³¸®)                
 
                 DisconnectDBServer(pTlsData, EN_DBCONN_AUTO_COMMIT);
                 DisconnectDBServer(pTlsData, EN_DBCONN_MANUAL_COMMIT);
-                DisconnectDBServer(pTlsData, EN_DBCONN_GLOG_COMMIT);    // 2013-06-20 by jhseol,bckim GLog ë³´ì™„
+                DisconnectDBServer(pTlsData, EN_DBCONN_GLOG_COMMIT);    // 2013-06-20 by jhseol,bckim GLog º¸¿Ï
 
                 BOOL bRet = Connect2DBServer(pTlsData, EN_DBCONN_AUTO_COMMIT);
                 if(bRet)
@@ -820,7 +821,7 @@ RETCODE CAtumDBManager::GetDBError(SQLHSTMT hstmt, UCHAR *sqlState)
 char* CAtumDBManager::GetSqlPattern(const char* str, char* buf)
 {
     ///////////////////////////////////////////////////////////////////////////////    
-    // 2009-01-28 by cmkwon, ì¼ë³¸ ìºë¦­í„°ëª… ê´€ë ¨ ë²„ê·¸ ìˆ˜ì • - 
+    // 2009-01-28 by cmkwon, ÀÏº» Ä³¸¯ÅÍ¸í °ü·Ã ¹ö±× ¼öÁ¤ - 
     util::zero(buf, SIZE_MAX_SQL_PATTERN_BUFFER);
 
     int        nOffset        = 0;
@@ -870,12 +871,12 @@ char* CAtumDBManager::GetSqlPattern(const char* str, char* buf)
                 }
             }
         }
-        pCurStr = CharNext(pCurStr);        // ë‹¤ìŒ ë¬¸ìë¡œ ì´ë™
+        pCurStr = CharNext(pCurStr);        // ´ÙÀ½ ¹®ÀÚ·Î ÀÌµ¿
     }
     return buf;
     
 
-// 2009-01-28 by cmkwon, ì¼ë³¸ ìºë¦­í„°ëª… ê´€ë ¨ ë²„ê·¸ ìˆ˜ì • - ìœ„ì™€ ê°™ì´ ìˆ˜ì • í•¨.
+// 2009-01-28 by cmkwon, ÀÏº» Ä³¸¯ÅÍ¸í °ü·Ã ¹ö±× ¼öÁ¤ - À§¿Í °°ÀÌ ¼öÁ¤ ÇÔ.
 //     int len = strlen(str);
 //     int offset = 0;
 // 
@@ -959,7 +960,7 @@ const char* GetDBQueryTypeString(EnumQueryType qType)
 //        return "QT_ChangePropensity";
     case QT_ChangeStatus:                            return "QT_ChangeStatus";
     case QT_ChangePKPoint:                            return "QT_ChangePKPoint";
-// 2009-11-02 by cmkwon, ìºì‰¬(ì¸ë²¤/ì°½ê³  í™•ì¥) ì•„ì´í…œ ì¶”ê°€ êµ¬í˜„ - ì‚¬ìš©í•˜ì§€ ì•Šìœ¼ë¯€ë¡œ ì œê±°
+// 2009-11-02 by cmkwon, Ä³½¬(ÀÎº¥/Ã¢°í È®Àå) ¾ÆÀÌÅÛ Ãß°¡ ±¸Çö - »ç¿ëÇÏÁö ¾ÊÀ¸¹Ç·Î Á¦°Å
 //    case QT_ChangeRacingPoint:                        return "QT_ChangeRacingPoint";
     case QT_UpdateTotalPlayTime:                    return "QT_UpdateTotalPlayTime";
     case QT_UpdateLastStartedTime:                    return "QT_UpdateLastStartedTime";
@@ -978,8 +979,8 @@ const char* GetDBQueryTypeString(EnumQueryType qType)
     case QT_UnblockUser:                            return "QT_UnblockUser";
     //case QT_MGameLogin:                                return "QT_MGameLogin";
     case QT_LogTotalUser:                            return "QT_LogTotalUser";            // 2007-03-16 by cmkwon
-    //case QT_InsertGlogAccount:                        return "QT_InsertGlogAccount";        // 2010-06-01 by shcho, GLogDB ê´€ë ¨ -
-    case QT_UpdateAccountLastGameEndDate:            return "QT_UpdateAccountLastGameEndDate";        // 2012-01-13 by hskim, EP4 [ë™ì˜ìƒ 1íšŒ ì¬ìƒ]
+    //case QT_InsertGlogAccount:                        return "QT_InsertGlogAccount";        // 2010-06-01 by shcho, GLogDB °ü·Ã -
+    case QT_UpdateAccountLastGameEndDate:            return "QT_UpdateAccountLastGameEndDate";        // 2012-01-13 by hskim, EP4 [µ¿¿µ»ó 1È¸ Àç»ı]
 
     case QT_GetStoreItem:                            return "QT_GetStoreItem";
     case QT_ReloadAllEnchant:                        return "QT_ReloadAllEnchant";
@@ -991,7 +992,7 @@ const char* GetDBQueryTypeString(EnumQueryType qType)
     case QT_UpdateItemNum:                            return "QT_UpdateItemNum";
     case QT_UpdateEndurance:                        return "QT_UpdateEndurance";
     case QT_StoreUpdateColorCode:                    return "QT_StoreUpdateColorCode";
-    case QT_UpdateShapeItemNum:                        return "QT_UpdateShapeItemNum";        // 2009-08-26 by cmkwon, ê·¸ë˜í”½ ë¦¬ì†ŒìŠ¤ ë³€ê²½ ì‹œìŠ¤í…œ êµ¬í˜„ - 
+    case QT_UpdateShapeItemNum:                        return "QT_UpdateShapeItemNum";        // 2009-08-26 by cmkwon, ±×·¡ÇÈ ¸®¼Ò½º º¯°æ ½Ã½ºÅÛ ±¸Çö - 
 
     case QT_UpdateItemUsingTimeStamp:                return "QT_UpdateItemUsingTimeStamp";
     case QT_UpdateItemRareFix:                        return "QT_UpdateItemRareFix";
@@ -1001,34 +1002,34 @@ const char* GetDBQueryTypeString(EnumQueryType qType)
     case QT_UpdateItemPossess:                        return "QT_UpdateItemPossess";
     case QT_UpdateItemStorage:                        return "QT_UpdateItemStorage";
     case QT_LoadOneItem:                            return "QT_LoadOneItem";
-    case QT_INSERTLOGINITEMEVENT:                    return "QT_INSERTLOGINITEMEVENT";        // 2011-08-25 by shcho, íšŸìˆ˜ë³„ ì•„ì´í…œ ì§€ê¸‰ê¸°ëŠ¥ êµ¬í˜„
+    case QT_INSERTLOGINITEMEVENT:                    return "QT_INSERTLOGINITEMEVENT";        // 2011-08-25 by shcho, È½¼öº° ¾ÆÀÌÅÛ Áö±Ş±â´É ±¸Çö
     case QT_CheckEventItem:                            return "QT_CheckEventItem";
     case QT_InsertEventItem:                        return "QT_InsertEventItem";
-    case QT_UpdateEventItemFixedPeriod:                return "QT_UpdateEventItemFixedPeriod";    // 2013-02-28 by bckim, ë³µê·€ìœ ì ¸ ë²„í”„ì¶”ê°€
-    case QT_CheckCouponEvent:                        return "QT_CheckCouponEvent";            // 2008-01-10 by cmkwon, ì•„ì´í…œ ì´ë²¤íŠ¸ ì‹œìŠ¤í…œì— ì‹  ì¿ í° ì‹œìŠ¤í…œ ì¶”ê°€ - 
+    case QT_UpdateEventItemFixedPeriod:                return "QT_UpdateEventItemFixedPeriod";    // 2013-02-28 by bckim, º¹±ÍÀ¯Á® ¹öÇÁÃß°¡
+    case QT_CheckCouponEvent:                        return "QT_CheckCouponEvent";            // 2008-01-10 by cmkwon, ¾ÆÀÌÅÛ ÀÌº¥Æ® ½Ã½ºÅÛ¿¡ ½Å ÄíÆù ½Ã½ºÅÛ Ãß°¡ - 
     case QT_GetGuildStoreItem:                        return "QT_GetGuildStoreItem";    
     case QT_UpdateGuildStoreItem:                    return "QT_UpdateGuildStoreItem";    
     case QT_InsertGuildStoreItem:                    return "QT_InsertGuildStoreItem";    
     case QT_DeleteGuildStoreItem:                    return "QT_DeleteGuildStoreItem";    
     case QT_GetLogGuildStoreItem:                    return "QT_GetLogGuildStoreItem";    
     case QT_AllDeleteGuildStoreItem:                return "QT_AllDeleteGuildStoreItem";    
-    case QT_Insert2WarpableUserList:                return "QT_Insert2WarpableUserList";    // 2007-08-30 by cmkwon, íšŒì˜ë£¸ ì‹œìŠ¤í…œ êµ¬í˜„ - ì…ì¥í—ˆê°€ ì¶”ê°€
-    case QT_DeleteWarpableUser:                        return "QT_DeleteWarpableUser";            // 2007-08-30 by cmkwon, íšŒì˜ë£¸ ì‹œìŠ¤í…œ êµ¬í˜„ - ì…ì¥í—ˆê°€ ì‚­ì œ
-    //case QT_UPDATE_ConnectingServerGroupID:            return "QT_UPDATE_ConnectingServerGroupID";            // 2007-11-06 by cmkwon, ê²Œì„ ë¡œê·¸ DB ì„œë²„ ë”°ë¡œ êµ¬ì¶•í•˜ê¸°
-    case QT_GiveStoreItem:                            return "QT_GiveStoreItem";            // 2007-11-13 by cmkwon, ì„ ë¬¼í•˜ê¸° ê¸°ëŠ¥ ì¶”ê°€ - 
-    case QT_GetLetter:                                return "QT_GetLetter";            // 2008-04-24 by dhjin, EP3 í¸ì§€ ì‹œìŠ¤í…œ - DBì—ì„œ í¸ì§€ ê°€ì ¸ì˜¤ê¸° 
-    case QT_ReadLetter:                                return "QT_ReadLetter";            // 2008-04-24 by dhjin, EP3 í¸ì§€ ì‹œìŠ¤í…œ - í¸ì§€ ì½ê¸°
-    case QT_DeleteLetter:                            return "QT_DeleteLetter";        // 2008-04-24 by dhjin, EP3 í¸ì§€ ì‹œìŠ¤í…œ - í¸ì§€ ì‚­ì œ
-    case QT_SendLetter:                                return "QT_SendLetter";            // 2008-05-08 by dhjin, EP3 í¸ì§€ ì‹œìŠ¤í…œ - í¸ì§€ ë³´ë‚´ê¸°
-    case QT_GetAllLetter:                            return "QT_GetAllLetter";        // 2008-05-09 by dhjin, EP3 í¸ì§€ ì‹œìŠ¤í…œ - DBì—ì„œ ì „ì²´ í¸ì§€ ê°€ì ¸ì˜¤ê¸°
-    case QT_SendAllLetter:                            return "QT_SendAllLetter";        // 2008-05-09 by dhjin, EP3 í¸ì§€ ì‹œìŠ¤í…œ - ì „ì²´ í¸ì§€ ë³´ë‚´ê¸°
-    case QT_ReadAllLetter:                            return "QT_ReadAllLetter";        // 2008-05-09 by dhjin, EP3 í¸ì§€ ì‹œìŠ¤í…œ - ì „ì²´ í¸ì§€ ì½ê¸°
-    case QT_DeleteAllLetter:                        return "QT_DeleteAllLetter";    // 2008-05-09 by dhjin, EP3 í¸ì§€ ì‹œìŠ¤í…œ - ì „ì²´ í¸ì§€ ì‚­ì œ
-    case QT_DeleteOldAllLetter:                        return "QT_DeleteOldAllLetter";    // 2008-05-09 by dhjin, EP3 í¸ì§€ ì‹œìŠ¤í…œ - ì˜¤ë˜ëœ ì „ì²´ í¸ì§€ ì‚­ì œ
+    case QT_Insert2WarpableUserList:                return "QT_Insert2WarpableUserList";    // 2007-08-30 by cmkwon, È¸ÀÇ·ë ½Ã½ºÅÛ ±¸Çö - ÀÔÀåÇã°¡ Ãß°¡
+    case QT_DeleteWarpableUser:                        return "QT_DeleteWarpableUser";            // 2007-08-30 by cmkwon, È¸ÀÇ·ë ½Ã½ºÅÛ ±¸Çö - ÀÔÀåÇã°¡ »èÁ¦
+    //case QT_UPDATE_ConnectingServerGroupID:            return "QT_UPDATE_ConnectingServerGroupID";            // 2007-11-06 by cmkwon, °ÔÀÓ ·Î±× DB ¼­¹ö µû·Î ±¸ÃàÇÏ±â
+    case QT_GiveStoreItem:                            return "QT_GiveStoreItem";            // 2007-11-13 by cmkwon, ¼±¹°ÇÏ±â ±â´É Ãß°¡ - 
+    case QT_GetLetter:                                return "QT_GetLetter";            // 2008-04-24 by dhjin, EP3 ÆíÁö ½Ã½ºÅÛ - DB¿¡¼­ ÆíÁö °¡Á®¿À±â 
+    case QT_ReadLetter:                                return "QT_ReadLetter";            // 2008-04-24 by dhjin, EP3 ÆíÁö ½Ã½ºÅÛ - ÆíÁö ÀĞ±â
+    case QT_DeleteLetter:                            return "QT_DeleteLetter";        // 2008-04-24 by dhjin, EP3 ÆíÁö ½Ã½ºÅÛ - ÆíÁö »èÁ¦
+    case QT_SendLetter:                                return "QT_SendLetter";            // 2008-05-08 by dhjin, EP3 ÆíÁö ½Ã½ºÅÛ - ÆíÁö º¸³»±â
+    case QT_GetAllLetter:                            return "QT_GetAllLetter";        // 2008-05-09 by dhjin, EP3 ÆíÁö ½Ã½ºÅÛ - DB¿¡¼­ ÀüÃ¼ ÆíÁö °¡Á®¿À±â
+    case QT_SendAllLetter:                            return "QT_SendAllLetter";        // 2008-05-09 by dhjin, EP3 ÆíÁö ½Ã½ºÅÛ - ÀüÃ¼ ÆíÁö º¸³»±â
+    case QT_ReadAllLetter:                            return "QT_ReadAllLetter";        // 2008-05-09 by dhjin, EP3 ÆíÁö ½Ã½ºÅÛ - ÀüÃ¼ ÆíÁö ÀĞ±â
+    case QT_DeleteAllLetter:                        return "QT_DeleteAllLetter";    // 2008-05-09 by dhjin, EP3 ÆíÁö ½Ã½ºÅÛ - ÀüÃ¼ ÆíÁö »èÁ¦
+    case QT_DeleteOldAllLetter:                        return "QT_DeleteOldAllLetter";    // 2008-05-09 by dhjin, EP3 ÆíÁö ½Ã½ºÅÛ - ¿À·¡µÈ ÀüÃ¼ ÆíÁö »èÁ¦
 
     case QT_GuildCreate:                            return "QT_GuildCreate";
     case QT_GuildAddMember:                            return "QT_GuildAddMember";
-    case QT_GuildAddOffMember:                        return "QT_GuildAddOffMember";        // 2008-06-12 by dhjin, EP3 - ì—¬ë‹¨ ìˆ˜ì • ì‚¬í•­ - ì˜¤í”„ìœ ì € ì—¬ë‹¨ ê°€ì…
+    case QT_GuildAddOffMember:                        return "QT_GuildAddOffMember";        // 2008-06-12 by dhjin, EP3 - ¿©´Ü ¼öÁ¤ »çÇ× - ¿ÀÇÁÀ¯Àú ¿©´Ü °¡ÀÔ
     case QT_GuildLeaveMember:                        return "QT_GuildLeaveMember";
     case QT_GuildBanMember:                            return "QT_GuildBanMember";
     case QT_GuildUpdateMemberCapacity:                return "QT_GuildUpdateMemberCapacity";
@@ -1037,24 +1038,24 @@ const char* GetDBQueryTypeString(EnumQueryType qType)
     case QT_GuildCancelDismember:                    return "QT_GuildCancelDismember";
     case QT_GuildChangeGuildName:                    return "QT_GuildChangeGuildName";
     case QT_GuildSetGuildMark:                        return "QT_GuildSetGuildMark";
-// 2007-08-02 by cmkwon, ì—¬ë‹¨ ë§ˆí¬ ì‹¬ì‚¬ ì‹œìŠ¤í…œ êµ¬í˜„ - ì‚¬ìš©í•˜ì§€ ì•ˆëŠ” í•¨ìˆ˜ì„
+// 2007-08-02 by cmkwon, ¿©´Ü ¸¶Å© ½É»ç ½Ã½ºÅÛ ±¸Çö - »ç¿ëÇÏÁö ¾È´Â ÇÔ¼öÀÓ
 //    case QT_GuildGetGuildMark:                        return "QT_GuildGetGuildMark";
     case QT_GuildSetRank:                            return "QT_GuildSetRank";
     case QT_GuildDeleteGuild:                        return "QT_GuildDeleteGuild";
     case QT_GuildSaveGuildWarPoint:                    return "QT_GuildSaveGuildWarPoint";
     case QT_GuildDeleteGuildUIDOfCharacter:            return "QT_GuildDeleteGuildUIDOfCharacter";
     case QT_GuildAddGuildFame:                        return "QT_GuildAddGuildFame";
-    case QT_GuildUpdateCommander:                    return "QT_GuildUpdateCommander";            // 2008-05-20 by dhjin, EP3 - ì—¬ë‹¨ ìˆ˜ì • ì‚¬í•­ - ì—¬ë‹¨ì¥ ìœ„ì„
-    case QT_GuildNotice:                            return "QT_GuildNotice";                    // 2008-05-20 by dhjin, EP3 - ì—¬ë‹¨ ìˆ˜ì • ì‚¬í•­ - ì—¬ë‹¨ ê³µì§€
-    case QT_GuildGetApplicant:                        return "QT_GuildGetApplicant";                // 2008-05-27 by dhjin, EP3 - ì—¬ë‹¨ ìˆ˜ì • ì‚¬í•­ - ì—¬ë‹¨ ì†Œê°œ
-    case QT_GuildGetIntroduction:                    return "QT_GuildGetIntroduction";                // 2008-05-27 by dhjin, EP3 - ì—¬ë‹¨ ìˆ˜ì • ì‚¬í•­ - ì—¬ë‹¨ ì†Œê°œ
-    case QT_GuildDeleteIntroduction:                return "QT_GuildDeleteIntroduction";                // 2008-05-27 by dhjin, EP3 - ì—¬ë‹¨ ìˆ˜ì • ì‚¬í•­ - ì—¬ë‹¨ ì†Œê°œ
-    case QT_GetSelfIntroduction:                    return "QT_GetSelfIntroduction";            // 2008-05-27 by dhjin, EP3 - ì—¬ë‹¨ ìˆ˜ì • ì‚¬í•­ - ì—¬ë‹¨ ì§€ì›ì ì†Œê°œì„œ 
-    case QT_GuildSearchIntroduction:                return "QT_GuildSearchIntroduction";            // 2008-05-27 by dhjin, EP3 - ì—¬ë‹¨ ìˆ˜ì • ì‚¬í•­ - ì—¬ë‹¨ ì†Œê°œ ê²€ìƒ‰
-    case QT_GuildUpdateIntroduction:                return "QT_GuildUpdateIntroduction";            // 2008-05-27 by dhjin,    EP3 - ì—¬ë‹¨ ìˆ˜ì • ì‚¬í•­ - ì—¬ë‹¨ ì†Œê°œ ì‘ì„±
-    case QT_GuildUpdateSelfIntroduction:            return "QT_GuildUpdateSelfIntroduction";        // 2008-05-27 by dhjin, EP3 - ì—¬ë‹¨ ìˆ˜ì • ì‚¬í•­ - ìê¸° ì†Œê°œ ì‘ì„± 
-    case QT_GuildDeleteSelfIntroduction:            return "QT_GuildDeleteSelfIntroduction";        // 2008-05-27 by dhjin, EP3 - ì—¬ë‹¨ ìˆ˜ì • ì‚¬í•­ - ìê¸° ì†Œê°œ ì§€ìš°ê¸° 
-    case QT_GuildDeleteSelfIntroductionOffUser:        return "QT_GuildDeleteSelfIntroductionOffUser";        // 2008-06-13 by dhjin, EP3 - ì—¬ë‹¨ ìˆ˜ì • ì‚¬í•­ - ìê¸° ì†Œê°œ ì§€ìš°ê¸° 
+    case QT_GuildUpdateCommander:                    return "QT_GuildUpdateCommander";            // 2008-05-20 by dhjin, EP3 - ¿©´Ü ¼öÁ¤ »çÇ× - ¿©´ÜÀå À§ÀÓ
+    case QT_GuildNotice:                            return "QT_GuildNotice";                    // 2008-05-20 by dhjin, EP3 - ¿©´Ü ¼öÁ¤ »çÇ× - ¿©´Ü °øÁö
+    case QT_GuildGetApplicant:                        return "QT_GuildGetApplicant";                // 2008-05-27 by dhjin, EP3 - ¿©´Ü ¼öÁ¤ »çÇ× - ¿©´Ü ¼Ò°³
+    case QT_GuildGetIntroduction:                    return "QT_GuildGetIntroduction";                // 2008-05-27 by dhjin, EP3 - ¿©´Ü ¼öÁ¤ »çÇ× - ¿©´Ü ¼Ò°³
+    case QT_GuildDeleteIntroduction:                return "QT_GuildDeleteIntroduction";                // 2008-05-27 by dhjin, EP3 - ¿©´Ü ¼öÁ¤ »çÇ× - ¿©´Ü ¼Ò°³
+    case QT_GetSelfIntroduction:                    return "QT_GetSelfIntroduction";            // 2008-05-27 by dhjin, EP3 - ¿©´Ü ¼öÁ¤ »çÇ× - ¿©´Ü Áö¿øÀÚ ¼Ò°³¼­ 
+    case QT_GuildSearchIntroduction:                return "QT_GuildSearchIntroduction";            // 2008-05-27 by dhjin, EP3 - ¿©´Ü ¼öÁ¤ »çÇ× - ¿©´Ü ¼Ò°³ °Ë»ö
+    case QT_GuildUpdateIntroduction:                return "QT_GuildUpdateIntroduction";            // 2008-05-27 by dhjin,    EP3 - ¿©´Ü ¼öÁ¤ »çÇ× - ¿©´Ü ¼Ò°³ ÀÛ¼º
+    case QT_GuildUpdateSelfIntroduction:            return "QT_GuildUpdateSelfIntroduction";        // 2008-05-27 by dhjin, EP3 - ¿©´Ü ¼öÁ¤ »çÇ× - ÀÚ±â ¼Ò°³ ÀÛ¼º 
+    case QT_GuildDeleteSelfIntroduction:            return "QT_GuildDeleteSelfIntroduction";        // 2008-05-27 by dhjin, EP3 - ¿©´Ü ¼öÁ¤ »çÇ× - ÀÚ±â ¼Ò°³ Áö¿ì±â 
+    case QT_GuildDeleteSelfIntroductionOffUser:        return "QT_GuildDeleteSelfIntroductionOffUser";        // 2008-06-13 by dhjin, EP3 - ¿©´Ü ¼öÁ¤ »çÇ× - ÀÚ±â ¼Ò°³ Áö¿ì±â 
 
     case QT_ExecuteTrade:                            return "QT_ExecuteTrade";
     case QT_TradeMoveItem:                            return "QT_TradeMoveItem";
@@ -1082,13 +1083,13 @@ const char* GetDBQueryTypeString(EnumQueryType qType)
 
     case QT_LoadHappyHourEvent:                        return "QT_LoadHappyHourEvent";
     case QT_LoadItemEvent:                            return "QT_LoadItemEvent";    
-// 2008-12-19 by cmkwon, QT_UpdatePCBangList->DQT_UpdatePCBangList ë³€ê²½ - 
+// 2008-12-19 by cmkwon, QT_UpdatePCBangList->DQT_UpdatePCBangList º¯°æ - 
 //    case QT_UpdatePCBangList:                        return "QT_UpdatePCBangList";    
     case QT_Get_QuickSlot:                            return "QT_Get_QuickSlot";            // 2006-09-04 by dhjin
     case QT_Delete_QuickSlot:                        return "QT_Delete_QuickSlot";        // 2006-09-04 by dhjin
     case QT_Update_QuickSlot:                        return "QT_Update_QuickSlot";        // 2006-09-04 by dhjin
 
-    // 2007-02-28 by dhjin, ì „ëµí¬ì¸íŠ¸ ìƒì„± ì£¼ê¸° ìˆ˜ì • ê´€ë ¨.
+    // 2007-02-28 by dhjin, Àü·«Æ÷ÀÎÆ® »ı¼º ÁÖ±â ¼öÁ¤ °ü·Ã.
     case QT_LoadStrategyPointSummonInfo:                    return "QT_LoadStrategyPointSummonInfo";
     case QT_UpdateStrategyPointSummonInfoBySummon:            return "QT_UpdateStrategyPointSummonInfoBySummon";
     case QT_UpdateStrategyPointSummonInfoBySummonTime:        return "QT_UpdateStrategyPointSummonInfoBySummonTime";
@@ -1110,7 +1111,7 @@ const char* GetDBQueryTypeString(EnumQueryType qType)
     case QT_UpdateWarPoint:                            return "QT_UpdateWarPoint";            // 2007-04-25 by dhjin
     case QT_UpdateArenaResult:                        return "QT_UpdateArenaResult";            // 2007-06-07 by dhjin
     case QT_UpdateArenaDisConnect:                    return "QT_UpdateArenaDisConnect";            // 2007-06-07 by dhjin
-    case QT_MF_Updata_CharacterArena:                return "QT_MF_Updata_CharacterArena";    // 2012-04-12 by jhseol, ì•„ë ˆë‚˜ ì¶”ê°€ê°œë°œ - ë³´ìƒ : ASì—ì„œ ë°›ì€ CharacterArena ì •ë³´ ì—…ë°ì´íŠ¸
+    case QT_MF_Updata_CharacterArena:                return "QT_MF_Updata_CharacterArena";    // 2012-04-12 by jhseol, ¾Æ·¹³ª Ãß°¡°³¹ß - º¸»ó : AS¿¡¼­ ¹ŞÀº CharacterArena Á¤º¸ ¾÷µ¥ÀÌÆ®
 
 
     case QT_LoadTutorialComplete:                    return "QT_LoadTutorialComplete";            // 2007-07-06 by dhjin
@@ -1136,85 +1137,85 @@ const char* GetDBQueryTypeString(EnumQueryType qType)
     case QT_UpdateLeaderDeleteCandidate:            return "QT_UpdateLeaderDeleteCandidate";        // 2007-10-30 by dhjin
     case QT_UpdateLeaderPollCount:                    return "QT_UpdateLeaderPollCount";        // 2007-10-31 by dhjin
     case QT_InsertVoterList:                        return "QT_InsertVoterList";        // 2007-10-31 by dhjin
-    case QT_CheckGiveTarget:                        return "QT_CheckGiveTarget";        // 2007-11-13 by cmkwon, ì„ ë¬¼í•˜ê¸° ê¸°ëŠ¥ ì¶”ê°€ -
-    case QT_UpdatePilotFace:                        return "QT_UpdatePilotFace";        // 2007-11-21 by cmkwon, PilotFace ë³€ê²½ ì¹´ë“œ êµ¬í˜„ - 
+    case QT_CheckGiveTarget:                        return "QT_CheckGiveTarget";        // 2007-11-13 by cmkwon, ¼±¹°ÇÏ±â ±â´É Ãß°¡ -
+    case QT_UpdatePilotFace:                        return "QT_UpdatePilotFace";        // 2007-11-21 by cmkwon, PilotFace º¯°æ Ä«µå ±¸Çö - 
 
-    case QT_InsertNotifyMsg:                        return "QT_InsertNotifyMsg";        // 2007-11-28 by cmkwon, í†µì§€ì‹œìŠ¤í…œ êµ¬í˜„ -
-    case QT_GetNotifyMsg:                            return "QT_GetNotifyMsg";            // 2007-11-28 by cmkwon, í†µì§€ì‹œìŠ¤í…œ êµ¬í˜„ -
-    case QT_DeleteNotifyMsg:                        return "QT_DeleteNotifyMsg";        // 2007-11-28 by cmkwon, í†µì§€ì‹œìŠ¤í…œ êµ¬í˜„ -
+    case QT_InsertNotifyMsg:                        return "QT_InsertNotifyMsg";        // 2007-11-28 by cmkwon, ÅëÁö½Ã½ºÅÛ ±¸Çö -
+    case QT_GetNotifyMsg:                            return "QT_GetNotifyMsg";            // 2007-11-28 by cmkwon, ÅëÁö½Ã½ºÅÛ ±¸Çö -
+    case QT_DeleteNotifyMsg:                        return "QT_DeleteNotifyMsg";        // 2007-11-28 by cmkwon, ÅëÁö½Ã½ºÅÛ ±¸Çö -
         
     case QT_GetGuildMark:                            return "QT_GetGuildMark";        // 2007-12-07 by dhjin
     
     //////////////////////////////////////////////////////////////////////////
-    // 2007-12-28 by dhjin, ì•„ë ˆë‚˜ í†µí•© - 
+    // 2007-12-28 by dhjin, ¾Æ·¹³ª ÅëÇÕ - 
     case QT_ArenaUpdateCharacterInfo:                return "QT_ArenaUpdateCharacterInfo";
     case QT_ArenaGetCharacter:                        return "QT_ArenaGetCharacter";
     case QT_ArenaCopyDBInfo:                        return "QT_ArenaCopyDBInfo";
     case QT_ArenaStartGetCharacter:                    return "QT_ArenaStartGetCharacter";
 
     //////////////////////////////////////////////////////////////////////////
-    // 2008-04-02 by dhjin,    ëª¨ì„ ì „, ê±°ì ì „ ì •ë³´ì°½ ê¸°íšì•ˆ -
+    // 2008-04-02 by dhjin,    ¸ğ¼±Àü, °ÅÁ¡Àü Á¤º¸Ã¢ ±âÈ¹¾È -
     case QT_GetLogMSWarInfo:                        return "QT_GetLogMSWarInfo";
     case QT_GetLogSPWarInfo:                        return "QT_GetLogSPWarInfo";
     case QT_UpdateMSWarOptionType:                    return "QT_UpdateMSWarOptionType";
-    case QT_InsertMSWarLog:                            return "QT_InsertMSWarLog";        // 2008-08-28 by dhjin, ë²„ê·¸ ìˆ˜ì •, ê²Œì„DBì— ë‚¨ê²¨ì•¼ Admintoolë¡œ ì´ˆê¸°í™”ê°€ ê°€ëŠ¥í•˜ë‹¤.
-    case QT_InsertSPWarLog:                            return "QT_InsertSPWarLog";        // 2008-08-28 by dhjin, ë²„ê·¸ ìˆ˜ì •, ê²Œì„DBì— ë‚¨ê²¨ì•¼ Admintoolë¡œ ì´ˆê¸°í™”ê°€ ê°€ëŠ¥í•˜ë‹¤.
+    case QT_InsertMSWarLog:                            return "QT_InsertMSWarLog";        // 2008-08-28 by dhjin, ¹ö±× ¼öÁ¤, °ÔÀÓDB¿¡ ³²°Ü¾ß Admintool·Î ÃÊ±âÈ­°¡ °¡´ÉÇÏ´Ù.
+    case QT_InsertSPWarLog:                            return "QT_InsertSPWarLog";        // 2008-08-28 by dhjin, ¹ö±× ¼öÁ¤, °ÔÀÓDB¿¡ ³²°Ü¾ß Admintool·Î ÃÊ±âÈ­°¡ °¡´ÉÇÏ´Ù.
 
 
-    case QT_UpdateDBServerGroup:                    return "QT_UpdateDBServerGroup";        // 2008-04-29 by cmkwon, ì„œë²„êµ° ì •ë³´ DBì— ì¶”ê°€(ì‹ ê·œ ê³„ì • ìºë¦­í„° ìƒì„± ì œí•œ ì‹œìŠ¤í…œì¶”ê°€) - 
-    case QT_CheckConnectableAccount:                return "QT_CheckConnectableAccount";    // 2008-04-29 by cmkwon, ì„œë²„êµ° ì •ë³´ DBì— ì¶”ê°€(ì‹ ê·œ ê³„ì • ìºë¦­í„° ìƒì„± ì œí•œ ì‹œìŠ¤í…œì¶”ê°€) - 
+    case QT_UpdateDBServerGroup:                    return "QT_UpdateDBServerGroup";        // 2008-04-29 by cmkwon, ¼­¹ö±º Á¤º¸ DB¿¡ Ãß°¡(½Å±Ô °èÁ¤ Ä³¸¯ÅÍ »ı¼º Á¦ÇÑ ½Ã½ºÅÛÃß°¡) - 
+    case QT_CheckConnectableAccount:                return "QT_CheckConnectableAccount";    // 2008-04-29 by cmkwon, ¼­¹ö±º Á¤º¸ DB¿¡ Ãß°¡(½Å±Ô °èÁ¤ Ä³¸¯ÅÍ »ı¼º Á¦ÇÑ ½Ã½ºÅÛÃß°¡) - 
 
-    case QT_GetUserInfo:                            return "QT_GetUserInfo";                    // 2008-06-23 by dhjin, EP3 ìœ ì €ì •ë³´ì˜µì…˜ - ë‹¤ë¥¸ ìœ ì € ì •ë³´ ìš”ì²­
+    case QT_GetUserInfo:                            return "QT_GetUserInfo";                    // 2008-06-23 by dhjin, EP3 À¯ÀúÁ¤º¸¿É¼Ç - ´Ù¸¥ À¯Àú Á¤º¸ ¿äÃ»
 
-// 2008-12-01 by cmkwon, ì¿¼ë¦¬ë³„ë¡œ ìŠ¤ë ˆë“œë¥¼ ë§Œë“¤ì–´ ì²˜ë¦¬í•˜ëŠ” ì‹œìŠ¤í…œ êµ¬ì¶• - DQT_DailyJob ë¡œ ë³€ê²½ í•¨.
+// 2008-12-01 by cmkwon, Äõ¸®º°·Î ½º·¹µå¸¦ ¸¸µé¾î Ã³¸®ÇÏ´Â ½Ã½ºÅÛ ±¸Ãà - DQT_DailyJob ·Î º¯°æ ÇÔ.
 //    //////////////////////////////////////////////////////////////////////////
-//    // 2008-08-19 by dhjin, MySQLí¬íŒ… ë¬¸ì œë¡œ MySQLì—ì„œ ì§€ì›í•˜ì§€ ì•ŠëŠ” MSSQLì— Jobê´€ë ¨ ì‘ì—…ì„ ì—¬ê¸°ì„œ ì²˜ë¦¬í•œë‹¤.
+//    // 2008-08-19 by dhjin, MySQLÆ÷ÆÃ ¹®Á¦·Î MySQL¿¡¼­ Áö¿øÇÏÁö ¾Ê´Â MSSQL¿¡ Job°ü·Ã ÀÛ¾÷À» ¿©±â¼­ Ã³¸®ÇÑ´Ù.
 //    case QT_DailyJob:                                return "QT_DailyJob";
 
-    // 2008-11-04 by dhjin, ëŸ­í‚¤ë¨¸ì‹ 
+    // 2008-11-04 by dhjin, ·°Å°¸Ó½Å
     case QT_UpdateLuckyItemDropCount:                return "QT_UpdateLuckyItemDropCount";
     case QT_UpdateLuckyItemStarttime:                return "QT_UpdateLuckyItemStarttime";
         
     //////////////////////////////////////////////////////////////////////////
-    // 2009-01-12 by dhjin, ì„ ì „ í¬ê³ 
+    // 2009-01-12 by dhjin, ¼±Àü Æ÷°í
     case QT_UpdateStartDeclarationOfWar:            return "QT_UpdateStartDeclarationOfWar";
     case QT_UpdateEndDeclarationOfWar:                return "QT_UpdateEndDeclarationOfWar";
     case QT_UpdateMSWarStartTime:                    return "QT_UpdateMSWarStartTime";        
-    case QT_UpdateNickName:                            return "QT_UpdateNickName";            // 2009-02-12 by cmkwon, EP3-3 ì›”ë“œë­í‚¹ì‹œìŠ¤í…œ êµ¬í˜„ - 
-    case QT_GetSelfRanking:                            return "QT_GetSelfRanking";            // 2009-02-12 by cmkwon, EP3-3 ì›”ë“œë­í‚¹ì‹œìŠ¤í…œ êµ¬í˜„ - 
+    case QT_UpdateNickName:                            return "QT_UpdateNickName";            // 2009-02-12 by cmkwon, EP3-3 ¿ùµå·©Å·½Ã½ºÅÛ ±¸Çö - 
+    case QT_GetSelfRanking:                            return "QT_GetSelfRanking";            // 2009-02-12 by cmkwon, EP3-3 ¿ùµå·©Å·½Ã½ºÅÛ ±¸Çö - 
 
-    case QT_ChangeItemWithItemMatching:                return "QT_ChangeItemWithItemMatching";        // 2009-03-31 by cmkwon, ì„¸ë ¥ì´ˆê¸°í™” ì‹œìŠ¤í…œ êµ¬í˜„ - 
+    case QT_ChangeItemWithItemMatching:                return "QT_ChangeItemWithItemMatching";        // 2009-03-31 by cmkwon, ¼¼·ÂÃÊ±âÈ­ ½Ã½ºÅÛ ±¸Çö - 
 
-    case QT_ChangeStartCityMapIndex:                return "QT_ChangeStartCityMapIndex";        // 2009-10-12 by cmkwon, í”„ë¦¬ìŠ¤ì¹´ ì œê±° ë°©ì•ˆ ì ìš© - 
-    case QT_ChangeAddedInventoryCount:                return "QT_ChangeAddedInventoryCount";        // 2009-11-02 by cmkwon, ìºì‰¬(ì¸ë²¤/ì°½ê³  í™•ì¥) ì•„ì´í…œ ì¶”ê°€ êµ¬í˜„ - 
+    case QT_ChangeStartCityMapIndex:                return "QT_ChangeStartCityMapIndex";        // 2009-10-12 by cmkwon, ÇÁ¸®½ºÄ« Á¦°Å ¹æ¾È Àû¿ë - 
+    case QT_ChangeAddedInventoryCount:                return "QT_ChangeAddedInventoryCount";        // 2009-11-02 by cmkwon, Ä³½¬(ÀÎº¥/Ã¢°í È®Àå) ¾ÆÀÌÅÛ Ãß°¡ ±¸Çö - 
 
-    case QT_LoadInfinityImpute:                        return "QT_LoadInfinityImpute";        // 2009-09-09 ~ 2010 by dhjin, ì¸í”¼ë‹ˆí‹° -     ì¸í”¼ ê·€ì† ì •ë³´ ê°€ì ¸ì˜¤ê¸°
-    case QT_InsertInfinityImpute:                    return "QT_InsertInfinityImpute";    // 2009-09-09 ~ 2010 by dhjin, ì¸í”¼ë‹ˆí‹° -     ì¸í”¼ ê·€ì† ì •ë³´ ì¶”ê°€
-    case QT_UpdateInfinityImpute:                    return "QT_UpdateInfinityImpute";    // 2009-09-09 ~ 2010 by dhjin, ì¸í”¼ë‹ˆí‹° -     ì¸í”¼ ì™„ë£Œ 
-    case QT_ResetInfinityImpute:                    return "QT_ResetInfinityImpute";    // 2009-09-09 ~ 2010 by dhjin, ì¸í”¼ë‹ˆí‹° -     í•´ë‹¹ ì¸í”¼ ë¦¬ì…‹ìœ¼ë¡œ ì •ë³´ ì‚­ì œ
-    case QT_ArenaCopyInfinityDBInfo:                return "QT_ArenaCopyInfinityDBInfo";    // 2009-09-09 ~ 2010 by dhjin, ì¸í”¼ë‹ˆí‹° - ì•„ë ˆë‚˜DBì— ë³µì‚¬í•˜ê¸°
-    case QT_CharacterSaveDataInfinityFin:            return "QT_CharacterSaveDataInfinityFin";        // 2009-09-09 ~ 2010 by dhjin, ì¸í”¼ë‹ˆí‹° - ì¸í”¼ ì¢…ë£Œ í›„ MainSvrì— ì¸í”¼ ì§„í–‰í•˜ë©´ì„œ ìˆ˜ì •ëœ ì¼€ë¦­í„° ì •ë³´ ìˆ˜ì •
-    case QT_InfinityFinUpdateItem:                    return "QT_InfinityFinUpdateItem";                // 2009-09-09 ~ 2010 by dhjin, ì¸í”¼ë‹ˆí‹° - ì¸í”¼ ì¢…ë£Œ í›„ MainSvrì— ì¸í”¼ ì§„í–‰í•˜ë©´ì„œ ìˆ˜ì •ëœ ì•„ì´í…œ ì •ë³´ ìˆ˜ì •
-    case QT_InfinityFinInsertItem:                    return "QT_InfinityFinInsertItem";                // 2009-09-09 ~ 2010 by dhjin, ì¸í”¼ë‹ˆí‹° - ì¸í”¼ ì¢…ë£Œ í›„ MainSvrì— ì¸í”¼ ì§„í–‰í•˜ë©´ì„œ ìˆ˜ì •ëœ ì•„ì´í…œ ì¶”ê°€ã…£
-    case QT_InfinityInsertLog:                        return "QT_InfinityInsertLog";                // 2009-09-09 ~ 2010 by dhjin, ì¸í”¼ë‹ˆí‹° - ì¸í”¼ ë¡œê·¸
-    case QT_CharacterSaveDataInfinityFinByDisconnect:    return "QT_CharacterSaveDataInfinityFinByDisconnect";        // 2009-09-09 ~ 2010 by dhjin, ì¸í”¼ë‹ˆí‹° - ì¸í”¼ ê°•ì œ ì¢…ë£Œ í›„ MainSvrì— ì¸í”¼ ì§„í–‰í•˜ë©´ì„œ ìˆ˜ì •ëœ ì¼€ë¦­í„° ì •ë³´ ìˆ˜ì •
-    case QT_InfinityFinUpdateItemByDisconnect:            return "QT_InfinityFinUpdateItemByDisconnect";                // 2009-09-09 ~ 2010 by dhjin, ì¸í”¼ë‹ˆí‹° - ì¸í”¼ ê°•ì œ ì¢…ë£Œ í›„ MainSvrì— ì¸í”¼ ì§„í–‰í•˜ë©´ì„œ ìˆ˜ì •ëœ ì•„ì´í…œ ì •ë³´ ìˆ˜ì •
-    case QT_InfinityFinInsertItemByDisconnect:            return "QT_InfinityFinInsertItemByDisconnect";                // 2009-09-09 ~ 2010 by dhjin, ì¸í”¼ë‹ˆí‹° - ì¸í”¼ ê°•ì œ ì¢…ë£Œ í›„ MainSvrì— ì¸í”¼ ì§„í–‰í•˜ë©´ì„œ ìˆ˜ì •ëœ ì•„ì´í…œ ì¶”ê°€ã…£
-    case QT_ResetInfinityImputeByServerStart:            return "QT_ResetInfinityImputeByServerStart";                // 2009-09-09 ~ 2010 by dhjin, ì¸í”¼ë‹ˆí‹° - ì„œë²„ ì‹œì‘ì‹œ ì¸í”¼ ë¦¬ì…‹
-    case QT_InfinityComBackPostWork:                    return "QT_InfinityComBackPostWork";                        // 2012-01-16 by hskim, í†µê³„ - í™”íŒ¨
+    case QT_LoadInfinityImpute:                        return "QT_LoadInfinityImpute";        // 2009-09-09 ~ 2010 by dhjin, ÀÎÇÇ´ÏÆ¼ -     ÀÎÇÇ ±Í¼Ó Á¤º¸ °¡Á®¿À±â
+    case QT_InsertInfinityImpute:                    return "QT_InsertInfinityImpute";    // 2009-09-09 ~ 2010 by dhjin, ÀÎÇÇ´ÏÆ¼ -     ÀÎÇÇ ±Í¼Ó Á¤º¸ Ãß°¡
+    case QT_UpdateInfinityImpute:                    return "QT_UpdateInfinityImpute";    // 2009-09-09 ~ 2010 by dhjin, ÀÎÇÇ´ÏÆ¼ -     ÀÎÇÇ ¿Ï·á 
+    case QT_ResetInfinityImpute:                    return "QT_ResetInfinityImpute";    // 2009-09-09 ~ 2010 by dhjin, ÀÎÇÇ´ÏÆ¼ -     ÇØ´ç ÀÎÇÇ ¸®¼ÂÀ¸·Î Á¤º¸ »èÁ¦
+    case QT_ArenaCopyInfinityDBInfo:                return "QT_ArenaCopyInfinityDBInfo";    // 2009-09-09 ~ 2010 by dhjin, ÀÎÇÇ´ÏÆ¼ - ¾Æ·¹³ªDB¿¡ º¹»çÇÏ±â
+    case QT_CharacterSaveDataInfinityFin:            return "QT_CharacterSaveDataInfinityFin";        // 2009-09-09 ~ 2010 by dhjin, ÀÎÇÇ´ÏÆ¼ - ÀÎÇÇ Á¾·á ÈÄ MainSvr¿¡ ÀÎÇÇ ÁøÇàÇÏ¸é¼­ ¼öÁ¤µÈ ÄÉ¸¯ÅÍ Á¤º¸ ¼öÁ¤
+    case QT_InfinityFinUpdateItem:                    return "QT_InfinityFinUpdateItem";                // 2009-09-09 ~ 2010 by dhjin, ÀÎÇÇ´ÏÆ¼ - ÀÎÇÇ Á¾·á ÈÄ MainSvr¿¡ ÀÎÇÇ ÁøÇàÇÏ¸é¼­ ¼öÁ¤µÈ ¾ÆÀÌÅÛ Á¤º¸ ¼öÁ¤
+    case QT_InfinityFinInsertItem:                    return "QT_InfinityFinInsertItem";                // 2009-09-09 ~ 2010 by dhjin, ÀÎÇÇ´ÏÆ¼ - ÀÎÇÇ Á¾·á ÈÄ MainSvr¿¡ ÀÎÇÇ ÁøÇàÇÏ¸é¼­ ¼öÁ¤µÈ ¾ÆÀÌÅÛ Ãß°¡¤Ó
+    case QT_InfinityInsertLog:                        return "QT_InfinityInsertLog";                // 2009-09-09 ~ 2010 by dhjin, ÀÎÇÇ´ÏÆ¼ - ÀÎÇÇ ·Î±×
+    case QT_CharacterSaveDataInfinityFinByDisconnect:    return "QT_CharacterSaveDataInfinityFinByDisconnect";        // 2009-09-09 ~ 2010 by dhjin, ÀÎÇÇ´ÏÆ¼ - ÀÎÇÇ °­Á¦ Á¾·á ÈÄ MainSvr¿¡ ÀÎÇÇ ÁøÇàÇÏ¸é¼­ ¼öÁ¤µÈ ÄÉ¸¯ÅÍ Á¤º¸ ¼öÁ¤
+    case QT_InfinityFinUpdateItemByDisconnect:            return "QT_InfinityFinUpdateItemByDisconnect";                // 2009-09-09 ~ 2010 by dhjin, ÀÎÇÇ´ÏÆ¼ - ÀÎÇÇ °­Á¦ Á¾·á ÈÄ MainSvr¿¡ ÀÎÇÇ ÁøÇàÇÏ¸é¼­ ¼öÁ¤µÈ ¾ÆÀÌÅÛ Á¤º¸ ¼öÁ¤
+    case QT_InfinityFinInsertItemByDisconnect:            return "QT_InfinityFinInsertItemByDisconnect";                // 2009-09-09 ~ 2010 by dhjin, ÀÎÇÇ´ÏÆ¼ - ÀÎÇÇ °­Á¦ Á¾·á ÈÄ MainSvr¿¡ ÀÎÇÇ ÁøÇàÇÏ¸é¼­ ¼öÁ¤µÈ ¾ÆÀÌÅÛ Ãß°¡¤Ó
+    case QT_ResetInfinityImputeByServerStart:            return "QT_ResetInfinityImputeByServerStart";                // 2009-09-09 ~ 2010 by dhjin, ÀÎÇÇ´ÏÆ¼ - ¼­¹ö ½ÃÀÛ½Ã ÀÎÇÇ ¸®¼Â
+    case QT_InfinityComBackPostWork:                    return "QT_InfinityComBackPostWork";                        // 2012-01-16 by hskim, Åë°è - È­ÆĞ
 
-// 2010-04-09 by cmkwon, ì¸í”¼2ì°¨ ì¶”ê°€ ìˆ˜ì •(ë‹¨ê³„ë³„ ë³´ìƒ ì¶”ê°€) - 
-//    case QT_LoadTenderInfo:                            return "QT_LoadTenderInfo";                // 2009-09-09 ~ 2010 by dhjin, ì¸í”¼ë‹ˆí‹° - Tender
+// 2010-04-09 by cmkwon, ÀÎÇÇ2Â÷ Ãß°¡ ¼öÁ¤(´Ü°èº° º¸»ó Ãß°¡) - 
+//    case QT_LoadTenderInfo:                            return "QT_LoadTenderInfo";                // 2009-09-09 ~ 2010 by dhjin, ÀÎÇÇ´ÏÆ¼ - Tender
 
-    case QT_CashLoadPremiumCard:                    return "QT_CashLoadPremiumCard";                // 2009-09-09 ~ 2010 by dhjin, ì¸í”¼ë‹ˆí‹° - í”„ë¦¬ë¯¸ì—„ ì •ë³´ ê°€ì ¸ì˜¤ê¸°
-    case QT_LoadInfinityShopInfo:                    return "QT_LoadInfinityShopInfo";                // 2009-09-09 ~ 2010 by dhjin, ì¸í”¼ë‹ˆí‹° - ì¸í”¼ ìƒì 
-    case QT_InfinityUpdateUserMapInfo:                return "QT_InfinityUpdateUserMapInfo";            // 2010-04-06 by cmkwon, ì¸í”¼2ì°¨ ì¶”ê°€ ìˆ˜ì • - 
-    case QT_LoadBurningMap:                            return "QT_LoadBurningMap";                        // 2010-08-05 by dhjin, ë²„ë‹ë§µ -
-    case QT_Log_UserGetTenderItem:                    return "QT_Log_UserGetTenderItem";                // 2010-06-25 by shcho, ì¸í”¼ë‹ˆí‹° ê´€ë ¨ë¡œê·¸ ì°ê¸° - ìŠµë“ ì•„ì´í…œ ì •ë³´ DBì €ì¥
+    case QT_CashLoadPremiumCard:                    return "QT_CashLoadPremiumCard";                // 2009-09-09 ~ 2010 by dhjin, ÀÎÇÇ´ÏÆ¼ - ÇÁ¸®¹Ì¾ö Á¤º¸ °¡Á®¿À±â
+    case QT_LoadInfinityShopInfo:                    return "QT_LoadInfinityShopInfo";                // 2009-09-09 ~ 2010 by dhjin, ÀÎÇÇ´ÏÆ¼ - ÀÎÇÇ »óÁ¡
+    case QT_InfinityUpdateUserMapInfo:                return "QT_InfinityUpdateUserMapInfo";            // 2010-04-06 by cmkwon, ÀÎÇÇ2Â÷ Ãß°¡ ¼öÁ¤ - 
+    case QT_LoadBurningMap:                            return "QT_LoadBurningMap";                        // 2010-08-05 by dhjin, ¹ö´×¸Ê -
+    case QT_Log_UserGetTenderItem:                    return "QT_Log_UserGetTenderItem";                // 2010-06-25 by shcho, ÀÎÇÇ´ÏÆ¼ °ü·Ã·Î±× Âï±â - ½Àµæ ¾ÆÀÌÅÛ Á¤º¸ DBÀúÀå
     case QT_NA:                                        return "QT_NA";
 
     ///////////////////////////////////////////////////////////////////////////////
-    // 2011-08-22 by hskim, íŒŒíŠ¸ë„ˆ ì‹œìŠ¤í…œ 2ì°¨ - ê¸°ëŠ¥ êµ¬í˜„
+    // 2011-08-22 by hskim, ÆÄÆ®³Ê ½Ã½ºÅÛ 2Â÷ - ±â´É ±¸Çö
 
     case QT_PetUpdateInfinityFin:                    return "QT_PetUpdateInfinityFin";
     case QT_PetSetName:                                return "QT_PetSetName";
@@ -1224,47 +1225,47 @@ const char* GetDBQueryTypeString(EnumQueryType qType)
     case QT_PetSetSocket:                            return "QT_PetSetSocket";
     case QT_PetSetKitSlot:                            return "QT_PetSetKitSlot";
     case QT_PetSetAutoSkillSlot:                    return "QT_PetSetAutoSkillSlot";
-    case QT_PetChangeSocketOwner:                    return "QT_PetChangeSocketOwner";                // 2012-01-30 by hskim, íŒŒíŠ¸ë„ˆ ì‹œìŠ¤í…œ 2ì°¨ - ê°œì¸ ì°½ê³  ì´ë™
-    case QT_StoreGetItemOne:                        return "QT_StoreGetItemOne";                // 2012-01-30 by hskim, íŒŒíŠ¸ë„ˆ ì‹œìŠ¤í…œ 2ì°¨ - ê°œì¸ ì°½ê³  ì´ë™
+    case QT_PetChangeSocketOwner:                    return "QT_PetChangeSocketOwner";                // 2012-01-30 by hskim, ÆÄÆ®³Ê ½Ã½ºÅÛ 2Â÷ - °³ÀÎ Ã¢°í ÀÌµ¿
+    case QT_StoreGetItemOne:                        return "QT_StoreGetItemOne";                // 2012-01-30 by hskim, ÆÄÆ®³Ê ½Ã½ºÅÛ 2Â÷ - °³ÀÎ Ã¢°í ÀÌµ¿
     case QT_UpgradePet:                                return "QT_UpgradePet";                        // 2015-06-22 Future, upgrading of Pets with sockets
 
     ///////////////////////////////////////////////////////////////////////////////
-    // 2008-12-01 by cmkwon, ì¿¼ë¦¬ë³„ë¡œ ìŠ¤ë ˆë“œë¥¼ ë§Œë“¤ì–´ ì²˜ë¦¬í•˜ëŠ” ì‹œìŠ¤í…œ êµ¬ì¶• - 
+    // 2008-12-01 by cmkwon, Äõ¸®º°·Î ½º·¹µå¸¦ ¸¸µé¾î Ã³¸®ÇÏ´Â ½Ã½ºÅÛ ±¸Ãà - 
     case DQT_DailyJob:                                return "DQT_DailyJob";
-    case DQT_UpdatePCBangList:                        return "DQT_UpdatePCBangList";        // 2008-12-19 by cmkwon, QT_UpdatePCBangList->DQT_UpdatePCBangList ë³€ê²½ - 
-    case DQT_ReloadWRKServiceList:                    return "DQT_ReloadWRKServiceList";    // 2009-02-12 by cmkwon, EP3-3 ì›”ë“œë­í‚¹ì‹œìŠ¤í…œ êµ¬í˜„ - 
-    case DQT_ReloadWRKLevel:                        return "DQT_ReloadWRKLevel";        // 2009-02-12 by cmkwon, EP3-3 ì›”ë“œë­í‚¹ì‹œìŠ¤í…œ êµ¬í˜„ - 
-    case DQT_ReloadWRKFame:                            return "DQT_ReloadWRKFame";            // 2009-02-12 by cmkwon, EP3-3 ì›”ë“œë­í‚¹ì‹œìŠ¤í…œ êµ¬í˜„ - 
-    case DQT_ReloadWRKPVP:                            return "DQT_ReloadWRKPVP";            // 2009-02-12 by cmkwon, EP3-3 ì›”ë“œë­í‚¹ì‹œìŠ¤í…œ êµ¬í˜„ - 
-    case DQT_LoadInfluenceRate:                        return "DQT_LoadInfluenceRate";                // 2009-09-16 by cmkwon, ì„¸ë ¥ ì´ˆê¸°í™”ì‹œ ì–´ë·°ì§• ë°©ì§€ êµ¬í˜„ - 
+    case DQT_UpdatePCBangList:                        return "DQT_UpdatePCBangList";        // 2008-12-19 by cmkwon, QT_UpdatePCBangList->DQT_UpdatePCBangList º¯°æ - 
+    case DQT_ReloadWRKServiceList:                    return "DQT_ReloadWRKServiceList";    // 2009-02-12 by cmkwon, EP3-3 ¿ùµå·©Å·½Ã½ºÅÛ ±¸Çö - 
+    case DQT_ReloadWRKLevel:                        return "DQT_ReloadWRKLevel";        // 2009-02-12 by cmkwon, EP3-3 ¿ùµå·©Å·½Ã½ºÅÛ ±¸Çö - 
+    case DQT_ReloadWRKFame:                            return "DQT_ReloadWRKFame";            // 2009-02-12 by cmkwon, EP3-3 ¿ùµå·©Å·½Ã½ºÅÛ ±¸Çö - 
+    case DQT_ReloadWRKPVP:                            return "DQT_ReloadWRKPVP";            // 2009-02-12 by cmkwon, EP3-3 ¿ùµå·©Å·½Ã½ºÅÛ ±¸Çö - 
+    case DQT_LoadInfluenceRate:                        return "DQT_LoadInfluenceRate";                // 2009-09-16 by cmkwon, ¼¼·Â ÃÊ±âÈ­½Ã ¾îºäÂ¡ ¹æÁö ±¸Çö - 
 
-    case DQT_NA:                                    return "DQT_NA";            // 2008-12-01 by cmkwon, ì¿¼ë¦¬ë³„ë¡œ ìŠ¤ë ˆë“œë¥¼ ë§Œë“¤ì–´ ì²˜ë¦¬í•˜ëŠ” ì‹œìŠ¤í…œ êµ¬ì¶• -         
+    case DQT_NA:                                    return "DQT_NA";            // 2008-12-01 by cmkwon, Äõ¸®º°·Î ½º·¹µå¸¦ ¸¸µé¾î Ã³¸®ÇÏ´Â ½Ã½ºÅÛ ±¸Ãà -         
 
-    case QT_ArenaCharacterReset:                    return "QT_ArenaCharacterReset";    // 2012-10-21 by jhseol, ì•„ë ˆë‚˜ ë²„ê·¸ìˆ˜ì • - ì•„ë ˆë‚˜ ì¢…ë£Œì‹œ ì¼€ë¦­í„° ì •ë³´ ë¦¬ì…‹.
+    case QT_ArenaCharacterReset:                    return "QT_ArenaCharacterReset";    // 2012-10-21 by jhseol, ¾Æ·¹³ª ¹ö±×¼öÁ¤ - ¾Æ·¹³ª Á¾·á½Ã ÄÉ¸¯ÅÍ Á¤º¸ ¸®¼Â.
 
     //////////////////////////////////////////////////////////////////////////////
-    // 2012-11-13 by jhseol, ì „ìŸ ì‹œìŠ¤í…œ ë¦¬ë‰´ì–¼ - ê±°ì ì „
+    // 2012-11-13 by jhseol, ÀüÀï ½Ã½ºÅÛ ¸®´º¾ó - °ÅÁ¡Àü
     case QT_LoadRenewalStrategyPointSummonInfo:        return "QT_LoadRenewalStrategyPointSummonInfo";
     case QT_UpdateStrategyPointSummonInfo:            return "QT_UpdateStrategyPointSummonInfo";
-    // end 2012-11-13 by jhseol, ì „ìŸ ì‹œìŠ¤í…œ ë¦¬ë‰´ì–¼ - ê±°ì ì „
+    // end 2012-11-13 by jhseol, ÀüÀï ½Ã½ºÅÛ ¸®´º¾ó - °ÅÁ¡Àü
 
-    case QT_ArenaCharacterReload:                    return "QT_ArenaCharacterReload";    // 2012-12-18 by jhseol, ì•„ë ˆë‚˜ ìºë¦­í„° ë¦¬ì…‹ í›„ ìºë¦­í„° ì •ë³´ ë‹¤ì‹œ ë¡œë”©í•˜ê¸°.
+    case QT_ArenaCharacterReload:                    return "QT_ArenaCharacterReload";    // 2012-12-18 by jhseol, ¾Æ·¹³ª Ä³¸¯ÅÍ ¸®¼Â ÈÄ Ä³¸¯ÅÍ Á¤º¸ ´Ù½Ã ·ÎµùÇÏ±â.
 
-    case QT_InsertStoreItemFromXMLRPC:                return "QT_InsertStoreItemFromXMLRPC";        // 2013-03-13 by hskim, ì›¹ ìºì‹œ ìƒì 
-    case QT_DeleteStoreItemFromXMLRPC:                return "QT_DeleteStoreItemFromXMLRPC";        // 2013-03-13 by hskim, ì›¹ ìºì‹œ ìƒì 
-    case QT_GetCharacterInfoFromXMLRPC:                return "QT_GetCharacterInfoFromXMLRPC";        // 2013-03-13 by hskim, ì›¹ ìºì‹œ ìƒì 
-    case QT_LoadCashBuyDate:                        return "QT_LoadCashBuyDate";        // 2013-03-29 by jhseol, ì•„ì´í…œ ì´ë²¤íŠ¸ - ë§¤ì›” ì²« ê²°ì¬ì‹œ ì„ ë¬¼ì§€ê¸‰
-    case QT_InsertCashBuyDate:                        return "QT_InsertCashBuyDate";        // 2013-03-29 by jhseol, ì•„ì´í…œ ì´ë²¤íŠ¸ - ë§¤ì›” ì²« ê²°ì¬ì‹œ ì„ ë¬¼ì§€ê¸‰
+    case QT_InsertStoreItemFromXMLRPC:                return "QT_InsertStoreItemFromXMLRPC";        // 2013-03-13 by hskim, À¥ Ä³½Ã »óÁ¡
+    case QT_DeleteStoreItemFromXMLRPC:                return "QT_DeleteStoreItemFromXMLRPC";        // 2013-03-13 by hskim, À¥ Ä³½Ã »óÁ¡
+    case QT_GetCharacterInfoFromXMLRPC:                return "QT_GetCharacterInfoFromXMLRPC";        // 2013-03-13 by hskim, À¥ Ä³½Ã »óÁ¡
+    case QT_LoadCashBuyDate:                        return "QT_LoadCashBuyDate";        // 2013-03-29 by jhseol, ¾ÆÀÌÅÛ ÀÌº¥Æ® - ¸Å¿ù Ã¹ °áÀç½Ã ¼±¹°Áö±Ş
+    case QT_InsertCashBuyDate:                        return "QT_InsertCashBuyDate";        // 2013-03-29 by jhseol, ¾ÆÀÌÅÛ ÀÌº¥Æ® - ¸Å¿ù Ã¹ °áÀç½Ã ¼±¹°Áö±Ş
 
-    case QT_LoadMonthlyArmorEvent:                    return "QT_LoadMonthlyArmorEvent";    // 2013-04-18 by jhseol,bckim ì´ë‹¬ì˜ ì•„ë¨¸ - ì´ë‹¬ì˜ ì•„ë¨¸ ì´ë²¤íŠ¸ ë¡œë“œ
+    case QT_LoadMonthlyArmorEvent:                    return "QT_LoadMonthlyArmorEvent";    // 2013-04-18 by jhseol,bckim ÀÌ´ŞÀÇ ¾Æ¸Ó - ÀÌ´ŞÀÇ ¾Æ¸Ó ÀÌº¥Æ® ·Îµå
 
-    case QT_UpdateInfluenceConsecutiveVictorites:    return "QT_UpdateInfluenceConsecutiveVictorites";    // 2013-05-09 by hskim, ì„¸ë ¥ í¬ì¸íŠ¸ ê°œì„ 
+    case QT_UpdateInfluenceConsecutiveVictorites:    return "QT_UpdateInfluenceConsecutiveVictorites";    // 2013-05-09 by hskim, ¼¼·Â Æ÷ÀÎÆ® °³¼±
         
-    case QT_GetTemporarySystemInfomation:            return "QT_GetTemporarySystemInfomation";    // 2013-05-20 by hskim, [ë³´ì•ˆ ì‹œìŠ¤í…œ] ë¹„ì •ìƒì ì¸ ë°©ë²•ìœ¼ë¡œ ì•„ì´í…œ ì¶”ê°€ ë°©ì§€
-    case QT_GetStoreExtension:                        return "QT_GetStoreExtension";                // 2013-05-20 by hskim, [ë³´ì•ˆ ì‹œìŠ¤í…œ] ë¹„ì •ìƒì ì¸ ë°©ë²•ìœ¼ë¡œ ì•„ì´í…œ ì¶”ê°€ ë°©ì§€
-    case QT_InsertStoreExtension:                    return "QT_InsertStoreExtension";            // 2013-05-20 by hskim, [ë³´ì•ˆ ì‹œìŠ¤í…œ] ë¹„ì •ìƒì ì¸ ë°©ë²•ìœ¼ë¡œ ì•„ì´í…œ ì¶”ê°€ ë°©ì§€
-    case QT_CollectionArmorListLoad:                return "QT_CollectionArmorListLoad";        // 2013-05-31 by jhseol,bckim ì•„ë¨¸ ì»¬ë ‰ì…˜ - ì•„ë¨¸ ì»¬ë ‰ì…˜ ë¡œë“œ
-    case QT_CollectionArmorUpdate:                    return "QT_CollectionArmorUpdate";            // 2013-05-31 by jhseol,bckim ì•„ë¨¸ ì»¬ë ‰ì…˜ - ì•„ë¨¸ ì»¬ë ‰ì…˜ ì €ì¥
+    case QT_GetTemporarySystemInfomation:            return "QT_GetTemporarySystemInfomation";    // 2013-05-20 by hskim, [º¸¾È ½Ã½ºÅÛ] ºñÁ¤»óÀûÀÎ ¹æ¹ıÀ¸·Î ¾ÆÀÌÅÛ Ãß°¡ ¹æÁö
+    case QT_GetStoreExtension:                        return "QT_GetStoreExtension";                // 2013-05-20 by hskim, [º¸¾È ½Ã½ºÅÛ] ºñÁ¤»óÀûÀÎ ¹æ¹ıÀ¸·Î ¾ÆÀÌÅÛ Ãß°¡ ¹æÁö
+    case QT_InsertStoreExtension:                    return "QT_InsertStoreExtension";            // 2013-05-20 by hskim, [º¸¾È ½Ã½ºÅÛ] ºñÁ¤»óÀûÀÎ ¹æ¹ıÀ¸·Î ¾ÆÀÌÅÛ Ãß°¡ ¹æÁö
+    case QT_CollectionArmorListLoad:                return "QT_CollectionArmorListLoad";        // 2013-05-31 by jhseol,bckim ¾Æ¸Ó ÄÃ·º¼Ç - ¾Æ¸Ó ÄÃ·º¼Ç ·Îµå
+    case QT_CollectionArmorUpdate:                    return "QT_CollectionArmorUpdate";            // 2013-05-31 by jhseol,bckim ¾Æ¸Ó ÄÃ·º¼Ç - ¾Æ¸Ó ÄÃ·º¼Ç ÀúÀå
 
     case QT_GetCharacterMultipleIPStatus:            return "QT_GetCharacterMultipleIPStatus";    // 2015-11-24 Future, Multiple IP Restriction
 

@@ -1,75 +1,75 @@
-ï»¿#ifndef _ANTICPX_SERVER_H_
+#ifndef _ANTICPX_SERVER_H_
 #define _ANTICPX_SERVER_H_
 
-// ìœ íš¨í•˜ì§€ ì•Šì€ í•¸ë“¤ì„ ì˜ë¯¸í•œë‹¤
+// Copyright [2002] MasangSoft
 #define ANTICPX_INVALID_HANDLE_VALUE		(0)
 
 //////////////////////////////////////////////////////////////////////////
-// ì—ëŸ¬ ì½”ë“œ
+// ¿¡·¯ ÄÚµå
 //////////////////////////////////////////////////////////////////////////
 
 #define ANTICPXSVR_BASECODE_ERROR							0xE9040000
 
-// íŒŒì¼ì— ì ‘ê·¼ ê¶Œí•œì´ ì—†ìŠµë‹ˆë‹¤
+// ÆÄÀÏ¿¡ Á¢±Ù ±ÇÇÑÀÌ ¾ø½À´Ï´Ù
 #define ERROR_ANTICPXSVR_FILE_ACCESS_DENIED					(ANTICPXSVR_BASECODE_ERROR + 0x1)
-// íŒŒì¼ì„ ì°¾ì„ ìˆ˜ê°€ ì—†ìŠµë‹ˆë‹¤
+// ÆÄÀÏÀ» Ã£À» ¼ö°¡ ¾ø½À´Ï´Ù
 #define ERROR_ANTICPXSVR_FILE_NOT_FOUND						(ANTICPXSVR_BASECODE_ERROR + 0x2)
-// ìž…ë ¥ê°’ì´ ì˜¬ë°”ë¥´ì§€ ì•ŠìŠµë‹ˆë‹¤
+// ÀÔ·Â°ªÀÌ ¿Ã¹Ù¸£Áö ¾Ê½À´Ï´Ù
 #define ERROR_ANTICPXSVR_INVALID_PARAMETER					(ANTICPXSVR_BASECODE_ERROR + 0x3)
-// ì˜¬ë°”ë¥¸ í¬ë©§ì´ ì•„ë‹™ë‹ˆë‹¤
+// ¿Ã¹Ù¸¥ Æ÷¸äÀÌ ¾Æ´Õ´Ï´Ù
 #define ERROR_ANTICPXSVR_BAD_FORMAT							(ANTICPXSVR_BASECODE_ERROR + 0x4)
-// ìš”ì²­ì— ëŒ€í•œ ì‘ë‹µì„ ë°›ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤
+// ¿äÃ»¿¡ ´ëÇÑ ÀÀ´äÀ» ¹ÞÁö ¾Ê¾Ò½À´Ï´Ù
 #define ERROR_ANTICPXSVR_NOT_YET_RECEIVED_RESPONSE			(ANTICPXSVR_BASECODE_ERROR + 0x5)
-// ëŒ€ê¸°í•˜ê³  ìžˆì§€ ì•ŠìŠµë‹ˆë‹¤
+// ´ë±âÇÏ°í ÀÖÁö ¾Ê½À´Ï´Ù
 #define ERROR_ANTICPXSVR_NO_WAITING							(ANTICPXSVR_BASECODE_ERROR + 0x6)
-// ë©”ëª¨ë¦¬ê°€ ë¶€ì¡±í•©ë‹ˆë‹¤
+// ¸Þ¸ð¸®°¡ ºÎÁ·ÇÕ´Ï´Ù
 #define ERROR_ANTICPXSVR_NOT_ENOUGH_MEMORY					(ANTICPXSVR_BASECODE_ERROR + 0x7)
-// ì†¡ìˆ˜ì‹ ëœ ë©”ì‹œì§€ê°€ ì˜¬ë°”ë¥´ì§€ ì•ŠìŠµë‹ˆë‹¤
+// ¼Û¼ö½ÅµÈ ¸Þ½ÃÁö°¡ ¿Ã¹Ù¸£Áö ¾Ê½À´Ï´Ù
 #define ERROR_ANTICPXSVR_BAD_MESSAGE						(ANTICPXSVR_BASECODE_ERROR + 0x8)
-// íŒ¨í‚· ë¶„ì„ì„ ìœ„í•œ ìž¬ì „ì†¡ ê³µê²©ì´ ê°ì§€ë˜ì—ˆìŠµë‹ˆë‹¤
+// ÆÐÅ¶ ºÐ¼®À» À§ÇÑ ÀçÀü¼Û °ø°ÝÀÌ °¨ÁöµÇ¾ú½À´Ï´Ù
 #define ERROR_ANTICPXSVR_REPLY_ATTACK						(ANTICPXSVR_BASECODE_ERROR + 0x9)
-// í•µì‰´ë“œ ëª¨ë“ˆ ë³€ì¡°ê°€ ê°ì§€ë˜ì—ˆìŠµë‹ˆë‹¤
+// ÇÙ½¯µå ¸ðµâ º¯Á¶°¡ °¨ÁöµÇ¾ú½À´Ï´Ù
 #define ERROR_ANTICPXSVR_HSHIELD_FILE_ATTACK				(ANTICPXSVR_BASECODE_ERROR + 0xA)
-// í´ë¼ì´ì–¸íŠ¸ íŒŒì¼ ë³€ì¡°ê°€ ê°ì§€ë˜ì—ˆìŠµë‹ˆë‹¤
+// Å¬¶óÀÌ¾ðÆ® ÆÄÀÏ º¯Á¶°¡ °¨ÁöµÇ¾ú½À´Ï´Ù
 #define ERROR_ANTICPXSVR_CLIENT_FILE_ATTACK					(ANTICPXSVR_BASECODE_ERROR + 0xB)
-// ë©”ëª¨ë¦¬ ë³€ì¡°ê°€ ê°ì§€ë˜ì—ˆìŠµë‹ˆë‹¤
+// ¸Þ¸ð¸® º¯Á¶°¡ °¨ÁöµÇ¾ú½À´Ï´Ù
 #define ERROR_ANTICPXSVR_MEMORY_ATTACK						(ANTICPXSVR_BASECODE_ERROR + 0xC)
-// êµ¬ ë²„ì „ í´ë¼ì´ì–¸íŠ¸ ì§€ì›ì´ ì¤‘ì§€ë˜ì—ˆìŠµë‹ˆë‹¤
-// (ì„œë²„ ì¤‘ì§€ ì—†ì´ HSB íŒŒì¼ì„ ì—…ë°ì´íŠ¸í•˜ì˜€ì„ ê²½ìš° HSB ì •ì±…ì— êµ¬ ë²„ì „ í´ë¼ì´ì–¸íŠ¸ë¥¼ ì§€ì›í•˜ì§€ ì•Šë„ë¡
-// ì„¤ì •ë˜ì–´ ìžˆì„ ê²½ìš° ì´ ì˜¤ë¥˜ê°€ ë°œìƒí•  ìˆ˜ ìžˆë‹¤. ì •ì±…ì— ì˜í•œ ê²ƒì´ë¯€ë¡œ ëª…ë°±í•œ ì˜¤ë¥˜ëŠ” ì•„ë‹ˆë‹¤.)
+// ±¸ ¹öÀü Å¬¶óÀÌ¾ðÆ® Áö¿øÀÌ ÁßÁöµÇ¾ú½À´Ï´Ù
+// (¼­¹ö ÁßÁö ¾øÀÌ HSB ÆÄÀÏÀ» ¾÷µ¥ÀÌÆ®ÇÏ¿´À» °æ¿ì HSB Á¤Ã¥¿¡ ±¸ ¹öÀü Å¬¶óÀÌ¾ðÆ®¸¦ Áö¿øÇÏÁö ¾Êµµ·Ï
+// ¼³Á¤µÇ¾î ÀÖÀ» °æ¿ì ÀÌ ¿À·ù°¡ ¹ß»ýÇÒ ¼ö ÀÖ´Ù. Á¤Ã¥¿¡ ÀÇÇÑ °ÍÀÌ¹Ç·Î ¸í¹éÇÑ ¿À·ù´Â ¾Æ´Ï´Ù.)
 #define ERROR_ANTICPXSVR_OLD_VERSION_CLIENT_EXPIRED			(ANTICPXSVR_BASECODE_ERROR + 0xD)
-// HSB íŒŒì¼ì„ ìƒì„±í•  ë•Œ ì§€ì •í•œ í•µì‰´ë“œ ëª¨ë“ˆê³¼ ì§ì´ ë§žì§€ ì•ŠìŠµë‹ˆë‹¤
+// HSB ÆÄÀÏÀ» »ý¼ºÇÒ ¶§ ÁöÁ¤ÇÑ ÇÙ½¯µå ¸ðµâ°ú Â¦ÀÌ ¸ÂÁö ¾Ê½À´Ï´Ù
 #define ERROR_ANTICPXSVR_UNKNOWN_CLIENT						(ANTICPXSVR_BASECODE_ERROR + 0xE)
-// V3 Small Engine íŒŒì¼ì˜ ë³€ì¡°ê°€ ê°ì§€ë˜ì—ˆìŠµë‹ˆë‹¤.
+// V3 Small Engine ÆÄÀÏÀÇ º¯Á¶°¡ °¨ÁöµÇ¾ú½À´Ï´Ù.
 #define ERROR_ANTICPXSVR_V3SENGINE_FILE_ATTACK				(ANTICPXSVR_BASECODE_ERROR + 0xF)
-// Nano Engine íŒŒì¼ì˜ ë³€ì¡°ê°€ ê°ì§€ë˜ì—ˆìŠµë‹ˆë‹¤.
+// Nano Engine ÆÄÀÏÀÇ º¯Á¶°¡ °¨ÁöµÇ¾ú½À´Ï´Ù.
 #define ERROR_ANTICPXSVR_NANOENGINE_FILE_ATTACK				(ANTICPXSVR_BASECODE_ERROR + 0x10)
-// HackShield Versionì´ ì§€ì›ë˜ì§€ ì•ŠëŠ”ë‹¤.
+// HackShield VersionÀÌ Áö¿øµÇÁö ¾Ê´Â´Ù.
 #define ERROR_ANTICPXSVR_INVALID_HACKSHIELD_VERSION			(ANTICPXSVR_BASECODE_ERROR + 0x11)
-// Engine Versionì´ ì§€ì›ë˜ì§€ ì•ŠëŠ”ë‹¤.
+// Engine VersionÀÌ Áö¿øµÇÁö ¾Ê´Â´Ù.
 #define ERROR_ANTICPXSVR_INVALID_ENGINE_VERSION				(ANTICPXSVR_BASECODE_ERROR + 0x12)
-// ì„œë²„ ì˜¤ë¸Œì íŠ¸ ìƒì„±ì‹œ ì˜ˆì™¸ë°œìƒ.
+// ¼­¹ö ¿ÀºêÁ§Æ® »ý¼º½Ã ¿¹¿Ü¹ß»ý.
 #define ERROR_ANTICPXSVR_CREATE_SVROBJ_EXCEPTION			(ANTICPXSVR_BASECODE_ERROR + 0x13)
-// ìš”êµ¬ë©”ì„¸ì§€ ìƒì„±ì‹œ ì˜ˆì™¸ë°œìƒ.
+// ¿ä±¸¸Þ¼¼Áö »ý¼º½Ã ¿¹¿Ü¹ß»ý.
 #define ERROR_ANTICPXSVR_MAKEREQ_EXCEPTION					(ANTICPXSVR_BASECODE_ERROR + 0x14)
-// ì‘ë‹µë©”ì„¸ì§€ í™•ì¸ì‹œ ì˜ˆì™¸ë°œìƒ.
+// ÀÀ´ä¸Þ¼¼Áö È®ÀÎ½Ã ¿¹¿Ü¹ß»ý.
 #define ERROR_ANTICPXSVR_VERIFY_EXCEPTION					(ANTICPXSVR_BASECODE_ERROR + 0x15)
-//Tracing Information ìž‘ì„± ì¤‘ì— ì˜ˆì™¸ë°œìƒ.
+//Tracing Information ÀÛ¼º Áß¿¡ ¿¹¿Ü¹ß»ý.
 #define ERROR_ANTICPXSVR_TRACE_EXCEPTION					(ANTICPXSVR_BASECODE_ERROR + 0x16)
-//CreateClientObject ìž‘ì„± ì¤‘ì— ì˜ˆì™¸ ë°œìƒ.
+//CreateClientObject ÀÛ¼º Áß¿¡ ¿¹¿Ü ¹ß»ý.
 #define ERROR_ANTICPXSVR_CREATE_CLIENT_OBJECT_EXCEPTION		(ANTICPXSVR_BASECODE_ERROR + 0x17)
-//í•µì‰´ë“œ ë™ìž‘ ìƒíƒœê°€ ì •ìƒì ì´ì§€ ì•ŠìŠµë‹ˆë‹¤.
+//ÇÙ½¯µå µ¿ÀÛ »óÅÂ°¡ Á¤»óÀûÀÌÁö ¾Ê½À´Ï´Ù.
 #define ERROR_ANTICPXSVR_ABNORMAL_HACKSHIELD_STATUS			(ANTICPXSVR_BASECODE_ERROR + 0x18)
-//í•µì‰´ë“œ ë™ìž‘ ìƒíƒœê°€ ì •ìƒì ì´ì§€ ì•ŠìŠµë‹ˆë‹¤.
+//ÇÙ½¯µå µ¿ÀÛ »óÅÂ°¡ Á¤»óÀûÀÌÁö ¾Ê½À´Ï´Ù.
 #define ERROR_ANTICPXSVR_DETECT_CALLBACK_IS_NOTIFIED		(ANTICPXSVR_BASECODE_ERROR + 0x19)
-// ì‘ë‹µë©”ì„¸ì§€_EX í™•ì¸ì‹œ ì˜ˆì™¸ë°œìƒ.
+// ÀÀ´ä¸Þ¼¼Áö_EX È®ÀÎ½Ã ¿¹¿Ü¹ß»ý.
 #define ERROR_ANTICPXSVR_VERIFYEX_EXCEPTION					(ANTICPXSVR_BASECODE_ERROR + 0x1A)
-// í•µì‰´ë“œ ë™ìž‘ ìƒíƒœ ê°•í™” ê²€ì‚¬ ì •ìƒì ì´ì§€ ì•ŠìŠµë‹ˆë‹¤.
+// ÇÙ½¯µå µ¿ÀÛ »óÅÂ °­È­ °Ë»ç Á¤»óÀûÀÌÁö ¾Ê½À´Ï´Ù.
 #define ERROR_ANTICPXSVR_ABNORMAL_HACKSHIELD_XSTATUS		(ANTICPXSVR_BASECODE_ERROR + 0x1B)
-// ì„œë²„ì—°ë™ ê°•í™” ê¸°ëŠ¥ì´ ì ìš©ë˜ì§€ ì•ŠëŠ” êµ¬ ë²„ì „ì˜ í´ë¼ì´ì–¸íŠ¸ê°€ ì ‘ì†í•˜ì˜€ìŠµë‹ˆë‹¤.
+// ¼­¹ö¿¬µ¿ °­È­ ±â´ÉÀÌ Àû¿ëµÇÁö ¾Ê´Â ±¸ ¹öÀüÀÇ Å¬¶óÀÌ¾ðÆ®°¡ Á¢¼ÓÇÏ¿´½À´Ï´Ù.
 #define ERROR_ANTICPXSVR_OLD_HACKSHIELD_VERSION				(ANTICPXSVR_BASECODE_ERROR + 0x1C)
 
-// ì •ì˜ë˜ì§€ ì•Šì€ ì—ëŸ¬
+// Á¤ÀÇµÇÁö ¾ÊÀº ¿¡·¯
 #define ERROR_ANTICPXSVR_UNKNOWN							(ANTICPXSVR_BASECODE_ERROR + 0xFF)
 
 #if defined (WIN32) || defined(WIN64)
@@ -103,46 +103,46 @@ typedef ULONG_PTR AHNHS_CLIENT_HANDLE;
 #define AHNHS_ACTAPC_DETECT_AUTOMACRO				0x010104			
 #define AHNHS_ACTAPC_DETECT_HOOKFUNCTION			0x010301			 
 #define AHNHS_ACTAPC_DETECT_DRIVERFAILED			0x010302			
-#define AHNHS_ACTAPC_DETECT_SPEEDHACK				0x010303		//ìŠ¤í”¼ë“œí•µë¥˜ì˜ í”„ë¡œê·¸ëž¨ì— ì˜í•´ ì‹œìŠ¤í…œ ì‹œê°„ì´ ë³€ê²½ë˜ì—ˆìŠµë‹ˆë‹¤.
-#define AHNHS_ACTAPC_DETECT_SPEEDHACK_APP			0x010304		//ìŠ¤í”¼ë“œí•µë¥˜ì˜ í”„ë¡œê·¸ëž¨ì— ì˜í•´ ì‹œìŠ¤í…œ ì‹œê°„ì´ ë³€ê²½ë˜ì—ˆìŠµë‹ˆë‹¤.
+#define AHNHS_ACTAPC_DETECT_SPEEDHACK				0x010303		//½ºÇÇµåÇÙ·ùÀÇ ÇÁ·Î±×·¥¿¡ ÀÇÇØ ½Ã½ºÅÛ ½Ã°£ÀÌ º¯°æµÇ¾ú½À´Ï´Ù.
+#define AHNHS_ACTAPC_DETECT_SPEEDHACK_APP			0x010304		//½ºÇÇµåÇÙ·ùÀÇ ÇÁ·Î±×·¥¿¡ ÀÇÇØ ½Ã½ºÅÛ ½Ã°£ÀÌ º¯°æµÇ¾ú½À´Ï´Ù.
 #define AHNHS_ACTAPC_DETECT_MESSAGEHOOK				0x010306			
-#define AHNHS_ACTAPC_DETECT_KDTRACE					0x010307		//ë””ë²„ê±° íŠ¸ëž˜ì´ì‹±ì´ ë°œìƒí–ˆìŠµë‹ˆë‹¤.(ì»¤ë„ ë””ë²„ê±° í™œì„±í™”, ì´í›„ ë¸Œë ˆì´í¬ í¬ì¸í„° ì²˜ë¦¬)
-#define AHNHS_ACTAPC_DETECT_KDTRACE_CHANGED			0x010308		//[ëª¨ë‹ˆí„°ë§] ì„¤ì¹˜ëœ ë””ë²„ê±° íŠ¸ëž˜ì´ì‹±ì´ ë³€ê²½ë˜ì—ˆìŠµë‹ˆë‹¤.
+#define AHNHS_ACTAPC_DETECT_KDTRACE					0x010307		//µð¹ö°Å Æ®·¡ÀÌ½ÌÀÌ ¹ß»ýÇß½À´Ï´Ù.(Ä¿³Î µð¹ö°Å È°¼ºÈ­, ÀÌÈÄ ºê·¹ÀÌÅ© Æ÷ÀÎÅÍ Ã³¸®)
+#define AHNHS_ACTAPC_DETECT_KDTRACE_CHANGED			0x010308		//[¸ð´ÏÅÍ¸µ] ¼³Ä¡µÈ µð¹ö°Å Æ®·¡ÀÌ½ÌÀÌ º¯°æµÇ¾ú½À´Ï´Ù.
 #define AHNHS_ACTAPC_DETECT_SPEEDHACK_RATIO			0x01030B		
-#define AHNHS_ACTAPC_DETECT_INJECTDLL_UNLOADED		0x010401		//í•µì‰´ë“œ ë³´í˜¸ ëª¨ë“ˆì´ ê°•ì œë¡œ ì–¸ë¡œë“œë˜ì—ˆìŠµë‹ˆë‹¤.
+#define AHNHS_ACTAPC_DETECT_INJECTDLL_UNLOADED		0x010401		//ÇÙ½¯µå º¸È£ ¸ðµâÀÌ °­Á¦·Î ¾ð·ÎµåµÇ¾ú½À´Ï´Ù.
 #define AHNHS_ENGINE_DETECT_GAME_HACK				0x010501			
 #define AHNHS_ENGINE_DETECT_GENERAL_HACK			0x010502			
-#define AHNHS_ENGINE_DETECT_WINDOWED_HACK			0x010503		// ì°½ëª¨ë“œ í•´í‚¹íˆ´	
-#define AHNHS_ACTAPC_DETECT_MULTI_LOADING			0x010504		// í´ë¼ì´ì–¸íŠ¸ ë©€í‹° ë¡œë”© ê°ì§€.
-#define AHNHS_ACTAPC_DETECT_ABNORMAL_MEMORY_ACCESS	0x010601		// ì½”ë“œ íŒ¨ì¹˜ ì‹œë„ê°€ ê°ì§€ë˜ì—ˆìŠµë‹ˆë‹¤.
-#define AHNHS_ACTAPC_DETECT_MODULE_CHANGE			0x010701		//í•µì‰´ë“œ ê´€ë ¨ëª¨ë“ˆì´ ë³€ê²½ë˜ì—ˆìŠµë‹ˆë‹¤.
-#define AHNHS_ACTAPC_DETECT_NANOENGINEFAILED		0x010702		// ë‚˜ë…¸ì—”ì§„ì´ ì •ìƒë™ìž‘í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
-#define AHNHS_ACTAPC_DETECT_CODEMISMATCH			0x010703		// HookFreeCodeì— ëŒ€í•œ ë³€ì¡°ê°€ ê°ì§€ ë˜ì—ˆìŠµë‹ˆë‹¤.
-#define AHNHS_ACTAPC_DETECT_PROTECTSCREENFAILED		0x010704		// ProtectScreen(Ex)ì´ ì •ìƒë™ìž‘í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
+#define AHNHS_ENGINE_DETECT_WINDOWED_HACK			0x010503		// Ã¢¸ðµå ÇØÅ·Åø	
+#define AHNHS_ACTAPC_DETECT_MULTI_LOADING			0x010504		// Å¬¶óÀÌ¾ðÆ® ¸ÖÆ¼ ·Îµù °¨Áö.
+#define AHNHS_ACTAPC_DETECT_ABNORMAL_MEMORY_ACCESS	0x010601		// ÄÚµå ÆÐÄ¡ ½Ãµµ°¡ °¨ÁöµÇ¾ú½À´Ï´Ù.
+#define AHNHS_ACTAPC_DETECT_MODULE_CHANGE			0x010701		//ÇÙ½¯µå °ü·Ã¸ðµâÀÌ º¯°æµÇ¾ú½À´Ï´Ù.
+#define AHNHS_ACTAPC_DETECT_NANOENGINEFAILED		0x010702		// ³ª³ë¿£ÁøÀÌ Á¤»óµ¿ÀÛÇÏÁö ¾Ê½À´Ï´Ù.
+#define AHNHS_ACTAPC_DETECT_CODEMISMATCH			0x010703		// HookFreeCode¿¡ ´ëÇÑ º¯Á¶°¡ °¨Áö µÇ¾ú½À´Ï´Ù.
+#define AHNHS_ACTAPC_DETECT_PROTECTSCREENFAILED		0x010704		// ProtectScreen(Ex)ÀÌ Á¤»óµ¿ÀÛÇÏÁö ¾Ê½À´Ï´Ù.
 #define AHNHS_ACTAPC_DETECT_MEM_MODIFY_FROM_LMP		0x010705
 #define AHNHS_ACTAPC_DETECT_LMP_FAILED				0x010706
-#define AHNHS_ACTAPC_DETECT_HACKING_PROCESS			0x010707		// Code Signatureì— ì¼ì¹˜í•˜ëŠ” í•´í‚¹ ë“œë¼ì´ë²„ë¥¼ ì°¾ì•˜ì„ ê²½ìš°
-#define AHNHS_ACTAPC_DETECT_THREAD_STOPPING			0x010708		// ë³´í˜¸ë˜ëŠ” ìŠ¤ë ˆë“œê°€ ê°•ì œ ì¢…ë£Œë˜ì—ˆì„ ê²½ìš°
+#define AHNHS_ACTAPC_DETECT_HACKING_PROCESS			0x010707		// Code Signature¿¡ ÀÏÄ¡ÇÏ´Â ÇØÅ· µå¶óÀÌ¹ö¸¦ Ã£¾ÒÀ» °æ¿ì
+#define AHNHS_ACTAPC_DETECT_THREAD_STOPPING			0x010708		// º¸È£µÇ´Â ½º·¹µå°¡ °­Á¦ Á¾·áµÇ¾úÀ» °æ¿ì
 #define AHNHS_ACTAPC_DETECT_ABNORMAL_FUNCTION_CALL	0x010801
-#define AHNHS_ACTAPC_DETECT_ANTIFREESERVER			0x010901		// Gameì´ ì˜¬ë°”ë¥¸ ì„œë²„ë¡œ ì ‘ì†ì„ í•˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.
-#define AHNHS_ACTAPC_DETECT_ABNORMAL_HACKSHIELD_STATUS	0x010A01	// HackShield ë™ìž‘ ìƒíƒœ í™•ì¸ ê²°ê³¼, ì •ìƒ ì •ë³´ê°€ ì•„ë‹˜.
-#define AHNHS_ACTAPC_DETECT_SELF_DESTRUCTION			0x010A02	// HackShield ë™ìž‘ ê°ì‹œì¤‘, í•´í‚¹íˆ´ì„ ê°ì§€í•˜ê³ ë„, ì¢…ë£Œë˜ì§€ ì•Šì„ ê²½ìš°, ê°•ì œ ì¢…ë£Œ ì‹œí‚¨ë‹¤.	
+#define AHNHS_ACTAPC_DETECT_ANTIFREESERVER			0x010901		// GameÀÌ ¿Ã¹Ù¸¥ ¼­¹ö·Î Á¢¼ÓÀ» ÇÏÁö ¾Ê¾Ò½À´Ï´Ù.
+#define AHNHS_ACTAPC_DETECT_ABNORMAL_HACKSHIELD_STATUS	0x010A01	// HackShield µ¿ÀÛ »óÅÂ È®ÀÎ °á°ú, Á¤»ó Á¤º¸°¡ ¾Æ´Ô.
+#define AHNHS_ACTAPC_DETECT_SELF_DESTRUCTION			0x010A02	// HackShield µ¿ÀÛ °¨½ÃÁß, ÇØÅ·ÅøÀ» °¨ÁöÇÏ°íµµ, Á¾·áµÇÁö ¾ÊÀ» °æ¿ì, °­Á¦ Á¾·á ½ÃÅ²´Ù.	
 
 
 
-//[AntiCpXSvr.dll 1.0.0.10 ì´í›„ ë¶€í„° ì ìš©]
-// ê²Œìž„ì‚¬ì—ì„œ ê¸°ë³¸ bytealigmentë¥¼ ì‚¬ìš©í•˜ì§€ ì•Šìœ¼ë©´ í•µì‰´ë“œ ì„œë²„ì—°ë™ ëª¨ë“ˆ ì ìš© í›„ ê²Œìž„ 
-// bytealignmentê°€ ë³€ê²½ë˜ë¯€ë¡œ ê¸°ì¡´ ì •ë³´ë¥¼ ìŠ¤íƒì— ì €ìž¥.
-#pragma pack(push) //ê¸°ì¡´ alignment ì €ìž¥
+//[AntiCpXSvr.dll 1.0.0.10 ÀÌÈÄ ºÎÅÍ Àû¿ë]
+// °ÔÀÓ»ç¿¡¼­ ±âº» bytealigment¸¦ »ç¿ëÇÏÁö ¾ÊÀ¸¸é ÇÙ½¯µå ¼­¹ö¿¬µ¿ ¸ðµâ Àû¿ë ÈÄ °ÔÀÓ 
+// bytealignment°¡ º¯°æµÇ¹Ç·Î ±âÁ¸ Á¤º¸¸¦ ½ºÅÃ¿¡ ÀúÀå.
+#pragma pack(push) //±âÁ¸ alignment ÀúÀå
 #pragma pack(8)
 
 typedef struct _AHNHS_TRANS_BUFFER
 {
-	unsigned char byBuffer[ANTICPX_TRANS_BUFFER_MAX/* ì†¡ìˆ˜ì‹  íŒ¨í‚·ì˜ ìµœëŒ€ í¬ê¸° */];
+	unsigned char byBuffer[ANTICPX_TRANS_BUFFER_MAX/* ¼Û¼ö½Å ÆÐÅ¶ÀÇ ÃÖ´ë Å©±â */];
 	unsigned short nLength;
 } AHNHS_TRANS_BUFFER, *PAHNHS_TRANS_BUFFER;
 
-#pragma pack(pop) // ê¸°ì¡´ alignment ë³µêµ¬.
+#pragma pack(pop) // ±âÁ¸ alignment º¹±¸.
 
 #endif // __ANTICPX_TRANS_BUFFER__
 
@@ -155,12 +155,12 @@ extern "C"
 
 #if defined (_NO_HACKSHIELD)
 	
-	#define	AHNHS_NOT_NULL	(1)	// í¬ì¸í„°ê°’ì„ ë¦¬í„´í•˜ëŠ” ê²½ìš°, NOT NULLë¡œ ì²˜ë¦¬
+	#define	AHNHS_NOT_NULL	(1)	// Æ÷ÀÎÅÍ°ªÀ» ¸®ÅÏÇÏ´Â °æ¿ì, NOT NULL·Î Ã³¸®
 
 	#define	_AhnHS_CreateServerObject(arg1)		AHNHS_NOT_NULL
-	#define	_AhnHS_CloseServerHandle(arg1)		;
+	#define	_AhnHS_CloseServerHandle(arg1);
 	#define	_AhnHS_CreateClientObject(arg1)		AHNHS_NOT_NULL
-	#define _AhnHS_CloseClientHandle(arg1)		;
+	#define _AhnHS_CloseClientHandle(arg1);
 	#define _AhnHS_MakeRequest(arg1,arg2)					ERROR_SUCCESS
 	#define _AhnHS_VerifyResponse(arg1,arg2,arg3)			ERROR_SUCCESS
 	#define _AhnHS_VerifyResponseEx(arg1,arg2,arg3,arg4)	ERROR_SUCCESS
@@ -169,20 +169,20 @@ extern "C"
 #else	//!_NO_HACKSHIELD
 
 /**
-	ì„œë²„ í•¸ë“¤(Server Handle)ì„ ìƒì„±í•œë‹¤
+	¼­¹ö ÇÚµé(Server Handle)À» »ý¼ºÇÑ´Ù
 
 	@param
-		const char *pszFilePath ; [ìž…ë ¥ê°’] HackShield Briefcase (.hsb) íŒŒì¼ ê²½ë¡œ
+		const char *pszFilePath ; [ÀÔ·Â°ª] HackShield Briefcase (.hsb) ÆÄÀÏ °æ·Î
 
 	@retval
-		ì„œë²„ í•¸ë“¤(Server Handle)
+		¼­¹ö ÇÚµé(Server Handle)
 
 	@remarks
-		ì„œë²„í•¸ë“¤ì„ ì˜¬ë°”ë¥´ê²Œ ìƒì„±í•˜ì§€ ëª»í–ˆì„ ê²½ìš° NULL ê°’ì„ ë¦¬í„´í•œë‹¤. ë³´í†µ HackShield Briefcase
-		(.hsb) íŒŒì¼ ê²½ë¡œê°€ ì˜¬ë°”ë¥´ì§€ ì•Šì„ ê²½ìš°ë‚˜ ì‹œìŠ¤í…œ ë¦¬ì†ŒìŠ¤(ë©”ëª¨ë¦¬)ê°€ ë¶€ì¡±í•  ê²½ìš° ë°œìƒí•œë‹¤.
+		¼­¹öÇÚµéÀ» ¿Ã¹Ù¸£°Ô »ý¼ºÇÏÁö ¸øÇßÀ» °æ¿ì NULL °ªÀ» ¸®ÅÏÇÑ´Ù. º¸Åë HackShield Briefcase
+		(.hsb) ÆÄÀÏ °æ·Î°¡ ¿Ã¹Ù¸£Áö ¾ÊÀ» °æ¿ì³ª ½Ã½ºÅÛ ¸®¼Ò½º(¸Þ¸ð¸®)°¡ ºÎÁ·ÇÒ °æ¿ì ¹ß»ýÇÑ´Ù.
 
 	@see
-		í™•ìž¥ ì„œë²„ì—°ë™ Quick Guideë¥¼ ì°¸ê³ í•´ ì£¼ì„¸ìš”.
+		È®Àå ¼­¹ö¿¬µ¿ Quick Guide¸¦ Âü°íÇØ ÁÖ¼¼¿ä.
 */
 AHNHS_API
 AHNHS_SERVER_HANDLE
@@ -193,20 +193,20 @@ _AhnHS_CreateServerObject (
 
 
 /**
-	ì„œë²„ í•¸ë“¤(Server Handle)ì„ ë‹«ëŠ”ë‹¤
+	¼­¹ö ÇÚµé(Server Handle)À» ´Ý´Â´Ù
 
 	@param
-		AHNHS_SERVER_HANDLE hServer ; [ìž…ë ¥ê°’] ì„œë²„ í•¸ë“¤(Server Handle)
+		AHNHS_SERVER_HANDLE hServer ; [ÀÔ·Â°ª] ¼­¹ö ÇÚµé(Server Handle)
 
 	@retval
-		ì—†ìŒ
+		¾øÀ½
 
 	@remarks
-		ìƒì„±í•œ ì„œë²„í•¸ë“¤ì€ ì„œë²„ í”„ë¡œì„¸ìŠ¤ë‚˜ ì„œë¹„ìŠ¤ í”„ë¡œì„¸ìŠ¤ê°€ ì¢…ë£Œí•  ë•Œ ë‹«ì•„ì£¼ì–´ì•¼
-		ì„œë²„í•¸ë“¤ ìƒì„±ì— ì‚¬ìš©ë˜ì—ˆë˜ ë©”ëª¨ë¦¬ë‚˜ ì‹œìŠ¤í…œ ìžì›ì„ í•´ì œí•˜ê²Œëœë‹¤.
+		»ý¼ºÇÑ ¼­¹öÇÚµéÀº ¼­¹ö ÇÁ·Î¼¼½º³ª ¼­ºñ½º ÇÁ·Î¼¼½º°¡ Á¾·áÇÒ ¶§ ´Ý¾ÆÁÖ¾î¾ß
+		¼­¹öÇÚµé »ý¼º¿¡ »ç¿ëµÇ¾ú´ø ¸Þ¸ð¸®³ª ½Ã½ºÅÛ ÀÚ¿øÀ» ÇØÁ¦ÇÏ°ÔµÈ´Ù.
 
 	@see
-		í™•ìž¥ ì„œë²„ì—°ë™ Quick Guideë¥¼ ì°¸ê³ í•´ ì£¼ì„¸ìš”.
+		È®Àå ¼­¹ö¿¬µ¿ Quick Guide¸¦ Âü°íÇØ ÁÖ¼¼¿ä.
 */
 AHNHS_API
 void
@@ -217,21 +217,21 @@ _AhnHS_CloseServerHandle (
 
 
 /**
-	í´ë¼ì´ì–¸íŠ¸ í•¸ë“¤(Client Handle)ì„ ìƒì„±í•œë‹¤
+	Å¬¶óÀÌ¾ðÆ® ÇÚµé(Client Handle)À» »ý¼ºÇÑ´Ù
 
 	@param
-		AHNHS_SERVER_HANDLE hServer ; [ìž…ë ¥ê°’] ì„œë²„ í•¸ë“¤(Server Handle)
+		AHNHS_SERVER_HANDLE hServer ; [ÀÔ·Â°ª] ¼­¹ö ÇÚµé(Server Handle)
 
 	@retval
-		í´ë¼ì´ì–¸íŠ¸ í•¸ë“¤(Client Handle)
+		Å¬¶óÀÌ¾ðÆ® ÇÚµé(Client Handle)
 
 	@remarks
-		ì„œë²„ í•¸ë“¤ì„ ìž…ë ¥ ë°›ì•„ í´ë¼ì´ì–¸íŠ¸ í•¸ë“¤ì„ ìƒì„±í•œë‹¤. í´ë¼ì´ì–¸íŠ¸ í•¸ë“¤ì€
-		í´ë¼ì´ì–¸íŠ¸ê°€ ì ‘ì†í•  ë•Œ ë§ˆë‹¤ ìƒì„±í•˜ë©°, ì„¸ì…˜ì´ ìœ ì§€ë˜ëŠ” ë™ì•ˆ í•¸ë“¤ì„ ë‹«ì§€ ì•Šê³ 
-		ìž¬ì‚¬ìš©í•œë‹¤.
+		¼­¹ö ÇÚµéÀ» ÀÔ·Â ¹Þ¾Æ Å¬¶óÀÌ¾ðÆ® ÇÚµéÀ» »ý¼ºÇÑ´Ù. Å¬¶óÀÌ¾ðÆ® ÇÚµéÀº
+		Å¬¶óÀÌ¾ðÆ®°¡ Á¢¼ÓÇÒ ¶§ ¸¶´Ù »ý¼ºÇÏ¸ç, ¼¼¼ÇÀÌ À¯ÁöµÇ´Â µ¿¾È ÇÚµéÀ» ´ÝÁö ¾Ê°í
+		Àç»ç¿ëÇÑ´Ù.
 
 	@see
-		í™•ìž¥ ì„œë²„ì—°ë™ Quick Guideë¥¼ ì°¸ê³ í•´ ì£¼ì„¸ìš”.
+		È®Àå ¼­¹ö¿¬µ¿ Quick Guide¸¦ Âü°íÇØ ÁÖ¼¼¿ä.
 */
 AHNHS_API
 AHNHS_CLIENT_HANDLE
@@ -242,20 +242,20 @@ _AhnHS_CreateClientObject (
 
 
 /**
-	í´ë¼ì´ì–¸íŠ¸ í•¸ë“¤(Client Handle)ì„ ë‹«ëŠ”ë‹¤
+	Å¬¶óÀÌ¾ðÆ® ÇÚµé(Client Handle)À» ´Ý´Â´Ù
 
 	@param
-		AHNHS_CLIENT_HANDLE hClient ; [ìž…ë ¥ê°’] í´ë¼ì´ì–¸íŠ¸ í•¸ë“¤(Client Handle)
+		AHNHS_CLIENT_HANDLE hClient ; [ÀÔ·Â°ª] Å¬¶óÀÌ¾ðÆ® ÇÚµé(Client Handle)
 
 	@retval
-		ì—†ìŒ
+		¾øÀ½
 
 	@remarks
-		ìƒì„±í•œ í´ë¼ì´ì–¸íŠ¸ í•¸ë“¤ì€ í´ë¼ì´ì–¸íŠ¸ ì„¸ì…˜ì´ ì¢…ë£Œë  ë•Œ í•´ì œë˜ì–´ì•¼ í•œë‹¤.
-		ì´ë•Œ í´ë¼ì´ì–¸íŠ¸ í•¸ë“¤ ìƒì„±ì— ì‚¬ìš©ë˜ì—ˆë˜ ë©”ëª¨ë¦¬ë‚˜ ì‹œìŠ¤í…œ ìžì›ì„ í•´ì œí•˜ê²Œëœë‹¤.
+		»ý¼ºÇÑ Å¬¶óÀÌ¾ðÆ® ÇÚµéÀº Å¬¶óÀÌ¾ðÆ® ¼¼¼ÇÀÌ Á¾·áµÉ ¶§ ÇØÁ¦µÇ¾î¾ß ÇÑ´Ù.
+		ÀÌ¶§ Å¬¶óÀÌ¾ðÆ® ÇÚµé »ý¼º¿¡ »ç¿ëµÇ¾ú´ø ¸Þ¸ð¸®³ª ½Ã½ºÅÛ ÀÚ¿øÀ» ÇØÁ¦ÇÏ°ÔµÈ´Ù.
 
 	@see
-		í™•ìž¥ ì„œë²„ì—°ë™ Quick Guideë¥¼ ì°¸ê³ í•´ ì£¼ì„¸ìš”.
+		È®Àå ¼­¹ö¿¬µ¿ Quick Guide¸¦ Âü°íÇØ ÁÖ¼¼¿ä.
 */
 AHNHS_API
 void
@@ -266,32 +266,32 @@ _AhnHS_CloseClientHandle (
 
 
 /**
-	í´ë¼ì´ì–¸íŠ¸ì˜ í•´í‚¹ ì‹œë„ë¥¼ ê°ì§€í•˜ê¸° ìœ„í•´ ìš”ì²­(ë©”ì‹œì§€)ë¥¼ ìƒì„±í•œë‹¤.
+	Å¬¶óÀÌ¾ðÆ®ÀÇ ÇØÅ· ½Ãµµ¸¦ °¨ÁöÇÏ±â À§ÇØ ¿äÃ»(¸Þ½ÃÁö)¸¦ »ý¼ºÇÑ´Ù.
 
 	@param
-		AHNHS_CLIENT_HANDLE hClient ; [ìž…ë ¥ê°’] í´ë¼ì´ì–¸íŠ¸ í•¸ë“¤
-		PAHNHS_TRANS_BUFFER pRequestBuffer ; [ì¶œë ¥ê°’] ë³´ë‚¼ ë°ì´í„° ë²„í¼/ê¸¸ì´
+		AHNHS_CLIENT_HANDLE hClient ; [ÀÔ·Â°ª] Å¬¶óÀÌ¾ðÆ® ÇÚµé
+		PAHNHS_TRANS_BUFFER pRequestBuffer ; [Ãâ·Â°ª] º¸³¾ µ¥ÀÌÅÍ ¹öÆÛ/±æÀÌ
 
 	@retval
-		ERROR_ANTICPXSVR_xxx í˜•ì‹ìœ¼ë¡œ ì •ì˜ë˜ì–´ ìžˆëŠ” ì—ëŸ¬ ì½”ë“œ 
+		ERROR_ANTICPXSVR_xxx Çü½ÄÀ¸·Î Á¤ÀÇµÇ¾î ÀÖ´Â ¿¡·¯ ÄÚµå 
 
 	@remarks
-		í˜„ìž¬ ì„¸ì…˜ì— ë§žëŠ” í´ë¼ì´ì–¸íŠ¸ í•¸ë“¤ì„ ìž…ë ¥í•˜ì—¬ ìš”ì²­ ë©”ì‹œì§€ë¥¼ ìƒì„±í•œë‹¤.
-		ìš”ì²­ ë©”ì‹œì§€ëŠ” AHNHS_TRANS_BUFFER êµ¬ì¡°ì²´ í˜•íƒœë¡œ ì¶œë ¥ë˜ë©°, ë©¤ë²„ ë³€ìˆ˜ ê°’ì€
-		ë‹¤ìŒê³¼ ê°™ë‹¤.
+		ÇöÀç ¼¼¼Ç¿¡ ¸Â´Â Å¬¶óÀÌ¾ðÆ® ÇÚµéÀ» ÀÔ·ÂÇÏ¿© ¿äÃ» ¸Þ½ÃÁö¸¦ »ý¼ºÇÑ´Ù.
+		¿äÃ» ¸Þ½ÃÁö´Â AHNHS_TRANS_BUFFER ±¸Á¶Ã¼ ÇüÅÂ·Î Ãâ·ÂµÇ¸ç, ¸â¹ö º¯¼ö °ªÀº
+		´ÙÀ½°ú °°´Ù.
 
 		typedef struct _AHNHS_TRANS_BUFFER
 		{
 			unsigned short nLength;
-			unsigned char byBuffer[ANTICPX_TRANS_BUFFER_MAX]; // ì†¡ìˆ˜ì‹  íŒ¨í‚·ì˜ ìµœëŒ€ ë²„í¼ í¬ê¸°
+			unsigned char byBuffer[ANTICPX_TRANS_BUFFER_MAX]; // ¼Û¼ö½Å ÆÐÅ¶ÀÇ ÃÖ´ë ¹öÆÛ Å©±â
 			
 		} AHNHS_TRANS_BUFFER, *PAHNHS_TRANS_BUFFER;
 
-		nLength ; ìš”ì²­ ë©”ì‹œì§€ ìƒì„±ì— ì‚¬ìš©ëœ ë²„í¼ ê¸¸ì´
-		byBuffer ; ìš”ì²­ ë©”ì‹œì§€ ìƒì„±ì— ì‚¬ìš©ë  ìˆ˜ ìžˆëŠ” ìµœëŒ€ ë°”ì´íŠ¸ ë²„í¼
+		nLength ; ¿äÃ» ¸Þ½ÃÁö »ý¼º¿¡ »ç¿ëµÈ ¹öÆÛ ±æÀÌ
+		byBuffer ; ¿äÃ» ¸Þ½ÃÁö »ý¼º¿¡ »ç¿ëµÉ ¼ö ÀÖ´Â ÃÖ´ë ¹ÙÀÌÆ® ¹öÆÛ
 
-		ì£¼ì˜ ì‚¬í•­!!! byBufferëŠ” ìš”ì²­ ë©”ì‹œì§€ ìƒì„±ì— ì‚¬ìš©ë  ìˆ˜ ìžˆëŠ” ìµœëŒ€ ë²„í¼ í¬ê¸°ì´ë¯€ë¡œ ë„¤íŠ¸ì›Œí¬ë¡œ 
-		ì „ì†¡í•  ë•Œ nLength ë§Œí¼ë§Œ ì „ì†¡í•´ì•¼í•œë‹¤.
+		ÁÖÀÇ »çÇ×!!! byBuffer´Â ¿äÃ» ¸Þ½ÃÁö »ý¼º¿¡ »ç¿ëµÉ ¼ö ÀÖ´Â ÃÖ´ë ¹öÆÛ Å©±âÀÌ¹Ç·Î ³×Æ®¿öÅ©·Î 
+		Àü¼ÛÇÒ ¶§ nLength ¸¸Å­¸¸ Àü¼ÛÇØ¾ßÇÑ´Ù.
 
 		Example:
 		
@@ -307,7 +307,7 @@ _AhnHS_CloseClientHandle (
 			...
 
 	@see
-		í™•ìž¥ ì„œë²„ì—°ë™ Quick Guideë¥¼ ì°¸ê³ í•´ ì£¼ì„¸ìš”.
+		È®Àå ¼­¹ö¿¬µ¿ Quick Guide¸¦ Âü°íÇØ ÁÖ¼¼¿ä.
 */
 AHNHS_API
 unsigned long
@@ -319,22 +319,22 @@ _AhnHS_MakeRequest (
 
 
 /**
-	í´ë¼ì´ì–¸íŠ¸ì˜ ì‘ë‹µ(ë©”ì‹œì§€)ì´ ì˜¬ë°”ë¥¸ì§€ ê²€ì‚¬í•œë‹¤.
+	Å¬¶óÀÌ¾ðÆ®ÀÇ ÀÀ´ä(¸Þ½ÃÁö)ÀÌ ¿Ã¹Ù¸¥Áö °Ë»çÇÑ´Ù.
 
 	@param
-		AHNHS_CLIENT_HANDLE hClient ; [ìž…ë ¥ê°’] í´ë¼ì´ì–¸íŠ¸ í•¸ë“¤
-		unsigned char *pbyResponse ; í´ë¼ì´ì–¸íŠ¸ë¡œ ë¶€í„° ë°›ì€ ë°ì´í„° ë²„í¼
-		unsigned long nResponseLength ; í´ë¼ì´ì–¸íŠ¸ë¡œ ë¶€í„° ë°›ì€ ë°ì´í„° ê¸¸ì´
+		AHNHS_CLIENT_HANDLE hClient ; [ÀÔ·Â°ª] Å¬¶óÀÌ¾ðÆ® ÇÚµé
+		unsigned char *pbyResponse ; Å¬¶óÀÌ¾ðÆ®·Î ºÎÅÍ ¹ÞÀº µ¥ÀÌÅÍ ¹öÆÛ
+		unsigned long nResponseLength ; Å¬¶óÀÌ¾ðÆ®·Î ºÎÅÍ ¹ÞÀº µ¥ÀÌÅÍ ±æÀÌ
 
 	@retval
-		ERROR_ANTICPXSVR_xxx í˜•ì‹ìœ¼ë¡œ ì •ì˜ë˜ì–´ ìžˆëŠ” ì—ëŸ¬ ì½”ë“œ 
+		ERROR_ANTICPXSVR_xxx Çü½ÄÀ¸·Î Á¤ÀÇµÇ¾î ÀÖ´Â ¿¡·¯ ÄÚµå 
 
 	@remarks
-		_AhnHS_MakeRequest í•¨ìˆ˜ë¥¼ í†µí•œ ìš”ì²­(ë©”ì‹œì§€)ì— ëŒ€í•œ í´ë¼ì´ì–¸íŠ¸ì˜ ì‘ë‹µì´
-		ì˜¬ë°”ë¥¸ì§€ ê²€ì‚¬í•˜ëŠ” í•¨ìˆ˜ì´ë‹¤.
+		_AhnHS_MakeRequest ÇÔ¼ö¸¦ ÅëÇÑ ¿äÃ»(¸Þ½ÃÁö)¿¡ ´ëÇÑ Å¬¶óÀÌ¾ðÆ®ÀÇ ÀÀ´äÀÌ
+		¿Ã¹Ù¸¥Áö °Ë»çÇÏ´Â ÇÔ¼öÀÌ´Ù.
 
 	@see
-		í™•ìž¥ ì„œë²„ì—°ë™ Quick Guideë¥¼ ì°¸ê³ í•´ ì£¼ì„¸ìš”.
+		È®Àå ¼­¹ö¿¬µ¿ Quick Guide¸¦ Âü°íÇØ ÁÖ¼¼¿ä.
 */
 AHNHS_API
 unsigned long
@@ -346,22 +346,22 @@ _AhnHS_VerifyResponse (
 	);
 
 /**
-	í´ë¼ì´ì–¸íŠ¸ì˜ ì‘ë‹µ ë©”ì‹œì§€ë¥¼ ê²€ì¦í•˜ì—¬ í´ë¼ì´ì–¸íŠ¸ ì„¸ì…˜ ì¢…ë£Œì—¬ë¶€ë¥¼ 
-	ë¦¬í„´í•œë‹¤. 
+	Å¬¶óÀÌ¾ðÆ®ÀÇ ÀÀ´ä ¸Þ½ÃÁö¸¦ °ËÁõÇÏ¿© Å¬¶óÀÌ¾ðÆ® ¼¼¼Ç Á¾·á¿©ºÎ¸¦ 
+	¸®ÅÏÇÑ´Ù. 
 
 	@param
-		AHNHS_CLIENT_HANDLE hClient ; [ìž…ë ¥ê°’] í´ë¼ì´ì–¸íŠ¸ í•¸ë“¤
-		unsigned char *pbyResponse ; í´ë¼ì´ì–¸íŠ¸ë¡œ ë¶€í„° ë°›ì€ ë°ì´í„° ë²„í¼
-		unsigned long nResponseLength ; í´ë¼ì´ì–¸íŠ¸ë¡œ ë¶€í„° ë°›ì€ ë°ì´í„° ê¸¸ì´
-		unsigned long *pnErrorCode	; ì˜¤ë¥˜ ì½”ë“œ 
+		AHNHS_CLIENT_HANDLE hClient ; [ÀÔ·Â°ª] Å¬¶óÀÌ¾ðÆ® ÇÚµé
+		unsigned char *pbyResponse ; Å¬¶óÀÌ¾ðÆ®·Î ºÎÅÍ ¹ÞÀº µ¥ÀÌÅÍ ¹öÆÛ
+		unsigned long nResponseLength ; Å¬¶óÀÌ¾ðÆ®·Î ºÎÅÍ ¹ÞÀº µ¥ÀÌÅÍ ±æÀÌ
+		unsigned long *pnErrorCode	; ¿À·ù ÄÚµå 
 	@retval
-		ANTICPX_RECOMMAND_CLOSE_SESSION : í´ë¼ì´ì–¸íŠ¸ ì ‘ì† ì„¸ì…˜ ì¢…ë£Œ ê¶Œìž¥
-		ANTICPX_RECOMMAND_KEEP_SESSION  : í´ë¼ì´ì–¸íŠ¸ ì ‘ì† ì„¸ì…˜ ìœ ì§€ ê¶Œìž¥
+		ANTICPX_RECOMMAND_CLOSE_SESSION : Å¬¶óÀÌ¾ðÆ® Á¢¼Ó ¼¼¼Ç Á¾·á ±ÇÀå
+		ANTICPX_RECOMMAND_KEEP_SESSION  : Å¬¶óÀÌ¾ðÆ® Á¢¼Ó ¼¼¼Ç À¯Áö ±ÇÀå
 	@remarks
-		ë‚´ë¶€ì ìœ¼ë¡œ _AhnHS_VerifyResponse í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•œë‹¤.
+		³»ºÎÀûÀ¸·Î _AhnHS_VerifyResponse ÇÔ¼ö¸¦ È£ÃâÇÑ´Ù.
 	
 	@see
-		í™•ìž¥ ì„œë²„ì—°ë™ Quick Guideë¥¼ ì°¸ê³ í•´ ì£¼ì„¸ìš”.
+		È®Àå ¼­¹ö¿¬µ¿ Quick Guide¸¦ Âü°íÇØ ÁÖ¼¼¿ä.
 */
 AHNHS_API
 unsigned long
@@ -375,23 +375,23 @@ _AhnHS_VerifyResponseEx (
 
 
 /**
-	í´ë¼ì´ì–¸íŠ¸ì˜ ì‘ë‹µ ë©”ì‹œì§€ë¥¼ ê²€ì¦í•˜ì—¬ í´ë¼ì´ì–¸íŠ¸ ì„¸ì…˜ ì¢…ë£Œì—¬ë¶€ë¥¼ 
-	ë¦¬í„´í•œë‹¤. 
+	Å¬¶óÀÌ¾ðÆ®ÀÇ ÀÀ´ä ¸Þ½ÃÁö¸¦ °ËÁõÇÏ¿© Å¬¶óÀÌ¾ðÆ® ¼¼¼Ç Á¾·á¿©ºÎ¸¦ 
+	¸®ÅÏÇÑ´Ù. 
 
 	@param
-		AHNHS_CLIENT_HANDLE hClient ; [ìž…ë ¥ê°’] í´ë¼ì´ì–¸íŠ¸ í•¸ë“¤
-		unsigned char *pbyResponse ; í´ë¼ì´ì–¸íŠ¸ë¡œ ë¶€í„° ë°›ì€ ë°ì´í„° ë²„í¼
-		unsigned long nResponseLength ; í´ë¼ì´ì–¸íŠ¸ë¡œ ë¶€í„° ë°›ì€ ë°ì´í„° ê¸¸ì´
-		unsigned long *pulErrorCode	; ì˜¤ë¥˜ ì½”ë“œ 
-		unsigned long *pulSpecificErr ; pnErrorCode ì˜¤ë¥˜ ê°’ì„ ë³´ì¶©í•˜ëŠ” ì—ëŸ¬ì½”ë“œ 
+		AHNHS_CLIENT_HANDLE hClient ; [ÀÔ·Â°ª] Å¬¶óÀÌ¾ðÆ® ÇÚµé
+		unsigned char *pbyResponse ; Å¬¶óÀÌ¾ðÆ®·Î ºÎÅÍ ¹ÞÀº µ¥ÀÌÅÍ ¹öÆÛ
+		unsigned long nResponseLength ; Å¬¶óÀÌ¾ðÆ®·Î ºÎÅÍ ¹ÞÀº µ¥ÀÌÅÍ ±æÀÌ
+		unsigned long *pulErrorCode	; ¿À·ù ÄÚµå 
+		unsigned long *pulSpecificErr ; pnErrorCode ¿À·ù °ªÀ» º¸ÃæÇÏ´Â ¿¡·¯ÄÚµå 
 	@retval
-		ANTICPX_RECOMMAND_CLOSE_SESSION : í´ë¼ì´ì–¸íŠ¸ ì ‘ì† ì„¸ì…˜ ì¢…ë£Œ ê¶Œìž¥
-		ANTICPX_RECOMMAND_KEEP_SESSION  : í´ë¼ì´ì–¸íŠ¸ ì ‘ì† ì„¸ì…˜ ìœ ì§€ ê¶Œìž¥
+		ANTICPX_RECOMMAND_CLOSE_SESSION : Å¬¶óÀÌ¾ðÆ® Á¢¼Ó ¼¼¼Ç Á¾·á ±ÇÀå
+		ANTICPX_RECOMMAND_KEEP_SESSION  : Å¬¶óÀÌ¾ðÆ® Á¢¼Ó ¼¼¼Ç À¯Áö ±ÇÀå
 	@remarks
-		ë‚´ë¶€ì ìœ¼ë¡œ _AhnHS_VerifyResponse í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•œë‹¤.
+		³»ºÎÀûÀ¸·Î _AhnHS_VerifyResponse ÇÔ¼ö¸¦ È£ÃâÇÑ´Ù.
 	
 	@see
-		í™•ìž¥ ì„œë²„ì—°ë™ Quick Guideë¥¼ ì°¸ê³ í•´ ì£¼ì„¸ìš”.
+		È®Àå ¼­¹ö¿¬µ¿ Quick Guide¸¦ Âü°íÇØ ÁÖ¼¼¿ä.
 */
 AHNHS_API
 unsigned long

@@ -1,14 +1,22 @@
-ï»¿
+/*
+* Copyright [2002] MasangSoft
+*
+* Any part of this source code can not be copied with
+* any method without prior written permission from
+* the author or authorized person.
+*
+* File Name : AntiCpSvrFunc.h
+*/
 
 #ifndef _ANTICPSVRFUNC_H
 #define _ANTICPSVRFUNC_H
 
-#define SIZEOF_REQMSG			160				// Request Messageë¥¼ ë‹´ì„ ë²„í¼ì˜ í¬ê¸°
-#define SIZEOF_REQINFO			88				// Request Infoë¥¼ ë‹´ì„ ë²„í¼ì˜ í¬ê¸°
-#define SIZEOF_ACKMSG			72				// Ack Messageë¥¼ ë‹´ì„ ë²„í¼ì˜ í¬ê¸°
-#define SIZEOF_GUIDREQMSG		20				// GUID Request Messageë¥¼ ë‹´ì„ ë²„í¼ì˜ í¬ê¸°
-#define SIZEOF_GUIDREQINFO		20				// GUID Request Infoë¥¼ ë‹´ì„ ë²„í¼ì˜ í¬ê¸°
-#define SIZEOF_GUIDACKMSG		340				// GUID Ack Messageë¥¼ ë‹´ì„ ë²„í¼ì˜ í¬ê¸°
+#define SIZEOF_REQMSG			160				// Request Message¸¦ ´ãÀ» ¹öÆÛÀÇ Å©±â
+#define SIZEOF_REQINFO			88				// Request Info¸¦ ´ãÀ» ¹öÆÛÀÇ Å©±â
+#define SIZEOF_ACKMSG			72				// Ack Message¸¦ ´ãÀ» ¹öÆÛÀÇ Å©±â
+#define SIZEOF_GUIDREQMSG		20				// GUID Request Message¸¦ ´ãÀ» ¹öÆÛÀÇ Å©±â
+#define SIZEOF_GUIDREQINFO		20				// GUID Request Info¸¦ ´ãÀ» ¹öÆÛÀÇ Å©±â
+#define SIZEOF_GUIDACKMSG		340				// GUID Ack Message¸¦ ´ãÀ» ¹öÆÛÀÇ Å©±â
 
 #define ALLOWED_ALL_SESSION				0xFFFFFFFF
 #define ALLOWED_ONLY_LATEST_SESSION		0x00000001
@@ -17,14 +25,14 @@
 #define ANTICPSVR_UNINITIALIZED	0x0
 #define ANTICPSVR_INITIALIZED	0x1
 
-#define ANTICPSVR_CHECK_GAME_MEMORY			0x01		// Gameì—ì„œ ë³´í˜¸í•˜ëŠ” Memoryì— ëŒ€í•œ Requestë§Œ ë§Œë“ ë‹¤.
-#define ANTICPSVR_CHECK_HACKSHIELD_FILE		0x02		// HackShield Fileì— ëŒ€í•œ Requestë§Œ ë§Œë“ ë‹¤.
-#define ANTICPSVR_CHECK_GAME_FILE			0x04		// Game Fileì— ëŒ€í•œ Requestë§Œ ë§Œë“ ë‹¤.
-#define ANTICPSVR_CHECK_NANOENGINE_FILE		0x08		// Heuristic Engine Data(.mhe)ì— ëŒ€í•œ Requestë¥¼ ë§Œë“ ë‹¤.
+#define ANTICPSVR_CHECK_GAME_MEMORY			0x01		// Game¿¡¼­ º¸È£ÇÏ´Â Memory¿¡ ´ëÇÑ Request¸¸ ¸¸µç´Ù.
+#define ANTICPSVR_CHECK_HACKSHIELD_FILE		0x02		// HackShield File¿¡ ´ëÇÑ Request¸¸ ¸¸µç´Ù.
+#define ANTICPSVR_CHECK_GAME_FILE			0x04		// Game File¿¡ ´ëÇÑ Request¸¸ ¸¸µç´Ù.
+#define ANTICPSVR_CHECK_NANOENGINE_FILE		0x08		// Heuristic Engine Data(.mhe)¿¡ ´ëÇÑ Request¸¦ ¸¸µç´Ù.
 
 #define ANTICPSVR_CHECK_ALL	( ANTICPSVR_CHECK_GAME_MEMORY | ANTICPSVR_CHECK_HACKSHIELD_FILE | ANTICPSVR_CHECK_GAME_FILE | ANTICPSVR_CHECK_NANOENGINE_FILE )
 
-// ì—ëŸ¬ì½”ë“œ ì •ì˜
+// ¿¡·¯ÄÚµå Á¤ÀÇ
 #define ERROR_ANTICPSVR_BASECODE									0x0001C000
 #define ERROR_ANTICPSVR_INIT_INVALIDPARAM							ERROR_ANTICPSVR_BASECODE + 0x1
 #define ERROR_ANTICPSVR_INIT_INSERTCRCDATATOLIST_FAIL				ERROR_ANTICPSVR_BASECODE + 0x2
@@ -122,9 +130,9 @@ typedef struct _HSHIELD_CLIENT_CONTEXT
 
 /*!
  * 
- * @remarks ì´ í•¨ìˆ˜ëŠ” ì„œë²„ê°€ ë¡œë”©ë ë•Œ í•œë²ˆ í˜¸ì¶œí•˜ëŠ” í•¨ìˆ˜ë¡œ ë‚´ë¶€ì ìœ¼ë¡œ ì‚¬ìš©í•˜ëŠ” ì •ë³´ë“¤ì„ ì´ˆê¸°í™”í•œë‹¤.
+ * @remarks ÀÌ ÇÔ¼ö´Â ¼­¹ö°¡ ·ÎµùµÉ¶§ ÇÑ¹ø È£ÃâÇÏ´Â ÇÔ¼ö·Î ³»ºÎÀûÀ¸·Î »ç¿ëÇÏ´Â Á¤º¸µéÀ» ÃÊ±âÈ­ÇÑ´Ù.
  *
- * @param	lpszHashFilePath : í•´ì‰¬ì •ë³´ì €ìž¥ íŒŒì¼(HackShield.crc)ì— ëŒ€í•œ ì „ì²´ ê²½ë¡œ
+ * @param	lpszHashFilePath : ÇØ½¬Á¤º¸ÀúÀå ÆÄÀÏ(HackShield.crc)¿¡ ´ëÇÑ ÀüÃ¼ °æ·Î
  *
  */
 ANTICPSVR_API
@@ -137,7 +145,7 @@ _AntiCpSvr_Initialize (
 
 /*!
  * 
- * @remarks ì´ í•¨ìˆ˜ëŠ” ì„œë²„ê°€ ì–¸ë¡œë”©ë ë•Œ í•œë²ˆ í˜¸ì¶œí•˜ëŠ” í•¨ìˆ˜ë¡œ ë‚´ë¶€ì ìœ¼ë¡œ ì‚¬ìš©í•˜ë˜ ì •ë³´ë“¤ì„ ì´ˆê¸°í™”í•œë‹¤.
+ * @remarks ÀÌ ÇÔ¼ö´Â ¼­¹ö°¡ ¾ð·ÎµùµÉ¶§ ÇÑ¹ø È£ÃâÇÏ´Â ÇÔ¼ö·Î ³»ºÎÀûÀ¸·Î »ç¿ëÇÏ´ø Á¤º¸µéÀ» ÃÊ±âÈ­ÇÑ´Ù.
  *
  */
 ANTICPSVR_API
@@ -148,16 +156,16 @@ _AntiCpSvr_Finalize ();
 
 /*!
  * 
- * @remarks ì´ í•¨ìˆ˜ëŠ” ìƒˆë¡œìš´ í´ë¼ì´ì–¸íŠ¸ê°€ ì—°ê²°ë ë•Œ í´ë¼ì´ì–¸íŠ¸ë‹¹ í•œë²ˆ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜ë¡œ í˜„ìž¬ ì ‘ì†í•œ
- *			í´ë¼ì´ì–¸íŠ¸ê°€ ì‚¬ìš©í•˜ëŠ” GUID ë²„ì „ì´ ë¬´ì—‡ì¸ì§€ í™•ì¸í•˜ê¸° ìœ„í•œ ìš”ì²­ë©”ì‹œì§€ë¥¼ ìƒì„±í•˜ëŠ” í•¨ìˆ˜ì´ë‹¤.
+ * @remarks ÀÌ ÇÔ¼ö´Â »õ·Î¿î Å¬¶óÀÌ¾ðÆ®°¡ ¿¬°áµÉ¶§ Å¬¶óÀÌ¾ðÆ®´ç ÇÑ¹ø È£ÃâµÇ´Â ÇÔ¼ö·Î ÇöÀç Á¢¼ÓÇÑ
+ *			Å¬¶óÀÌ¾ðÆ®°¡ »ç¿ëÇÏ´Â GUID ¹öÀüÀÌ ¹«¾ùÀÎÁö È®ÀÎÇÏ±â À§ÇÑ ¿äÃ»¸Þ½ÃÁö¸¦ »ý¼ºÇÏ´Â ÇÔ¼öÀÌ´Ù.
  *
- * @param	pbyGuidReqMsg : í´ë¼ì´ì–¸íŠ¸ì—ê²Œ ë³´ë‚¼ ì•”í˜¸í™”ëœ Guid Request Message
- *							ì´ ë°ì´í„°ë¥¼ ë‹´ì„ ë²„í¼ì˜ í¬ê¸°(Byte)ëŠ” ìœ„ì— ì •ì˜ëœ SIZEOF_GUIDREQMSGì´ë‹¤.
- * @param	pbyGuidReqInfo : _AntiCpSvr_AnalyzeGuidAckMsg() ì—ì„œ ê²€ì‚¬í• ë•Œ ì‚¬ìš©í•  ì›ë³¸ Guid Request Info
- *							 ì´ ë°ì´í„°ë¥¼ ë‹´ì„ ë²„í¼ì˜ í¬ê¸°(Byte)ëŠ” ìœ„ì— ì •ì˜ëœ SIZEOF_GUIDREQINFOì´ë‹¤.
+ * @param	pbyGuidReqMsg : Å¬¶óÀÌ¾ðÆ®¿¡°Ô º¸³¾ ¾ÏÈ£È­µÈ Guid Request Message
+ *							ÀÌ µ¥ÀÌÅÍ¸¦ ´ãÀ» ¹öÆÛÀÇ Å©±â(Byte)´Â À§¿¡ Á¤ÀÇµÈ SIZEOF_GUIDREQMSGÀÌ´Ù.
+ * @param	pbyGuidReqInfo : _AntiCpSvr_AnalyzeGuidAckMsg() ¿¡¼­ °Ë»çÇÒ¶§ »ç¿ëÇÒ ¿øº» Guid Request Info
+ *							 ÀÌ µ¥ÀÌÅÍ¸¦ ´ãÀ» ¹öÆÛÀÇ Å©±â(Byte)´Â À§¿¡ Á¤ÀÇµÈ SIZEOF_GUIDREQINFOÀÌ´Ù.
  *
- * @attention	ì´ í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ì§€ ì•Šìœ¼ë©´ í•´ë‹¹ í´ë¼ì´ì–¸íŠ¸ì˜ GUIDë¥¼ ì•Œ ìˆ˜ ì—†ì–´ í¬ëž™ ìœ ë¬´ë¥¼ í™•ì¸í•  ìˆ˜ ì—†ë‹¤.
- *				ë˜í•œ ë²„í¼ í¬ê¸°ëŠ” ì•žìœ¼ë¡œ ë³€ê²½ë  ìˆ˜ë„ ìžˆìœ¼ë¯€ë¡œ ë°˜ë“œì‹œ ì´ í—¤ë”íŒŒì¼ì— ì •ì˜ëœ ê²ƒì„ ì‚¬ìš©í•˜ì—¬ì•¼í•œë‹¤.
+ * @attention	ÀÌ ÇÔ¼ö¸¦ È£ÃâÇÏÁö ¾ÊÀ¸¸é ÇØ´ç Å¬¶óÀÌ¾ðÆ®ÀÇ GUID¸¦ ¾Ë ¼ö ¾ø¾î Å©·¢ À¯¹«¸¦ È®ÀÎÇÒ ¼ö ¾ø´Ù.
+ *				¶ÇÇÑ ¹öÆÛ Å©±â´Â ¾ÕÀ¸·Î º¯°æµÉ ¼öµµ ÀÖÀ¸¹Ç·Î ¹Ýµå½Ã ÀÌ Çì´õÆÄÀÏ¿¡ Á¤ÀÇµÈ °ÍÀ» »ç¿ëÇÏ¿©¾ßÇÑ´Ù.
  *
  */
 ANTICPSVR_API
@@ -171,17 +179,17 @@ _AntiCpSvr_MakeGuidReqMsg (
 
 /*!
  * 
- * @remarks ì´ í•¨ìˆ˜ëŠ” ìƒˆë¡œìš´ í´ë¼ì´ì–¸íŠ¸ê°€ ì—°ê²°ë ë•Œ í´ë¼ì´ì–¸íŠ¸ë‹¹ í•œë²ˆ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜ë¡œ
- *			_AntiCpSvr_MakeGuidReqMsg()ë¥¼ í†µí•´ ìƒì„±ëœ GUID Request Messageì˜ ì‘ë‹µë©”ì‹œì§€ë¥¼
- *			í´ë¼ì´ì–¸íŠ¸ê°€ ì•”í˜¸í™”í•˜ì—¬ ë³´ë‚´ë©´ í•´ë‹¹ í´ë¼ì´ì–¸íŠ¸ì˜ GUIDê°€ í—ˆìš©ë˜ëŠ” ë²„ì „ì¸ì§€ í™•ì¸í•œ í›„
- *			í—ˆìš©ë˜ëŠ” ë²„ì „ì¼ ê²½ìš° ì•žìœ¼ë¡œ ê³„ì† ì‚¬ìš©í•˜ê²Œ ë  CRC Infoì˜ ì£¼ì†Œë¥¼ ë¦¬í„´í•œë‹¤.
+ * @remarks ÀÌ ÇÔ¼ö´Â »õ·Î¿î Å¬¶óÀÌ¾ðÆ®°¡ ¿¬°áµÉ¶§ Å¬¶óÀÌ¾ðÆ®´ç ÇÑ¹ø È£ÃâµÇ´Â ÇÔ¼ö·Î
+ *			_AntiCpSvr_MakeGuidReqMsg()¸¦ ÅëÇØ »ý¼ºµÈ GUID Request MessageÀÇ ÀÀ´ä¸Þ½ÃÁö¸¦
+ *			Å¬¶óÀÌ¾ðÆ®°¡ ¾ÏÈ£È­ÇÏ¿© º¸³»¸é ÇØ´ç Å¬¶óÀÌ¾ðÆ®ÀÇ GUID°¡ Çã¿ëµÇ´Â ¹öÀüÀÎÁö È®ÀÎÇÑ ÈÄ
+ *			Çã¿ëµÇ´Â ¹öÀüÀÏ °æ¿ì ¾ÕÀ¸·Î °è¼Ó »ç¿ëÇÏ°Ô µÉ CRC InfoÀÇ ÁÖ¼Ò¸¦ ¸®ÅÏÇÑ´Ù.
  *
- * @param	pbyGuidAckMsg : í´ë¼ì´ì–¸íŠ¸ì—ì„œ ë³´ë‚¸ ì•”í˜¸í™”ëœ Guid ACK Message
- * @param	pbyGuidReqInfo : _AntiCpSvr_MakeGuidReqMsg() í•¨ìˆ˜ì—ì„œ ë§Œë“¤ì–´ì§„ ì›ë³¸ Guid Request Info
- * @param	pCrcInfo : CRC Infoë¥¼ ë‹´ê³ ìžˆëŠ” ë©”ëª¨ë¦¬ë¥¼ ê°€ë¦¬í‚¬ í¬ì¸í„°ë¥¼ ì €ìž¥í•  ë²„í¼
+ * @param	pbyGuidAckMsg : Å¬¶óÀÌ¾ðÆ®¿¡¼­ º¸³½ ¾ÏÈ£È­µÈ Guid ACK Message
+ * @param	pbyGuidReqInfo : _AntiCpSvr_MakeGuidReqMsg() ÇÔ¼ö¿¡¼­ ¸¸µé¾îÁø ¿øº» Guid Request Info
+ * @param	pCrcInfo : CRC Info¸¦ ´ã°íÀÖ´Â ¸Þ¸ð¸®¸¦ °¡¸®Å³ Æ÷ÀÎÅÍ¸¦ ÀúÀåÇÒ ¹öÆÛ
  *
- * @attention	ì—¬ê¸°ì„œ ë¦¬í„´ë˜ëŠ” ppCrcInfoì— ë‹´ê¸´ ì£¼ì†ŒëŠ” í•´ë‹¹ í´ë¼ì´ì–¸íŠ¸ì˜ Sessionì´ ëŠê¸¸ë•Œê¹Œì§€
- *				ê³„ì†í•´ì„œ ì‚¬ìš©ë˜ë¯€ë¡œ í´ë¼ì´ì–¸íŠ¸ë³„ë¡œ ì €ìž¥ë˜ê³  ê´€ë¦¬ë˜ì–´ì•¼ í•œë‹¤.
+ * @attention	¿©±â¼­ ¸®ÅÏµÇ´Â ppCrcInfo¿¡ ´ã±ä ÁÖ¼Ò´Â ÇØ´ç Å¬¶óÀÌ¾ðÆ®ÀÇ SessionÀÌ ²÷±æ¶§±îÁö
+ *				°è¼ÓÇØ¼­ »ç¿ëµÇ¹Ç·Î Å¬¶óÀÌ¾ðÆ®º°·Î ÀúÀåµÇ°í °ü¸®µÇ¾î¾ß ÇÑ´Ù.
  *
  */
 ANTICPSVR_API
@@ -196,23 +204,23 @@ _AntiCpSvr_AnalyzeGuidAckMsg (
 
 /*!
  * 
- * @remarks ì´ í•¨ìˆ˜ëŠ” í´ë¼ì´ì–¸íŠ¸ì˜ í¬ëž™ ìœ ë¬´ë¥¼ í™•ì¸í•˜ê³  ì‹¶ì„ë•Œë§ˆë‹¤ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜ë¡œ
- *			í•´ë‹¹ í´ë¼ì´ì–¸íŠ¸ ë²„ì „ì— ë§žëŠ” CRC ì •ë³´ë¥¼ ì´ìš©í•˜ì—¬ ì‹¤í–‰íŒŒì¼ ë° ë©”ëª¨ë¦¬, í•µì‰´ë“œ
- *			ëª¨ë“ˆì´ ì •ìƒì ìœ¼ë¡œ ë™ìž‘í•˜ëŠ”ì§€ í™•ì¸í•˜ëŠ” Request Messageë¥¼ ìƒì„±í•´ ë‚¸ë‹¤.
+ * @remarks ÀÌ ÇÔ¼ö´Â Å¬¶óÀÌ¾ðÆ®ÀÇ Å©·¢ À¯¹«¸¦ È®ÀÎÇÏ°í ½ÍÀ»¶§¸¶´Ù È£ÃâµÇ´Â ÇÔ¼ö·Î
+ *			ÇØ´ç Å¬¶óÀÌ¾ðÆ® ¹öÀü¿¡ ¸Â´Â CRC Á¤º¸¸¦ ÀÌ¿ëÇÏ¿© ½ÇÇàÆÄÀÏ ¹× ¸Þ¸ð¸®, ÇÙ½¯µå
+ *			¸ðµâÀÌ Á¤»óÀûÀ¸·Î µ¿ÀÛÇÏ´ÂÁö È®ÀÎÇÏ´Â Request Message¸¦ »ý¼ºÇØ ³½´Ù.
  *
- * @param	pCrcInfo : _AntiCpSvr_AnalyzeGuidAckMsg() í•¨ìˆ˜ì—ì„œ êµ¬í•´ì§„ CRC Infoì˜ ë©”ëª¨ë¦¬ ì£¼ì†Œ
- * @param	pbyReqMsg : í´ë¼ì´ì–¸íŠ¸ì—ê²Œ ë³´ë‚¼ ì•”í˜¸í™”ëœ Request Message
- *						ì´ ì •ë³´ë¥¼ ë‹´ì„ ë²„í¼ì˜ í¬ê¸°(Byte)ëŠ” ìœ„ì— ì •ì˜ëœ SIZEOF_REQMSGì´ë‹¤.
- * @param	pbyReqInfo : _AntiCpSvr_AnalyzeAckMsg() ì—ì„œ ê²€ì‚¬í• ë•Œ ì‚¬ìš©í•  ì›ë³¸ Request Info
- *						 ì´ ì •ë³´ë¥¼ ë‹´ì„ ë²„í¼ì˜ í¬ê¸°(Byte)ëŠ” ìœ„ì— ì •ì˜ëœ SIZEOF_REQINFOì´ë‹¤.
- * @param	ulOption : ì–´ë–¤ ì •ë³´ë“¤ì— ëŒ€í•œ Request Messageë¥¼ ë§Œë“¤ì§€ì— ëŒ€í•œ Flag, ìœ„ì— ì •ì˜ëœ
+ * @param	pCrcInfo : _AntiCpSvr_AnalyzeGuidAckMsg() ÇÔ¼ö¿¡¼­ ±¸ÇØÁø CRC InfoÀÇ ¸Þ¸ð¸® ÁÖ¼Ò
+ * @param	pbyReqMsg : Å¬¶óÀÌ¾ðÆ®¿¡°Ô º¸³¾ ¾ÏÈ£È­µÈ Request Message
+ *						ÀÌ Á¤º¸¸¦ ´ãÀ» ¹öÆÛÀÇ Å©±â(Byte)´Â À§¿¡ Á¤ÀÇµÈ SIZEOF_REQMSGÀÌ´Ù.
+ * @param	pbyReqInfo : _AntiCpSvr_AnalyzeAckMsg() ¿¡¼­ °Ë»çÇÒ¶§ »ç¿ëÇÒ ¿øº» Request Info
+ *						 ÀÌ Á¤º¸¸¦ ´ãÀ» ¹öÆÛÀÇ Å©±â(Byte)´Â À§¿¡ Á¤ÀÇµÈ SIZEOF_REQINFOÀÌ´Ù.
+ * @param	ulOption : ¾î¶² Á¤º¸µé¿¡ ´ëÇÑ Request Message¸¦ ¸¸µéÁö¿¡ ´ëÇÑ Flag, À§¿¡ Á¤ÀÇµÈ
  *						ANTICPSVR_CHECK_GAME_MEMORY, ANTICPSVR_CHECK_HACKSHIELD_FILE,
- *						ANTICPSVR_CHECK_GAME_FILE, ANTICPSVR_CHECK_NANOENGINE_FILEë“¤ì˜ ORë¥¼ ì´ìš©í•˜ì—¬ ì •ì˜í•  ìˆ˜ ìžˆë‹¤.
- *						ë‹¨, ì•ˆì „ì„ ìœ„í•´ ìµœì´ˆ í˜¸ì¶œì‹œëŠ” ANTICPSVR_CHECK_ALL Optionì„ ì´ìš©í•˜ì—¬
- *						ì „ì²´ì— ëŒ€í•œ ì•ˆì „ ìœ ë¬´ë¥¼ ê²€ì‚¬í•˜ê³  ê·¸ ë‹¤ìŒë¶€í„°ëŠ” Performanceë¥¼ ìœ„í•´
- *						ANTICPSVR_CHECK_GAME_MEMORY Optionë§Œ ì‚¬ìš©í•˜ê¸¸ ê¶Œìž¥í•œë‹¤.
+ *						ANTICPSVR_CHECK_GAME_FILE, ANTICPSVR_CHECK_NANOENGINE_FILEµéÀÇ OR¸¦ ÀÌ¿ëÇÏ¿© Á¤ÀÇÇÒ ¼ö ÀÖ´Ù.
+ *						´Ü, ¾ÈÀüÀ» À§ÇØ ÃÖÃÊ È£Ãâ½Ã´Â ANTICPSVR_CHECK_ALL OptionÀ» ÀÌ¿ëÇÏ¿©
+ *						ÀüÃ¼¿¡ ´ëÇÑ ¾ÈÀü À¯¹«¸¦ °Ë»çÇÏ°í ±× ´ÙÀ½ºÎÅÍ´Â Performance¸¦ À§ÇØ
+ *						ANTICPSVR_CHECK_GAME_MEMORY Option¸¸ »ç¿ëÇÏ±æ ±ÇÀåÇÑ´Ù.
  *
- * @attention	ë²„í¼ í¬ê¸°ëŠ” ì•žìœ¼ë¡œ ë³€ê²½ë  ìˆ˜ë„ ìžˆìœ¼ë¯€ë¡œ ë°˜ë“œì‹œ ì´ í—¤ë”íŒŒì¼ì— ì •ì˜ëœ ê²ƒì„ ì‚¬ìš©í•˜ì—¬ì•¼í•œë‹¤.
+ * @attention	¹öÆÛ Å©±â´Â ¾ÕÀ¸·Î º¯°æµÉ ¼öµµ ÀÖÀ¸¹Ç·Î ¹Ýµå½Ã ÀÌ Çì´õÆÄÀÏ¿¡ Á¤ÀÇµÈ °ÍÀ» »ç¿ëÇÏ¿©¾ßÇÑ´Ù.
  *
  */
 ANTICPSVR_API
@@ -228,13 +236,13 @@ _AntiCpSvr_MakeReqMsg (
 
 /*!
  * 
- * @remarks ì´ í•¨ìˆ˜ëŠ” _AntiCpSvr_MakeReqMsg() í•¨ìˆ˜ë¥¼ í†µí•´ ìƒì„±ëœ í¬ëž™ ìœ ë¬´ Request Messageì—
- *			ëŒ€í•œ ì‘ë‹µìœ¼ë¡œ í´ë¼ì´ì–¸íŠ¸ë¡œë¶€í„° ì•”í˜¸í™”ëœ Ack Messageê°€ ì˜¬ ê²½ìš° í•´ë‹¹ Ack Messageë¥¼
- *			ë¶„ì„í•˜ì—¬ í´ë¼ì´ì–¸íŠ¸ê°€ ì •ìƒì ì¸ì§€ ê²€ì‚¬í•œë‹¤.
+ * @remarks ÀÌ ÇÔ¼ö´Â _AntiCpSvr_MakeReqMsg() ÇÔ¼ö¸¦ ÅëÇØ »ý¼ºµÈ Å©·¢ À¯¹« Request Message¿¡
+ *			´ëÇÑ ÀÀ´äÀ¸·Î Å¬¶óÀÌ¾ðÆ®·ÎºÎÅÍ ¾ÏÈ£È­µÈ Ack Message°¡ ¿Ã °æ¿ì ÇØ´ç Ack Message¸¦
+ *			ºÐ¼®ÇÏ¿© Å¬¶óÀÌ¾ðÆ®°¡ Á¤»óÀûÀÎÁö °Ë»çÇÑ´Ù.
  *
- * @param	pCrcInfo : _AntiCpSvr_AnalyzeGuidAckMsg() í•¨ìˆ˜ì—ì„œ êµ¬í•´ì§„ CRC Infoì˜ ë©”ëª¨ë¦¬ ì£¼ì†Œ
- * @param	pbyAckMsg : í´ë¼ì´ì–¸íŠ¸ì—ì„œ ë³´ë‚¸ ì•”í˜¸í™”ëœ ACK Message
- * @param	pbyReqInfo : _AntiCpSvr_MakeReqMsg() í•¨ìˆ˜ì—ì„œ ë§Œë“¤ì–´ì§„ ì›ë³¸ Request Message ì •ë³´
+ * @param	pCrcInfo : _AntiCpSvr_AnalyzeGuidAckMsg() ÇÔ¼ö¿¡¼­ ±¸ÇØÁø CRC InfoÀÇ ¸Þ¸ð¸® ÁÖ¼Ò
+ * @param	pbyAckMsg : Å¬¶óÀÌ¾ðÆ®¿¡¼­ º¸³½ ¾ÏÈ£È­µÈ ACK Message
+ * @param	pbyReqInfo : _AntiCpSvr_MakeReqMsg() ÇÔ¼ö¿¡¼­ ¸¸µé¾îÁø ¿øº» Request Message Á¤º¸
  *
  */
 ANTICPSVR_API

@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright [2002] MasangSoft
+* Copyright[2002] MasangSoft
 *
 * Any part of this source code can not be copied with
 * any method without prior written permission from

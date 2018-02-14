@@ -1,4 +1,5 @@
-﻿#if !defined(_ACEONLINE_SQL_H_)
+﻿//Copyright [2002] MasangSoft
+#if !defined(_ACEONLINE_SQL_H_)
 #define _ACEONLINE_SQL_H_
 
 

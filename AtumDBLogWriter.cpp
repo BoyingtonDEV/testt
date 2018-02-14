@@ -309,7 +309,7 @@ BOOL CAtumDBLogWriter::InsertLog_User_Game_Start_End(
 
 	BOOL bRet = i_pODBCStmt->ExecuteQuery((char*)(PROCEDURE_080822_0028), TRUE);
 	if (!bRet)
-	{
+    {
 //		i_pODBCStmt->ProcessLogMessagesForStmt("atum_log_insert_user_game_start_end Failed!\r\n");
 		char szTemp[1024];
 		sprintf(szTemp, "%s\r\n", GetLogBaseString(i_pUserLogBase, string()));
@@ -615,7 +615,7 @@ BOOL CAtumDBLogWriter::InsertLog_Item_Enchant_Change_By_Admin(
 
 	BOOL bRet = i_pODBCStmt->ExecuteQuery((char*)(PROCEDURE_121121_0002), TRUE);
 	if (!bRet)
-	{
+    {
 		i_pODBCStmt->FreeStatement();
 		return FALSE;
 	}
@@ -667,7 +667,7 @@ BOOL CAtumDBLogWriter::InsertLog_Item_Trade(
 
 	BOOL bRet = i_pODBCStmt->ExecuteQuery((char*)(PROCEDURE_080822_0029), TRUE);
 	if (!bRet)
-	{
+    {
 		i_pODBCStmt->FreeStatement();
 		return FALSE;
 	}
@@ -990,7 +990,7 @@ BOOL CAtumDBLogWriter::InserLog_Live_Deleted_Character(
 
 	BOOL bRet = i_pODBCStmt->ExecuteQuery((char*)(PROCEDURE_080822_0030), TRUE);
 	if (!bRet)
-	{
+    {
 		i_pODBCStmt->FreeStatement();
 		return FALSE;
 	}

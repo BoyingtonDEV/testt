@@ -1,6 +1,6 @@
 ﻿#ifndef _ATUM_DB_HELPER_H_
 #define _ATUM_DB_HELPER_H_
-
+//Copyright [2002] MasangSoft
 #include "AtumParam.h"
 #include "AtumProtocol.h"
 #include "ODBCStatement.h"

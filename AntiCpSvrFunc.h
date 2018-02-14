@@ -1,12 +1,4 @@
-﻿/*
-* (C) Copyright 2005 ~ 2007. AhnLab, Inc.
-*
-* Any part of this source code can not be copied with
-* any method without prior written permission from
-* the author or authorized person.
-*
-* File Name : AntiCpSvrFunc.h
-*/
+﻿
 
 #ifndef _ANTICPSVRFUNC_H
 #define _ANTICPSVRFUNC_H

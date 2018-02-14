@@ -1,4 +1,5 @@
-﻿#include "stdafx.h"
+﻿//Copyright [2002] MasangSoft
+#include "stdafx.h"
 #include "AtumDBHelper.h"
 #include "sql.h"
 #include "sqlext.h"
@@ -4794,7 +4795,7 @@ int CAtumDBHelper::LoadEachInflueceTypeCount(int* o_pNormalInfl, int* o_pVCNInfl
     // Bind Columns
     SQLBindCol(i_pODBCStmt->m_hstmt, 1, SQL_C_UTINYINT, &byInflType, 0, &arrCB[1]);
     SQLBindCol(i_pODBCStmt->m_hstmt, 2, SQL_C_LONG, &nInflTypeCount, 0, &arrCB[2]);
-    byInflType = INFLUENCE_TYPE_UNKNOWN ;
+    byInflType = INFLUENCE_TYPE_UNKNOWN;
     nInflTypeCount = 0;
     while ((ret = SQLFetch(i_pODBCStmt->m_hstmt)) != SQL_NO_DATA)
     {
@@ -4829,7 +4830,7 @@ int CAtumDBHelper::LoadEachInflueceTypeCount(int* o_pNormalInfl, int* o_pVCNInfl
             break;
         }
 
-        byInflType = INFLUENCE_TYPE_UNKNOWN ;
+        byInflType = INFLUENCE_TYPE_UNKNOWN;
         nInflTypeCount = 0;
     }
     i_pODBCStmt->FreeStatement();
